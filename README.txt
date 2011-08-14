@@ -7,5 +7,5 @@ Copyright (c) 2011 Tyler Smith
 
 Changelog:
 
-v1.0 2011-08-16 (Release)
+v1.0 2011-08-14 (Release)
 	- Free to use under the MIT license
