@@ -56,6 +56,8 @@
         slider.css({"overflow": "hidden"});
         slides.width(slider.width()).css({"float": "left"});
         container.width((slides.length * slider.width()) + 200); //extra width to account for quirks
+        
+        container.css({"margin-left": (-1 * currentSlide)* slider.width() + "px"});
       } else { //Default to fade
         slides.hide().eq(currentSlide).fadeIn(400);
       }
