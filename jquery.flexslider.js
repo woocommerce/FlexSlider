@@ -1,10 +1,12 @@
 /*
- * jQuery FlexSlider v1.0 (Release)
+ * jQuery FlexSlider v1.2
  * http://flex.madebymufffin.com
  *
  * Copyright 2011, Tyler Smith
  * Free to use under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
+ *
+ * TouchWipe gesture credits: http://www.netcu.de/jquery-touchwipe-iphone-ipad-library
  */
 
 
@@ -15,26 +17,38 @@
       var defaults = {
         animation: "fade",              //Select your animation type (fade/slide)
         slideshow: true,                //Should the slider animate automatically by default? (true/false)
-				slideshowSpeed: 7000,           //Set the speed of the slideshow cycling, in milliseconds
-				animationDuration: 500,         //Set the speed of animations, in milliseconds
-				directionNav: true,             //Create navigation for previous/next navigation? (true/false)
-				controlNav: true,               //Create navigation for paging control of each clide? (true/false)
-				keyboardNav: true,              //Allow for keyboard navigation using left/right keys (true/false)
-				prevText: "Previous",           //Set the text for the "previous" directionNav item
-				nextText: "Next",               //Set the text for the "next" directionNav item
-				slideToStart: 0,                //The slide that the slider should start on. Array notation (0 = first slide)
-				pauseOnAction: true,            //Pause the slideshow when interacting with control elements, highly recommended. (true/false)
-				pauseOnHover: false,            //Pause the slideshow when hovering over slider, then resume when no longer hovering (true/false)
-				controlsContainer: ""           //Advanced property: Can declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
+        slideshowSpeed: 7000,           //Set the speed of the slideshow cycling, in milliseconds
+        animationDuration: 500,         //Set the speed of animations, in milliseconds
+        directionNav: true,             //Create navigation for previous/next navigation? (true/false)
+        controlNav: true,               //Create navigation for paging control of each clide? (true/false)
+        keyboardNav: true,              //Allow for keyboard navigation using left/right keys (true/false)
+        touchSwipe: true,               //Touch swipe gestures for left/right slide navigation (true/false)
+        prevText: "Previous",           //Set the text for the "previous" directionNav item
+        nextText: "Next",               //Set the text for the "next" directionNav item
+        randomize: false,                //Randomize slide order on page load? (true/false)
+        slideToStart: 0,                //The slide that the slider should start on. Array notation (0 = first slide)
+        pauseOnAction: true,            //Pause the slideshow when interacting with control elements, highly recommended. (true/false)
+        pauseOnHover: false,            //Pause the slideshow when hovering over slider, then resume when no longer hovering (true/false)
+        controlsContainer: ""           //Advanced property: Can declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
 			}
 			
 			//Get slider, slides, and other useful variables
 			var options =  $.extend(defaults, options),
-			    slider = $(this),
+			    slider = this,
 			    container = $('.slides', slider),
 			    slides = $('.slides li', slider),
 			    ANIMATING = false,
           currentSlide = options.slideToStart;
+      
+      
+      ///////////////////////////////////////////////////////////////////
+      // FLEXSLIDER: RANDOMIZE SLIDES
+      if (options.randomize) {
+        slides.sort(function() { return (Math.round(Math.random())-0.5); });
+        container.empty().append(slides);
+      }
+      ///////////////////////////////////////////////////////////////////
+      
       
       //Slider animation initialize
       if (options.animation.toLowerCase() == "slide") {
@@ -80,8 +94,9 @@
             controlNav.append('<li><a>' + j + '</a></li>');
             j++;
           }
-
-          if ($(options.controlsContainer).length > 0) {
+          
+          //extra children check for jquery 1.3.2 - Drupal 6
+          if (options.controlsContainer != "" && $(options.controlsContainer).length > 0) {
             $(options.controlsContainer).append(controlNav);
           } else {
             slider.append(controlNav);
@@ -114,7 +129,7 @@
       //FLEXSLIDER: DIRECTION NAV
       if (options.directionNav) {
         //Create and append the nav
-        if ($(options.controlsContainer).length > 0) {
+        if (options.controlsContainer != "" && $(options.controlsContainer).length > 0) {
             $(options.controlsContainer).append($('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + options.prevText + '</a></li><li><a class="next" href="#">' + options.nextText + '</a></li></ul>'));
           } else {
             slider.append($('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + options.prevText + '</a></li><li><a class="next" href="#">' + options.nextText + '</a></li></ul>'));
@@ -175,8 +190,8 @@
         });
       }
     	//////////////////////////////////////////////////////////////////
-
-			//////////////////////////////////////////////////////////////////
+    	
+    	//////////////////////////////////////////////////////////////////
       //FLEXSLIDER: ANIMATION SLIDESHOW
       if (options.slideshow) {
         var animatedSlides;
@@ -209,6 +224,60 @@
         if (slides.length > 1) {
           animatedSlides = setInterval(animateSlides, options.slideshowSpeed);
         }
+      }
+    	//////////////////////////////////////////////////////////////////
+
+			//////////////////////////////////////////////////////////////////
+      //FLEXSLIDER: TOUCHSWIPE GESTURES
+      //Credit of concept: TouchSwipe - http://www.netcu.de/jquery-touchwipe-iphone-ipad-library
+      if (options.touchSwipe && 'ontouchstart' in document.documentElement) {
+        slider.each(function() {
+          var startX,
+              min_move_x = 20;
+              isMoving = false;
+              
+          function cancelTouch() {
+            this.removeEventListener('touchmove', onTouchMove);
+            startX = null;
+            isMoving = false;
+          }
+          function onTouchMove(e) {
+            if (isMoving) {
+              var x = e.touches[0].pageX,
+                  dx = startX - x;
+            
+              if(Math.abs(dx) >= min_move_x) {
+                cancelTouch();
+                if(dx > 0) {
+                	var target = (currentSlide == slides.length - 1) ? 0 : currentSlide + 1;
+                }
+                else {
+                	var target = (currentSlide == 0) ? slides.length - 1 : currentSlide - 1;
+                }
+            
+                if (options.controlNav) {
+              	  controlNav.removeClass('active');
+              	  controlNav.eq(target).addClass('active');
+                 }
+                 
+                flexAnimate(target);
+                if (options.pauseOnAction) {
+                  clearInterval(animatedSlides);
+                }
+              }
+            }
+          }
+          function onTouchStart(e) { 
+            if (e.touches.length == 1) {
+              startX = e.touches[0].pageX;
+              isMoving = true;
+              this.addEventListener('touchmove', onTouchMove, false);
+            }
+          }   
+          if ('ontouchstart' in document.documentElement) {
+            this.addEventListener('touchstart', onTouchStart, false);
+          }
+        });
       }
     	//////////////////////////////////////////////////////////////////
     	
