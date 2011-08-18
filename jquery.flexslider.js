@@ -57,7 +57,7 @@
         slides.width(slider.width()).css({"float": "left"});
         container.width((slides.length * slider.width()) + 200); //extra width to account for quirks
         
-        container.css({"margin-left": (-1 * currentSlide)* slider.width() + "px"});
+        container.css({"marginLeft": (-1 * currentSlide)* slider.width() + "px"});
       } else { //Default to fade
         slides.hide().eq(currentSlide).fadeIn(400);
       }
@@ -68,7 +68,7 @@
         if (!ANIMATING) {
           ANIMATING = true;
           if (options.animation.toLowerCase() == "slide") {
-      	    container.animate({"margin-left": (-1 * target)* slider.width() + "px"}, options.animationDuration, function(){
+      	    container.animate({"marginLeft": (-1 * target)* slider.width() + "px"}, options.animationDuration, function(){
       	      ANIMATING = false;
       	      currentSlide = target;
       	    });
@@ -89,10 +89,10 @@
     	///////////////////////////////////////////////////////////////////
     	// FLEXSLIDER: CONTROL NAV
       if (options.controlNav) {
-        if (slides.size() > 1) {
+        if (slides.length > 1) {
           var controlNav = $('<ol class="flex-control-nav"></ol>');
           var j = 1;
-          for (var i = 0; i < slides.size(); i++) {
+          for (var i = 0; i < slides.length; i++) {
             controlNav.append('<li><a>' + j + '</a></li>');
             j++;
           }
