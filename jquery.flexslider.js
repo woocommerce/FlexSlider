@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v1.2
+ * jQuery FlexSlider v1.3
  * http://flex.madebymufffin.com
  *
  * Copyright 2011, Tyler Smith
@@ -37,13 +37,14 @@
 			    slider = this,
 			    container = $('.slides', slider),
 			    slides = $('.slides li', slider),
+			    length = slides.length;
 			    ANIMATING = false,
           currentSlide = options.slideToStart;
       
       
       ///////////////////////////////////////////////////////////////////
       // FLEXSLIDER: RANDOMIZE SLIDES
-      if (options.randomize) {
+      if (options.randomize && length > 1) {
         slides.sort(function() { return (Math.round(Math.random())-0.5); });
         container.empty().append(slides);
       }
@@ -51,13 +52,20 @@
       
       
       //Slider animation initialize
-      if (options.animation.toLowerCase() == "slide") {
-        slides.show(); //show slides after using CSS to hide them for loading
+      if (options.animation.toLowerCase() == "slide" && length > 1) {
         slider.css({"overflow": "hidden"});
-        slides.width(slider.width()).css({"float": "left"});
-        container.width((slides.length * slider.width()) + 200); //extra width to account for quirks
         
-        container.css({"marginLeft": (-1 * currentSlide)* slider.width() + "px"});
+        container.append(slides.filter(':first').clone().addClass('clone')).prepend(slides.filter(':last').clone().addClass('clone'));
+        container.width(((length + 2) * slider.width()) + 1000); //extra width to account for quirks
+        
+        //Timeout function to give browser enough time to get proper width initially
+        var newSlides = $('.slides li', slider);
+        setTimeout(function() {
+          newSlides.width(slider.width()).css({"float": "left"}).show();
+        }, 100);
+        
+        container.css({"marginLeft": (-1 * (currentSlide + 1))* slider.width() + "px"});
+        
       } else { //Default to fade
         slides.hide().eq(currentSlide).fadeIn(400);
       }
@@ -68,10 +76,24 @@
         if (!ANIMATING) {
           ANIMATING = true;
           if (options.animation.toLowerCase() == "slide") {
-      	    container.animate({"marginLeft": (-1 * target)* slider.width() + "px"}, options.animationDuration, function(){
-      	      ANIMATING = false;
-      	      currentSlide = target;
-      	    });
+            if (currentSlide == 0 && target == length - 1) {
+              container.animate({"marginLeft": "0px"}, options.animationDuration, function(){
+        	      container.css({"marginLeft": (-1 * length) * slider.width() + "px"});
+        	      ANIMATING = false;
+        	      currentSlide = target;
+        	    });
+            } else if (currentSlide == length - 1 && target == 0) {
+              container.animate({"marginLeft": (-1 * (length + 1)) * slider.width() + "px"}, options.animationDuration, function(){
+        	      container.css({"marginLeft": -1 * slider.width() + "px"});
+        	      ANIMATING = false;
+        	      currentSlide = target;
+        	    });
+            } else {
+              container.animate({"marginLeft": (-1 * (target + 1)) * slider.width() + "px"}, options.animationDuration, function(){
+        	      ANIMATING = false;
+        	      currentSlide = target;
+        	    });
+            }
         	} else { //Default to Fade
         	  slider.css({"minHeight": slides.eq(currentSlide).height()});
       	    slides.eq(currentSlide).fadeOut(options.animationDuration, function() {
@@ -88,21 +110,19 @@
     	
     	///////////////////////////////////////////////////////////////////
     	// FLEXSLIDER: CONTROL NAV
-      if (options.controlNav) {
-        if (slides.length > 1) {
-          var controlNav = $('<ol class="flex-control-nav"></ol>');
-          var j = 1;
-          for (var i = 0; i < slides.length; i++) {
-            controlNav.append('<li><a>' + j + '</a></li>');
-            j++;
-          }
-          
-          //extra children check for jquery 1.3.2 - Drupal 6
-          if (options.controlsContainer != "" && $(options.controlsContainer).length > 0) {
-            $(options.controlsContainer).append(controlNav);
-          } else {
-            slider.append(controlNav);
-          }
+      if (options.controlNav && length > 1) {
+        var controlNav = $('<ol class="flex-control-nav"></ol>');
+        var j = 1;
+        for (var i = 0; i < length; i++) {
+          controlNav.append('<li><a>' + j + '</a></li>');
+          j++;
+        }
+        
+        //extra children check for jquery 1.3.2 - Drupal 6
+        if (options.controlsContainer != "" && $(options.controlsContainer).length > 0) {
+          $(options.controlsContainer).append(controlNav);
+        } else {
+          slider.append(controlNav);
         }
         
         controlNav = $('.flex-control-nav li a');
@@ -129,7 +149,7 @@
       
       //////////////////////////////////////////////////////////////////
       //FLEXSLIDER: DIRECTION NAV
-      if (options.directionNav) {
+      if (options.directionNav && length > 1) {
         //Create and append the nav
         if (options.controlsContainer != "" && $(options.controlsContainer).length > 0) {
             $(options.controlsContainer).append($('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + options.prevText + '</a></li><li><a class="next" href="#">' + options.nextText + '</a></li></ul>'));
@@ -144,9 +164,9 @@
       	  } else {
         	  
         	  if ($(this).hasClass('next')) {
-        	    var target = (currentSlide == slides.length - 1) ? 0 : currentSlide + 1;
+        	    var target = (currentSlide == length - 1) ? 0 : currentSlide + 1;
         	  } else {
-        	    var target = (currentSlide == 0) ? slides.length - 1 : currentSlide - 1;
+        	    var target = (currentSlide == 0) ? length - 1 : currentSlide - 1;
         	  }
             
             if (options.controlNav) {
@@ -165,7 +185,7 @@
 
       //////////////////////////////////////////////////////////////////
       //FLEXSLIDER: KEYBOARD NAV
-      if (options.keyboardNav) {
+      if (options.keyboardNav && length > 1) {
         $(document).keyup(function(event) {
           if (ANIMATING) {
             return;
@@ -174,9 +194,9 @@
           } else {
             
             if (event.keyCode == 39) {
-        	    var target = (currentSlide == slides.length - 1) ? 0 : currentSlide + 1;
+        	    var target = (currentSlide == length - 1) ? 0 : currentSlide + 1;
         	  } else if (event.keyCode == 37){
-        	    var target = (currentSlide == 0) ? slides.length - 1 : currentSlide - 1;
+        	    var target = (currentSlide == 0) ? length - 1 : currentSlide - 1;
         	  }
       	  
         	  if (options.controlNav) {
@@ -195,14 +215,14 @@
     	
     	//////////////////////////////////////////////////////////////////
       //FLEXSLIDER: ANIMATION SLIDESHOW
-      if (options.slideshow) {
+      if (options.slideshow && length > 1) {
         var animatedSlides;
         
         function animateSlides() {
           if (ANIMATING) {
             return;
           } else {
-        	  var target = (currentSlide == slides.length - 1) ? 0 : currentSlide + 1;
+        	  var target = (currentSlide == length - 1) ? 0 : currentSlide + 1;
       	  
         	  if (options.controlNav) {
           	  controlNav.removeClass('active');
@@ -223,7 +243,7 @@
         }
         
         //Initialize animation
-        if (slides.length > 1) {
+        if (length > 1) {
           animatedSlides = setInterval(animateSlides, options.slideshowSpeed);
         }
       }
@@ -232,7 +252,7 @@
 			//////////////////////////////////////////////////////////////////
       //FLEXSLIDER: TOUCHSWIPE GESTURES
       //Credit of concept: TouchSwipe - http://www.netcu.de/jquery-touchwipe-iphone-ipad-library
-      if (options.touchSwipe && 'ontouchstart' in document.documentElement) {
+      if (options.touchSwipe && 'ontouchstart' in document.documentElement && length > 1) {
         slider.each(function() {
           var startX,
               min_move_x = 20;
@@ -251,10 +271,10 @@
               if(Math.abs(dx) >= min_move_x) {
                 cancelTouch();
                 if(dx > 0) {
-                	var target = (currentSlide == slides.length - 1) ? 0 : currentSlide + 1;
+                	var target = (currentSlide == length - 1) ? 0 : currentSlide + 1;
                 }
                 else {
-                	var target = (currentSlide == 0) ? slides.length - 1 : currentSlide - 1;
+                	var target = (currentSlide == 0) ? length - 1 : currentSlide - 1;
                 }
             
                 if (options.controlNav) {
@@ -285,11 +305,12 @@
     	
     	//////////////////////////////////////////////////////////////////
       //FLEXSLIDER: RESIZE FUNCTIONS (If necessary)
-      if (options.animation.toLowerCase() == "slide") {
+      if (options.animation.toLowerCase() == "slide" && length > 1) {
         var sliderTimer;
         $(window).resize(function(){
-          slides.width(slider.width());
-          container.width((slides.length * slider.width()) + 200); //extra width to account for quirks
+          newSlides.width(slider.width());
+          //clones.width(slider.width());
+          container.width(((length + 2) * slider.width()) + 1000); //extra width to account for quirks
           
           //slider resize reset
           clearTimeout(sliderTimer);
