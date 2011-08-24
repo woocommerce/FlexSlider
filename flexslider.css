@@ -37,3 +37,6 @@
 .flex-control-nav li a {width: 13px; height: 13px; display: block; background: url(theme/bg_control_nav.png) no-repeat 0 0; cursor: pointer; text-indent: -9999px;}
 .flex-control-nav li a:hover {background-position: 0 -13px;}
 .flex-control-nav li a.active {background-position: 0 -26px; cursor: default;}
+
+/* Browser Quirks */
+.flexslider a {outline: none;}
