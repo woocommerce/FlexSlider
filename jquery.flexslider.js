@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v1.3
+ * jQuery FlexSlider v1.4
  * http://flex.madebymufffin.com
  *
  * Copyright 2011, Tyler Smith
@@ -15,7 +15,7 @@
     flexslider: function(options) {
       //Plugin options and their default values
       var defaults = {
-        animation: "fade",              //Select your animation type (fade/slide)
+        animation: "fade",              //Select your animation type (fade/slide/show)
         slideshow: true,                //Should the slider animate automatically by default? (true/false)
         slideshowSpeed: 7000,           //Set the speed of the slideshow cycling, in milliseconds
         animationDuration: 500,         //Set the speed of animations, in milliseconds
@@ -25,11 +25,12 @@
         touchSwipe: true,               //Touch swipe gestures for left/right slide navigation (true/false)
         prevText: "Previous",           //Set the text for the "previous" directionNav item
         nextText: "Next",               //Set the text for the "next" directionNav item
-        randomize: false,                //Randomize slide order on page load? (true/false)
+        randomize: false,               //Randomize slide order on page load? (true/false)
         slideToStart: 0,                //The slide that the slider should start on. Array notation (0 = first slide)
         pauseOnAction: true,            //Pause the slideshow when interacting with control elements, highly recommended. (true/false)
         pauseOnHover: false,            //Pause the slideshow when hovering over slider, then resume when no longer hovering (true/false)
-        controlsContainer: ""           //Advanced property: Can declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
+        controlsContainer: "",          //Advanced property: Can declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
+        manualControls: ""              //Advanced property: Can declare custom control navigation. Example would be ".flex-control-nav" or "#tabs-nav", etc. The number of elements in your controlNav should match the number of slides/tabs (obviously).
 			}
 			
 			//Get slider, slides, and other useful variables
@@ -56,14 +57,14 @@
         slider.css({"overflow": "hidden"});
         
         container.append(slides.filter(':first').clone().addClass('clone')).prepend(slides.filter(':last').clone().addClass('clone'));
-        container.width(((length + 2) * slider.width()) + 1000); //extra width to account for quirks
+        container.width(((length + 2) * slider.width()) + 2000); //extra width to account for quirks
         
         //Timeout function to give browser enough time to get proper width initially
         var newSlides = $('.slides li', slider);
         setTimeout(function() {
           newSlides.width(slider.width()).css({"float": "left"}).show();
         }, 100);
-        
+
         container.css({"marginLeft": (-1 * (currentSlide + 1))* slider.width() + "px"});
         
       } else { //Default to fade
@@ -78,22 +79,29 @@
           if (options.animation.toLowerCase() == "slide") {
             if (currentSlide == 0 && target == length - 1) {
               container.animate({"marginLeft": "0px"}, options.animationDuration, function(){
-        	      container.css({"marginLeft": (-1 * length) * slider.width() + "px"});
+        	      container.css({"marginLeft": (-1 * length) * slides.filter(':first').width() + "px"});
         	      ANIMATING = false;
         	      currentSlide = target;
         	    });
             } else if (currentSlide == length - 1 && target == 0) {
-              container.animate({"marginLeft": (-1 * (length + 1)) * slider.width() + "px"}, options.animationDuration, function(){
-        	      container.css({"marginLeft": -1 * slider.width() + "px"});
+              container.animate({"marginLeft": (-1 * (length + 1)) * slides.filter(':first').width() + "px"}, options.animationDuration, function(){
+        	      container.css({"marginLeft": -1 * slides.filter(':first').width() + "px"});
         	      ANIMATING = false;
         	      currentSlide = target;
         	    });
             } else {
-              container.animate({"marginLeft": (-1 * (target + 1)) * slider.width() + "px"}, options.animationDuration, function(){
+              container.animate({"marginLeft": (-1 * (target + 1)) * slides.filter(':first').width() + "px"}, options.animationDuration, function(){
         	      ANIMATING = false;
         	      currentSlide = target;
         	    });
             }
+        	} else if (options.animation.toLowerCase() == "show") {
+            
+            slides.eq(currentSlide).hide();
+            slides.eq(target).show();
+            ANIMATING = false;
+            currentSlide = target;
+            
         	} else { //Default to Fade
         	  slider.css({"minHeight": slides.eq(currentSlide).height()});
       	    slides.eq(currentSlide).fadeOut(options.animationDuration, function() {
@@ -111,25 +119,31 @@
     	///////////////////////////////////////////////////////////////////
     	// FLEXSLIDER: CONTROL NAV
       if (options.controlNav && length > 1) {
-        var controlNav = $('<ol class="flex-control-nav"></ol>');
-        var j = 1;
-        for (var i = 0; i < length; i++) {
-          controlNav.append('<li><a>' + j + '</a></li>');
-          j++;
-        }
-        
-        //extra children check for jquery 1.3.2 - Drupal 6
-        if (options.controlsContainer != "" && $(options.controlsContainer).length > 0) {
-          $(options.controlsContainer).append(controlNav);
+        if (options.manualControls != "" && $(options.manualControls).length > 0) {
+          var controlNav = $(options.manualControls);
         } else {
-          slider.append(controlNav);
+          var controlNav = $('<ol class="flex-control-nav"></ol>');
+          var j = 1;
+          for (var i = 0; i < length; i++) {
+            controlNav.append('<li><a>' + j + '</a></li>');
+            j++;
+          }
+          
+          //extra children check for jquery 1.3.2 - Drupal 6
+          if (options.controlsContainer != "" && $(options.controlsContainer).length > 0) {
+            $(options.controlsContainer).append(controlNav);
+          } else {
+            slider.append(controlNav);
+          }
+          
+          controlNav = $('.flex-control-nav li a'); 
         }
         
-        controlNav = $('.flex-control-nav li a');
         controlNav.eq(currentSlide).addClass('active');
 
         controlNav.click(function(event) {
-          event.preventDefault();
+          event.preventDefault(); 
+          
           if ($(this).hasClass('active') || ANIMATING) {
             return;
           } else {
@@ -310,7 +324,7 @@
         $(window).resize(function(){
           newSlides.width(slider.width());
           //clones.width(slider.width());
-          container.width(((length + 2) * slider.width()) + 1000); //extra width to account for quirks
+          container.width(((length + 2) * slider.width()) + 2000); //extra width to account for quirks
           
           //slider resize reset
           clearTimeout(sliderTimer);
