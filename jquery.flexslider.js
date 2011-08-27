@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v1.4
+ * jQuery FlexSlider v1.5
  * http://flex.madebymufffin.com
  *
  * Copyright 2011, Tyler Smith
@@ -38,10 +38,10 @@
 			    slider = this,
 			    container = $('.slides', slider),
 			    slides = $('.slides li', slider),
-			    length = slides.length;
+			    length = slides.length,
 			    ANIMATING = false,
-          currentSlide = options.slideToStart;
-      
+          currentSlide = options.slideToStart,
+          eventType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
       
       ///////////////////////////////////////////////////////////////////
       // FLEXSLIDER: RANDOMIZE SLIDES
@@ -141,7 +141,7 @@
         
         controlNav.eq(currentSlide).addClass('active');
 
-        controlNav.click(function(event) {
+        controlNav.bind(eventType, function(event) {
           event.preventDefault(); 
           
           if ($(this).hasClass('active') || ANIMATING) {
@@ -171,7 +171,7 @@
             slider.append($('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + options.prevText + '</a></li><li><a class="next" href="#">' + options.nextText + '</a></li></ul>'));
           }
       
-      	$('.flex-direction-nav li a').click(function(event) {
+      	$('.flex-direction-nav li a').bind(eventType, function(event) {
       	  event.preventDefault();
       	  if (ANIMATING) {
       	    return;

@@ -1,4 +1,4 @@
-jQuery FlexSlider v1.4
+jQuery FlexSlider v1.5
 http://flex.madebymufffin.com
 
 Copyright (c) 2011 Tyler Smith
@@ -7,9 +7,15 @@ Copyright (c) 2011 Tyler Smith
 
 Changelog:
 
+v1.5 (2011-08-27)
+	- Improved mobile support by adding "touchstart" to bound events
+	- Implemented solution for no javascript fallback (relies on user, and prepares for html5 boilerplate/modernizr classes)
+--
+
 v1.4 (2011-08-23)
   - Added "manualControls" property to allow for custom, non-dynamic control navigation
   - Added "show" animation to allow for instant transitions between slides
+--
 
 v1.3 (2011-08-18)
   - Made slide animation a continuous scroll effect, rather than jumping back to start/end
