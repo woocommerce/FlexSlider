@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v1.5
+ * jQuery FlexSlider v1.6
  * http://flex.madebymufffin.com
  *
  * Copyright 2011, Tyler Smith
@@ -10,7 +10,7 @@
 /* FlexSlider Necessary Styles
 *********************************/ 
 .flexslider {width: 100%; margin: 0; padding: 0;}
-.flexslider .slides li {display: none;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.flexslider .slides > li {display: none;} /* Hide the slides before the JS is loaded. Avoids image jumping */
 .flexslider .slides img {max-width: 100%; display: block;}
 
 /* Browser Resets */
@@ -23,18 +23,18 @@
 /* If you are not using another script, such as Modernizr, make sure you
  * include js that eliminates this class on page load
  */
-.no-js .slides li:first-child {display: block;}
+.no-js .slides > li:first-child {display: block;}
 
 
 /* FlexSlider Default Theme
 *********************************/
 .flexslider {background: #fff; border: 4px solid #fff; position: relative; -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px;}
-.flexslider .slides  li {position: relative;}
+.flexslider .slides > li {position: relative;}
 /* Suggested container for "Slide" animation setups. Can replace this with your own, if you wish */
-.flexslider-container {position: relative;}
+.flex-container {position: relative;}
 
 /* Caption style */
-.flex-caption {width: 96%; padding: 2%; position: absolute; left: 0; bottom: 0; background: rgba(0,0,0,.3); color: #fff; text-shadow: 0 -1px 0 rgba(0,0,0,.3); font-size: 14px; line-height: 18px;}
+.flex-caption {width: 96%; padding: 2%; position: absolute; left: 0; bottom: 0; background: #000; background: rgba(0,0,0,.3); color: #fff; text-shadow: 0 -1px 0 rgba(0,0,0,.3); font-size: 14px; line-height: 18px;}
 
 /* Direction Nav */
 .flex-direction-nav li a {width: 52px; height: 52px; margin: -13px 0 0; display: block; background: url(theme/bg_direction_nav.png) no-repeat 0 0; position: absolute; top: 50%; cursor: pointer; text-indent: -9999px;} /* set negative margin-top equal to half the height on the directional-nav for perfect vertical centering */

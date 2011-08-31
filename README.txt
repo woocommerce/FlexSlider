@@ -1,4 +1,4 @@
-jQuery FlexSlider v1.5
+jQuery FlexSlider v1.6
 http://flex.madebymufffin.com
 
 Copyright (c) 2011 Tyler Smith
@@ -6,6 +6,13 @@ Copyright (c) 2011 Tyler Smith
 ---
 
 Changelog:
+
+v1.6 (2011-08-30)
+  - Vast improvements to the plugin architecture
+  - Multiple instances of FlexSlider are now possible. (Please, consider your audience before going crazy with this)
+  - Removed the "show" animation option in interest of other things. Use animationDuration: 0, if needed.
+  - FlexSlider CSS has been updated. Use the v1.6 stylesheet!
+--
 
 v1.5 (2011-08-27)
 	- Improved mobile support by adding "touchstart" to bound events
