@@ -1,4 +1,4 @@
-jQuery FlexSlider v1.6
+jQuery FlexSlider v1.7
 http://flex.madebymufffin.com
 
 Copyright (c) 2011 Tyler Smith
@@ -6,6 +6,14 @@ Copyright (c) 2011 Tyler Smith
 ---
 
 Changelog:
+
+v1.7 (2011-09-10)
+  - Callback API features with start(), before(), after(), and end() options. All functions should include one parameter for the slider element. (ex. start: function(slider) {})
+  - Crossfade has been introduced through new CSS techniques
+  - pausePlay property added to support a dynamic pause/play element
+  - animationLoop property added to support non-looping sliders
+  - FlexSlider CSS further improved, including IE hacks to improve cross-browser design integrity
+--
 
 v1.6 (2011-08-30)
   - Vast improvements to the plugin architecture
@@ -37,4 +45,4 @@ v1.2 (2011-08-16)
 --
 
 v1.0 2011-08-14 (Release)
-	- Free to use under the MIT license
+  - Free to use under the MIT license
