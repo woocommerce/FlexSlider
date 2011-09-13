@@ -357,9 +357,9 @@
     //FlexSlider: Helper function for non-looping sliders
     slider.canAdvance = function(target) {
       if (!slider.vars.animationLoop && slider.atEnd) {
-        if (slider.currentSlide == 0 && target == slider.count - 1) {
+        if (slider.currentSlide == 0 && target == slider.count - 1 && slider.direction != "next") {
           return false;
-        } else if (slider.currentSlide == slider.count - 1 && target == 0) {
+        } else if (slider.currentSlide == slider.count - 1 && target == 0 && slider.direction == "next") {
           return false;
         } else {
           return true;
@@ -371,6 +371,7 @@
     
     //FlexSlider: Helper function to determine animation target
     slider.getTarget = function(dir) {
+      slider.direction = dir;
       if (dir == "next") {
         return (slider.currentSlide == slider.count - 1) ? 0 : slider.currentSlide + 1;
       } else {
