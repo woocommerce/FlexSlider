@@ -23,6 +23,7 @@
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
+      slider.animatingTo = slider.currentSlide;
       slider.atEnd = (slider.currentSlide == 0) ? true : false;
       slider.eventType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
       slider.cloneCount = 0;
@@ -295,6 +296,7 @@
         }
         
         //FlexSlider: before() animation Callback
+        slider.animatingTo = target;
         slider.vars.before(slider);
         
         if (slider.vars.animation.toLowerCase() == "slide") {
