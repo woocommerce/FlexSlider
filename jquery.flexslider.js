@@ -187,7 +187,7 @@
           slider.pausePlay = $('.flex-pauseplay span', slider.controlsContainer);
         } else {
           slider.append(pausePlayScaffold);
-          slider.pausePlay = $('.flex-pauseplay li a', slider);
+          slider.pausePlay = $('.flex-pauseplay span', slider);
         }
         
         var pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
