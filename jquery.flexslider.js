@@ -66,8 +66,7 @@
         }, 100);
         slider.container.css({"marginLeft": (-1 * (slider.currentSlide + slider.cloneOffset))* slider.width() + "px"});
       } else { //Default to fade
-        slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%"}).filter(':first').fadeIn(400, function() {
-        });
+        slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%"}).eq(slider.currentSlide).fadeIn(400);
       }
       ///////////////////////////////////////////////////////////////////
       
