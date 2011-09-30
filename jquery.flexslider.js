@@ -190,7 +190,7 @@
         }
         
         var pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
-        slider.pausePlay.addClass(pausePlayState).text(pausePlayState);
+        slider.pausePlay.addClass(pausePlayState).text((pausePlayState == 'pause') ? slider.vars.pauseText : slider.vars.playText);
         
         slider.pausePlay.click(function(event) {
           event.preventDefault();
@@ -269,6 +269,10 @@
         //Animating flag
         slider.animating = true;
         
+        //FlexSlider: before() animation Callback
+        slider.animatingTo = target;
+        slider.vars.before(slider);
+        
         //Optional paramter to pause slider when making an anmiation call
         if (pause) {
           slider.pause();
@@ -281,22 +285,21 @@
         
         //Is the slider at either end
         slider.atEnd = (target == 0 || target == slider.count - 1) ? true : false;
-        if (!slider.vars.animationLoop) {
+        if (!slider.vars.animationLoop && slider.vars.directionNav) {
           if (target == 0) {
             slider.directionNav.removeClass('disabled').filter('.prev').addClass('disabled');
           } else if (target == slider.count - 1) {
             slider.directionNav.removeClass('disabled').filter('.next').addClass('disabled');
-            slider.pause();
-            //FlexSlider: end() of cycle Callback
-            slider.vars.end(slider);
           } else {
             slider.directionNav.removeClass('disabled');
           }
         }
         
-        //FlexSlider: before() animation Callback
-        slider.animatingTo = target;
-        slider.vars.before(slider);
+        if (!slider.vars.animationLoop && target == slider.count - 1) {
+          slider.pause();
+          //FlexSlider: end() of cycle Callback
+          slider.vars.end(slider);
+        }
         
         if (slider.vars.animation.toLowerCase() == "slide") {
 
@@ -343,7 +346,7 @@
     slider.pause = function() {
       clearInterval(slider.animatedSlides);
       if (slider.vars.pausePlay) {
-        slider.pausePlay.removeClass('pause').addClass('play').text('play');
+        slider.pausePlay.removeClass('pause').addClass('play').text(slider.vars.playText);
       }
     }
     
@@ -351,7 +354,7 @@
     slider.resume = function() {
       slider.animatedSlides = setInterval(slider.animateSlides, slider.vars.slideshowSpeed);
       if (slider.vars.pausePlay) {
-        slider.pausePlay.removeClass('play').addClass('pause').text('pause');
+        slider.pausePlay.removeClass('play').addClass('pause').text(slider.vars.pauseText);
       }
     }
     
@@ -397,6 +400,8 @@
     prevText: "Previous",           //Set the text for the "previous" directionNav item
     nextText: "Next",               //Set the text for the "next" directionNav item
     pausePlay: false,               //Create pause/play dynamic element (true/false)
+    pauseText: 'Pause',             //Set the text for the "pause" pausePlay item
+    playText: 'Play',               //Set the text for the "play" pausePlay item
     randomize: false,               //Randomize slide order on page load? (true/false)
     slideToStart: 0,                //The slide that the slider should start on. Array notation (0 = first slide)
     animationLoop: true,            //Should the animation loop? If false, directionNav will received disabled classes when at either end (true/false)
