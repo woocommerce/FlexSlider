@@ -303,9 +303,9 @@
         
         if (slider.vars.animation.toLowerCase() == "slide") {
 
-          if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop) {
+          if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop && slider.direction != "next") {
             slider.slideString = "0px";
-          } else if (slider.currentSlide == slider.count - 1 && target == 0 && slider.vars.animationLoop) {
+          } else if (slider.currentSlide == slider.count - 1 && target == 0 && slider.vars.animationLoop && slider.direction != "prev") {
             slider.slideString = (-1 * (slider.count + 1)) * slider.slides.filter(':first').width() + "px";
           } else {
             slider.slideString = (-1 * (target + slider.cloneOffset)) * slider.slides.filter(':first').width() + "px";
