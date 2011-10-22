@@ -1,4 +1,4 @@
-jQuery FlexSlider v1.7
+jQuery FlexSlider v1.8
 http://flex.madebymufffin.com
 
 Copyright (c) 2011 Tyler Smith
@@ -6,6 +6,16 @@ Copyright (c) 2011 Tyler Smith
 ---
 
 Changelog:
+v1.8 (2011-10-22)
+  - CSS3 transform3d support for webkit browsers coupled with 1-to-1 swiping has been introduced. The entire touch swipe experience has been vastly improved beyond comparison to previous versions.
+  - New resize event handling to nix the old behavior. Slides not stay in place, rather than moving around and then sliding back.
+  - Added "slideDirection" property to support "vertical" or "horizontal" sliding directions
+  - Added "mousewheel" property to support mousewheel scrolling of slide elements.
+  - Added "slider.manualPause" that is set by the pausePlay element and can be set via the callback API. This will prevent pauseOnHover from resuming on hover exit.
+  - Removed "touchswipe" property as a customizable options.
+  - Fixed behavior in slides with only two slides. Scrolling should happen as intended.
+  - Fixed pausePlay element bind to trigger both touchstart and click.
+  - Note: A destroy function has been added to the main plugin file, but is commented out and omitted from the minified version. Those interested can find the function and documentation to implement a custom destroy function based on their own needs/event triggers.
 
 v1.7 (2011-09-10)
   - Callback API features with start(), before(), after(), and end() options. All functions should include one parameter for the slider element. (ex. start: function(slider) {})

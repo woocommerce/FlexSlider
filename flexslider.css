@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v1.7
+ * jQuery FlexSlider v1.8
  * http://flex.madebymufffin.com
  *
  * Copyright 2011, Tyler Smith
@@ -59,4 +59,4 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4C000000,endCol
 .flex-control-nav li:first-child {margin: 0;}
 .flex-control-nav li a {width: 13px; height: 13px; display: block; background: url(theme/bg_control_nav.png) no-repeat; cursor: pointer; text-indent: -999em;}
 .flex-control-nav li a:hover {background-position: 0 -13px;}
-.flex-control-nav li .active {background-position: 0 -26px; cursor: default;}
+.flex-control-nav li a.active {background-position: 0 -26px; cursor: default;}
