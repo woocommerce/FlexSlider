@@ -7,7 +7,7 @@ Copyright (c) 2011 Tyler Smith
 
 Changelog:
 v1.8 (2011-10-22)
-  - CSS3 transform3d support for webkit browsers coupled with 1-to-1 swiping has been introduced. The entire touch swipe experience has been vastly improved beyond comparison to previous versions.
+  - CSS3 translate3d support for webkit browsers coupled with 1-to-1 swiping has been introduced. The entire touch swipe experience has been vastly improved beyond comparison to previous versions.
   - New resize event handling to nix the old behavior. Slides not stay in place, rather than moving around and then sliding back.
   - Added "slideDirection" property to support "vertical" or "horizontal" sliding directions
   - Added "mousewheel" property to support mousewheel scrolling of slide elements.
