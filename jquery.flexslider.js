@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v1.8
+ * jQuery FlexSlider v1.8.1
  * http://flex.madebymufffin.com
  *
  * Copyright 2011, Tyler Smith
@@ -65,12 +65,12 @@
         slider.css({"overflow": "hidden"});
         if (slider.vars.animationLoop) {
           slider.cloneCount = 2;
-          slider.cloneOffset = 1;
-          slider.container.append(slider.slides.filter(':first').clone().addClass('clone')).prepend(slider.slides.filter(':last').clone().addClass('clone'));
+          slider.cloneOffset = slider.vars.visibleSlides;
+          slider.container.append(slider.slides.slice(0,slider.vars.visibleSlides).clone().addClass('clone')).prepend(slider.slides.slice(slider.slides.length - slider.vars.visibleSlides, slider.slides.length).clone().addClass('clone'));
         }
         //create newSlides to capture possible clones
         slider.newSlides = $('.slides > li', slider);
-        var sliderOffset = (-1 * (slider.currentSlide + slider.cloneOffset));
+        var sliderOffset = (-1 * (slider.currentSlide + 1));
         if (slider.vertical) {
           slider.newSlides.css({"display": "block", "width": "100%", "float": "left"});
           slider.container.height((slider.count + slider.cloneCount) * 200 + "%").css("position", "absolute").width("100%");
@@ -86,7 +86,7 @@
           slider.container.width((slider.count + slider.cloneCount) * 200 + "%").css(slider.args);
           //Timeout function to give browser enough time to get proper width initially
           setTimeout(function() {
-            slider.newSlides.width(slider.width()).css({"float": "left", "display": "block"});
+            slider.newSlides.width(slider.width()/slider.vars.visibleSlides).css({"float": "left", "display": "block"});
           }, 100);
         }
         
@@ -346,8 +346,8 @@
               }
               slider.container.css(slider.args);
             } else {
-              slider.newSlides.width(slider.width());
-              slider.args[slider.prop] = (-1 * (slider.currentSlide + slider.cloneOffset))* slider.width() + "px";
+              slider.newSlides.width(slider.width()/slider.vars.visibleSlides);
+              //slider.args[slider.prop] = (-1 * (slider.currentSlide + 1))* slider.width() + "px";
               if (slider.transitions) {
                 slider.setTransition(0);
                 slider.args[slider.prop] = (slider.vertical) ? "translate3d(0," + slider.args[slider.prop] + ",0)" : "translate3d(" + slider.args[slider.prop] + ",0,0)";
@@ -426,9 +426,9 @@
           var dimension = (slider.vertical) ? slider.slides.filter(':first').height() : slider.slides.filter(':first').width();
           
           if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop && slider.direction != "next") {
-            slider.slideString = "0px";
+            slider.slideString = ((1 - slider.cloneOffset)) * dimension + "px";
           } else if (slider.currentSlide == slider.count - 1 && target == 0 && slider.vars.animationLoop && slider.direction != "prev") {
-            slider.slideString = (-1 * (slider.count + 1)) * dimension + "px";
+            slider.slideString = (-1 * (slider.vars.visibleSlides + slider.count)) * dimension + "px";
           } else {
             slider.slideString = (-1 * (target + slider.cloneOffset)) * dimension + "px";
           }
@@ -438,7 +438,6 @@
               slider.setTransition(slider.vars.animationDuration); 
               slider.args[slider.prop] = (slider.vertical) ? "translate3d(0," + slider.slideString + ",0)" : "translate3d(" + slider.slideString + ",0,0)";
               slider.container.css(slider.args).one("webkitTransitionEnd transitionend", function(){
-                slider.wrapup(dimension);
               });   
           } else {
             slider.container.animate(slider.args, slider.vars.animationDuration, function(){
@@ -456,17 +455,18 @@
     
     //FlexSlider: Function to minify redundant animation actions
     slider.wrapup = function(dimension) {
+
       if (slider.vars.animation == "slide") {
         //Jump the slider if necessary
         if (slider.currentSlide == 0 && slider.animatingTo == slider.count - 1 && slider.vars.animationLoop) {
-          slider.args[slider.prop] = (-1 * slider.count) * dimension + "px";
+          slider.args[slider.prop] = (-1 * (slider.count + slider.vars.visibleSlides - 1)) * dimension + "px";
           if (slider.transitions) {
             slider.setTransition(0);
             slider.args[slider.prop] = (slider.vertical) ? "translate3d(0," + slider.args[slider.prop] + ",0)" : "translate3d(" + slider.args[slider.prop] + ",0,0)";
           }
           slider.container.css(slider.args);
         } else if (slider.currentSlide == slider.count - 1 && slider.animatingTo == 0 && slider.vars.animationLoop) {
-          slider.args[slider.prop] = -1 * dimension + "px";
+          slider.args[slider.prop] = -1 * (dimension * slider.vars.visibleSlides) + "px";
           if (slider.transitions) {
             slider.setTransition(0);
             slider.args[slider.prop] = (slider.vertical) ? "translate3d(0," + slider.args[slider.prop] + ",0)" : "translate3d(" + slider.args[slider.prop] + ",0,0)";
@@ -560,6 +560,7 @@
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
     controlsContainer: "",          //Selector: Declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
     manualControls: "",             //Selector: Declare custom control navigation. Example would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.
+    visibleSlides: 1,               //Integer: Number of visible slides that should be displayed
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
