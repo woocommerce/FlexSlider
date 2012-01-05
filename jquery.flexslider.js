@@ -376,6 +376,8 @@
         if (slider.vertical) slider.height("auto");
         slider.slides.hide();
         slider.removeData('flexslider');
+
+        slider.vars.destroyed(slider);
       }
       
       //////////////////////////////////////////////////////////////////
@@ -563,7 +565,8 @@
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
-    end: function(){}               //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
+    end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
+    destroyed: function(){}         //Callback: function(slider) - Fires after the the slider's destroy() public API method is called
   }
   
   //FlexSlider: Plugin Function
