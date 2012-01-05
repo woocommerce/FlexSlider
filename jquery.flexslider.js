@@ -13,7 +13,9 @@
   
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
-    var slider = el;
+    var
+      slider = el,
+      plugin = this;
 
     slider.init = function() {
       slider.vars = $.extend({}, $.flexslider.defaults, options);
@@ -361,10 +363,8 @@
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Destroy the slider entity
-      //Destory is not included in the minified version right now, but this is a working function for anyone who wants to include it.
-      //Simply bind the actions you need from this function into a function in the start() callback to the event of your chosing
-      /*
-      slider.destroy = function() {
+      // accessible viw $('.flexsider').data('flexslider-api').destroy()      
+      plugin.destroy = function() {
         slider.pause();
         if (slider.controlNav && slider.vars.manualControls == "") slider.controlNav.closest('.flex-control-nav').remove();
         if (slider.directionNav) slider.directionNav.closest('.flex-direction-nav').remove();
@@ -377,7 +377,7 @@
         slider.slides.hide();
         slider.removeData('flexslider');
       }
-      */
+      
       //////////////////////////////////////////////////////////////////
       
       //FlexSlider: start() Callback
@@ -573,7 +573,8 @@
         $(this).find('.slides li').fadeIn(400);
       }
       else if ($(this).data('flexslider') != true) {
-        new $.flexslider($(this), options);
+        var api = new $.flexslider($(this), options);
+        $(this).data('flexslider-api', api);
       }
     });
   }  
