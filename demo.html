@@ -4,15 +4,15 @@
 	<meta content="charset=utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>FlexSlider Demo</title>
-	
+
 	<!-- FlexSlider pieces -->
 	<link rel="stylesheet" href="flexslider.css" type="text/css" media="screen" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-	<script src="jquery.flexslider-min.js"></script>
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="jquery.flexslider.js"></script>
+
 	<!-- Includes for this demo -->
 	<link rel="stylesheet" href="demo-stuff/demo.css" type="text/css" media="screen" />
-	
+
 	<!-- Hook up the FlexSlider -->
 	<script type="text/javascript">
 		$(window).load(function() {
@@ -23,7 +23,7 @@
 <body>
 	<div id="container">
 		<h2>FlexSlider Demo - <a href="http://flex.madebymufffin.com">Visit the homepage for documentation details</a></h2>
-		
+
 		<!--=============================
 		Markup for FADE animation
 		=================================-->
@@ -56,12 +56,12 @@
 			$(window).load(function() {
 				$('.flexslider').flexslider({
 				  animation: "slide",
-				  controlsContainer: ".flexslider-container"
+				  controlsContainer: ".flex-container"
 			  });
 			});
 		</script>
 		=================================
-		<div class="flexslider-container">
+		<div class="flex-container">
 			<div class="flexslider">
 		    <ul class="slides">
 		    	<li>

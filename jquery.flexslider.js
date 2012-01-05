@@ -13,7 +13,9 @@
   
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
-    var slider = el;
+    var
+      slider = el,
+      plugin = this;
 
     slider.init = function() {
       slider.vars = $.extend({}, $.flexslider.defaults, options);
@@ -121,7 +123,7 @@
 
         slider.controlNav.eq(slider.currentSlide).addClass('active');
 
-        slider.controlNav.bind(slider.eventType, function(event) {
+        slider.controlNav.on(slider.eventType, function(event) {
           event.preventDefault();
           if (!$(this).hasClass('active')) {
             (slider.controlNav.index($(this)) > slider.currentSlide) ? slider.direction = "next" : slider.direction = "prev";
@@ -153,7 +155,7 @@
           }
         }
         
-        slider.directionNav.bind(slider.eventType, function(event) {
+        slider.directionNav.on(slider.eventType, function(event) {
           event.preventDefault();
           var target = ($(this).hasClass('next')) ? slider.getTarget('next') : slider.getTarget('prev');
           
@@ -184,7 +186,7 @@
             }
           }
         }
-        $(document).bind('keyup', keyboardMove);
+        $(document).on('keyup', keyboardMove);
       }
       //////////////////////////////////////////////////////////////////
       
@@ -192,7 +194,7 @@
       // FlexSlider: Mousewheel interaction
       if (slider.vars.mousewheel) {
         slider.mousewheelEvent = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel";
-        slider.bind(slider.mousewheelEvent, function(e) {
+        slider.on(slider.mousewheelEvent, function(e) {
           e.preventDefault();
           e = e ? e : window.event;
           var wheelData = e.detail ? e.detail * -1 : e.wheelDelta / 40,
@@ -240,7 +242,7 @@
         var pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
         slider.pausePlay.addClass(pausePlayState).text((pausePlayState == 'pause') ? slider.vars.pauseText : slider.vars.playText);
         
-        slider.pausePlay.bind(slider.eventType, function(event) {
+        slider.pausePlay.on(slider.eventType, function(event) {
           event.preventDefault();
           if ($(this).hasClass('pause')) {
             slider.pause();
@@ -361,23 +363,23 @@
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Destroy the slider entity
-      //Destory is not included in the minified version right now, but this is a working function for anyone who wants to include it.
-      //Simply bind the actions you need from this function into a function in the start() callback to the event of your chosing
-      /*
-      slider.destroy = function() {
+      // accessible viw $('.flexsider').data('flexslider-api').destroy()      
+      plugin.destroy = function() {
         slider.pause();
         if (slider.controlNav && slider.vars.manualControls == "") slider.controlNav.closest('.flex-control-nav').remove();
         if (slider.directionNav) slider.directionNav.closest('.flex-direction-nav').remove();
         if (slider.vars.pausePlay) slider.pausePlay.closest('.flex-pauseplay').remove();
-        if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).unbind('keyup', keyboardMove);
-        if (slider.vars.mousewheel) slider.unbind(slider.mousewheelEvent);
+        if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).off('keyup', keyboardMove);
+        if (slider.vars.mousewheel) slider.off(slider.mousewheelEvent);
         if (slider.transitions) slider.each(function(){this.removeEventListener('touchstart', onTouchStart, false);});
         if (slider.vars.animation == "slide" && slider.vars.animationLoop) slider.newSlides.filter('.clone').remove();
         if (slider.vertical) slider.height("auto");
         slider.slides.hide();
         slider.removeData('flexslider');
+
+        slider.vars.destroyed(slider);
       }
-      */
+      
       //////////////////////////////////////////////////////////////////
       
       //FlexSlider: start() Callback
@@ -563,7 +565,8 @@
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
-    end: function(){}               //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
+    end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
+    destroyed: function(){}         //Callback: function(slider) - Fires after the the slider's destroy() public API method is called
   }
   
   //FlexSlider: Plugin Function
@@ -573,7 +576,8 @@
         $(this).find('.slides li').fadeIn(400);
       }
       else if ($(this).data('flexslider') != true) {
-        new $.flexslider($(this), options);
+        var api = new $.flexslider($(this), options);
+        $(this).data('flexslider-api', api);
       }
     });
   }  
