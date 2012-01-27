@@ -42,6 +42,7 @@
 	slider.controlsContainer =  $(slider).find(slider.vars.controlsContainer);
         slider.containerExists = slider.controlsContainer.length > 0;
       }
+
       //Test for manualControls
       if (slider.vars.manualControls != "") {
         slider.manualControls = $(slider.vars.manualControls, ((slider.containerExists) ? slider.controlsContainer : slider));
