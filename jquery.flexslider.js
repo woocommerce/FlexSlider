@@ -17,6 +17,7 @@
 
     slider.init = function() {
       slider.vars = $.extend({}, $.flexslider.defaults, options);
+      if(slider.vars.animation == "slide") slider.vars.animation = "linear"; // deprecated "slide" is superseded by "linear"
       slider.data('flexslider', true);
 	  slider.container = $('.slides', slider).first();
 	  slider.slides = $('.slides:first > li', slider);
@@ -34,7 +35,7 @@
       slider.args = {};
       
       //Test for webbkit CSS3 Animations
-      slider.transitions = "webkitTransition" in document.body.style;
+      slider.transitions = "webkitTransition" in document.body.style && slider.vars.useTransition;
       if (slider.transitions) slider.prop = "-webkit-transform";
       
       //Test for controlsContainer
@@ -58,7 +59,7 @@
       
       ///////////////////////////////////////////////////////////////////
       // FlexSlider: Slider Animation Initialize
-      if (slider.vars.animation.toLowerCase() == "slide") {
+      if (slider.vars.animation.toLowerCase() != "fade") {
         if (slider.transitions) {
           slider.setTransition(0);
         }
@@ -300,7 +301,7 @@
 
           if (!scrolling) {
             e.preventDefault();
-            if (slider.vars.animation == "slide" && slider.transitions) {
+            if (slider.vars.animation != "fade" && slider.transitions) {
               if (!slider.vars.animationLoop) {
                 dx = dx/((slider.currentSlide == 0 && dx < 0 || slider.currentSlide == slider.count - 1 && dx > 0) ? (Math.abs(dx)/cwidth+2) : 1);
               }
@@ -334,7 +335,7 @@
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Resize Functions (If necessary)
-      if (slider.vars.animation.toLowerCase() == "slide") {
+      if (slider.vars.animation.toLowerCase() != "fade") {
         $(window).resize(function(){
           if (!slider.animating) {
             if (slider.vertical) {
@@ -372,7 +373,7 @@
         if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).unbind('keyup', keyboardMove);
         if (slider.vars.mousewheel) slider.unbind(slider.mousewheelEvent);
         if (slider.transitions) slider.each(function(){this.removeEventListener('touchstart', onTouchStart, false);});
-        if (slider.vars.animation == "slide" && slider.vars.animationLoop) slider.newSlides.filter('.clone').remove();
+        if (slider.vars.animation != "fade" && slider.vars.animationLoop) slider.newSlides.filter('.clone').remove();
         if (slider.vertical) slider.height("auto");
         slider.slides.hide();
         slider.removeData('flexslider');
@@ -422,7 +423,7 @@
           slider.vars.end(slider);
         }
         
-        if (slider.vars.animation.toLowerCase() == "slide") {
+        if (slider.vars.animation.toLowerCase() != "fade") {
           var dimension = (slider.vertical) ? slider.slides.filter(':first').height() : slider.slides.filter(':first').width();
           
           if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop && slider.direction != "next") {
@@ -441,7 +442,7 @@
                 slider.wrapup(dimension);
               });   
           } else {
-            slider.container.animate(slider.args, slider.vars.animationDuration, function(){
+            slider.container.animate(slider.args, slider.vars.animationDuration, slider.vars.animation, function(){
               slider.wrapup(dimension);
             });
           }
@@ -456,7 +457,7 @@
     
     //FlexSlider: Function to minify redundant animation actions
     slider.wrapup = function(dimension) {
-      if (slider.vars.animation == "slide") {
+      if (slider.vars.animation != "fade") {
         //Jump the slider if necessary
         if (slider.currentSlide == 0 && slider.animatingTo == slider.count - 1 && slider.vars.animationLoop) {
           slider.args[slider.prop] = (-1 * slider.count) * dimension + "px";
@@ -539,7 +540,8 @@
   
   //FlexSlider: Default Settings
   $.flexslider.defaults = {
-    animation: "fade",              //String: Select your animation type, "fade" or "slide"
+    animation: "fade",              //String: Select your animation type, "fade" or any easing type ("linear" or "swing" without any additional plugin, more with easing plugin; former "slide" is deprecated and superseded by "linear")
+    useTransition: true,            //Boolean: Use webkit css3 transitions if available (set to false if used with easing plugin)
     slideDirection: "horizontal",   //String: Select the sliding direction, "horizontal" or "vertical"
     slideshow: true,                //Boolean: Animate slider automatically
     slideshowSpeed: 7000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
