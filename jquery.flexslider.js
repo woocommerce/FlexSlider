@@ -17,9 +17,20 @@
 
     slider.init = function() {
       slider.vars = $.extend({}, $.flexslider.defaults, options);
-      slider.data('flexslider', true);
-      slider.container = $('.slides', slider);
-      slider.slides = $('.slides > li', slider);
+
+        slider.data('flexslider', true);
+        // SW Mod: Make this object functions public so we can call them.
+        slider.data('api', slider);
+    
+      if (!slider.vars.delayInitialisation) {
+        slider.doInit();
+      }
+   }
+
+   slider.doInit = function() {
+
+      slider.container = $('.slides', slider); 
+      slider.slides = $(slider.vars.slideSelector, slider); // RBSG mod
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
@@ -47,6 +58,11 @@
         slider.manualControls = $(slider.vars.manualControls, ((slider.containerExists) ? slider.controlsContainer : slider));
         slider.manualExists = slider.manualControls.length > 0;
       }
+      //Test for manualControls2
+      if (slider.vars.manualControls2 != "") {
+        slider.manualControls2 = $(slider.vars.manualControls2, ((slider.containerExists) ? slider.controlsContainer : slider));
+        slider.manualExists2 = slider.manualControls2.length > 0;
+      }
       
       ///////////////////////////////////////////////////////////////////
       // FlexSlider: Randomize Slides
@@ -69,7 +85,7 @@
           slider.container.append(slider.slides.filter(':first').clone().addClass('clone')).prepend(slider.slides.filter(':last').clone().addClass('clone'));
         }
         //create newSlides to capture possible clones
-        slider.newSlides = $('.slides > li', slider);
+        slider.newSlides = $('.slides > .slide', slider);
         var sliderOffset = (-1 * (slider.currentSlide + slider.cloneOffset));
         if (slider.vertical) {
           slider.newSlides.css({"display": "block", "width": "100%", "float": "left"});
@@ -103,13 +119,56 @@
         if (slider.manualExists) {
           slider.controlNav = slider.manualControls;
         } else {
-          var controlNavScaffold = $('<ol class="flex-control-nav"></ol>');
+          var controlNavScaffold = $(slider.vars.controlNavScaffold); //$('<ol class="flex-control-nav bg-mono-1-a-30 rds-blr-3"></ol>');
           var j = 1;
-          for (var i = 0; i < slider.count; i++) {
-            controlNavScaffold.append('<li><a>' + j + '</a></li>');
-            j++;
+
+          // SW - mod - add in prev button
+          // Check if control-nav-prev-next-key is to be added
+          if (slider.vars.controlNavPrevNext) {
+              var controlNavHtml = '<a class="js-flex-control-prev" href="#">';
+
+              // Check if a button img has been provided
+//              if (typeof(sliders.vars.controlNavPrevNextImg) != undefined)
+//                controlNavHtml += slider.vars.controlNavPrevNextImg[0];
+//              else
+                controlNavHtml += 'prev';
+              
+              controlNavHtml += '<a/>';
+
+              controlNavScaffold.append(controlNavHtml);
           }
 
+          for (var i = 0; i < slider.count; i++) {
+            controlNavScaffold.append('<li class="' + slider.vars.controlNavElementClass + '"><a>' + j + '</a></li>');
+            j++;
+          }	
+		  
+		  //////////////////////////////////////////////////////////////////
+		  //FlexSlider: Pause/Play
+		  if (slider.vars.pausePlay) {
+			var pausePlayScaffold = $('<div class="flex-pauseplay pointer"><span></span></div>');
+		  
+			  controlNavScaffold.append(pausePlayScaffold);
+		
+			var pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
+
+			if (slider.vars.disablePlayPauseText) {
+			   slider.vars.pauseText = '\u00A0';
+			   slider.vars.playText = '\u00A0';
+			}
+
+		  }
+		  //////////////////////////////////////////////////////////////////
+		  
+		  
+
+	      // SW - mod - add in prev button
+          // Check if control-nav-prev-next-key is to be added
+          if (slider.vars.controlNavPrevNext) {
+              controlNavScaffold.append('<a class="js-flex-control-next ml-8" href="#">' + 'next' + '</a>');
+          }
+
+          
           if (slider.containerExists) {
             $(slider.controlsContainer).append(controlNavScaffold);
             slider.controlNav = $('.flex-control-nav li a', slider.controlsContainer);
@@ -121,6 +180,7 @@
 
         slider.controlNav.eq(slider.currentSlide).addClass('active');
 
+        // Inline bind function for nav clicks
         slider.controlNav.bind(slider.eventType, function(event) {
           event.preventDefault();
           if (!$(this).hasClass('active')) {
@@ -128,7 +188,23 @@
             slider.flexAnimate(slider.controlNav.index($(this)), slider.vars.pauseOnAction);
           }
         });
-      }
+
+			slider.pausePlay = $('.flex-pauseplay span', slider);
+			slider.pausePlay.addClass(pausePlayState).text((pausePlayState == 'pause') ? slider.vars.pauseText : slider.vars.playText);
+			
+			slider.pausePlay.bind(slider.eventType, function(event) {
+			  event.preventDefault();
+			  if ($(this).hasClass('pause')) {
+				slider.pause();
+				slider.manualPause = true;
+			  } else {
+				slider.resume();
+				slider.manualPause = false;
+			  }
+			});
+
+
+		}
       ///////////////////////////////////////////////////////////////////
       
       //////////////////////////////////////////////////////////////////
@@ -166,7 +242,7 @@
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Keyboard Nav
-      if (slider.vars.keyboardNav && $('ul.slides').length == 1) {
+      if (slider.vars.keyboardNav && $('.slides').length == 1) {
         function keyboardMove(event) {
           if (slider.animating) {
             return;
@@ -224,34 +300,7 @@
       }
       //////////////////////////////////////////////////////////////////
       
-      //////////////////////////////////////////////////////////////////
-      //FlexSlider: Pause/Play
-      if (slider.vars.pausePlay) {
-        var pausePlayScaffold = $('<div class="flex-pauseplay"><span></span></div>');
       
-        if (slider.containerExists) {
-          slider.controlsContainer.append(pausePlayScaffold);
-          slider.pausePlay = $('.flex-pauseplay span', slider.controlsContainer);
-        } else {
-          slider.append(pausePlayScaffold);
-          slider.pausePlay = $('.flex-pauseplay span', slider);
-        }
-        
-        var pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
-        slider.pausePlay.addClass(pausePlayState).text((pausePlayState == 'pause') ? slider.vars.pauseText : slider.vars.playText);
-        
-        slider.pausePlay.bind(slider.eventType, function(event) {
-          event.preventDefault();
-          if ($(this).hasClass('pause')) {
-            slider.pause();
-            slider.manualPause = true;
-          } else {
-            slider.resume();
-            slider.manualPause = false;
-          }
-        });
-      }
-      //////////////////////////////////////////////////////////////////
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider:Touch Swip Gestures
@@ -369,7 +418,7 @@
         if (slider.controlNav && slider.vars.manualControls == "") slider.controlNav.closest('.flex-control-nav').remove();
         if (slider.directionNav) slider.directionNav.closest('.flex-direction-nav').remove();
         if (slider.vars.pausePlay) slider.pausePlay.closest('.flex-pauseplay').remove();
-        if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).unbind('keyup', keyboardMove);
+        if (slider.vars.keyboardNav && $('.slides').length == 1) $(document).unbind('keyup', keyboardMove);
         if (slider.vars.mousewheel) slider.unbind(slider.mousewheelEvent);
         if (slider.transitions) slider.each(function(){this.removeEventListener('touchstart', onTouchStart, false);});
         if (slider.vars.animation == "slide" && slider.vars.animationLoop) slider.newSlides.filter('.clone').remove();
@@ -491,7 +540,7 @@
     slider.pause = function() {
       clearInterval(slider.animatedSlides);
       if (slider.vars.pausePlay) {
-        slider.pausePlay.removeClass('pause').addClass('play').text(slider.vars.playText);
+            slider.pausePlay.removeClass('pause').addClass('play').text(slider.vars.playText);
       }
     }
     
@@ -535,22 +584,38 @@
 
     //FlexSlider: Initialize
     slider.init();
+
+    //SW Mod - bring out movement functions to public scope
+    slider.slideTo = function(target) {
+        if (!slider.controlNav.eq(target).hasClass('active')) {
+            if (slider.canAdvance(target)) {
+                slider.flexAnimate(target, slider.vars.pauseOnAction);
+            }
+        }
+    }
+
+    //SW Mod - delayed initialisation
+    slider.refresh = function() {
+        //if (slider.vars.delayInitialisation)
+            slider.doInit();
+    }
+
   }
   
   //FlexSlider: Default Settings
   $.flexslider.defaults = {
-    animation: "fade",              //String: Select your animation type, "fade" or "slide"
+    animation: "slide",              //String: Select your animation type, "fade" or "slide"
     slideDirection: "horizontal",   //String: Select the sliding direction, "horizontal" or "vertical"
     slideshow: true,                //Boolean: Animate slider automatically
     slideshowSpeed: 7000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
     animationDuration: 600,         //Integer: Set the speed of animations, in milliseconds
-    directionNav: true,             //Boolean: Create navigation for previous/next navigation? (true/false)
+    directionNav: false,            //Boolean: Create navigation for previous/next navigation? (true/false)
     controlNav: true,               //Boolean: Create navigation for paging control of each clide? Note: Leave true for manualControls usage
     keyboardNav: true,              //Boolean: Allow slider navigating via keyboard left/right keys
     mousewheel: false,              //Boolean: Allow slider navigating via mousewheel
     prevText: "Previous",           //String: Set the text for the "previous" directionNav item
     nextText: "Next",               //String: Set the text for the "next" directionNav item
-    pausePlay: false,               //Boolean: Create pause/play dynamic element
+    pausePlay: true,               //Boolean: Create pause/play dynamic element
     pauseText: 'Pause',             //String: Set the text for the "pause" pausePlay item
     playText: 'Play',               //String: Set the text for the "play" pausePlay item
     randomize: false,               //Boolean: Randomize slide order
@@ -563,14 +628,21 @@
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
-    end: function(){}               //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
+    end: function(){},               //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
+    slideSelector: ".slides > .slide",
+    controlNavScaffold :'<ol class="flex-control-nav bg-mono-1-a-30 rds-blr-3"></ol>',
+    controlNavElementClass : 'bg-mono-5-a-40',
+    disablePlayPauseText: true,
+    delayInitialisation : false,
+    controlNavPrevNext : false,
+    controlNavPrevNextImg : null
   }
   
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
     return this.each(function() {
-      if ($(this).find('.slides li').length == 1) {
-        $(this).find('.slides li').fadeIn(400);
+      if ($(this).find('.slides .slide').length == 1) {
+        $(this).find('.slides .slide').fadeIn(400);
       }
       else if ($(this).data('flexslider') != true) {
         new $.flexslider($(this), options);
