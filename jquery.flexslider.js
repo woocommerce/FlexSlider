@@ -143,6 +143,16 @@
           slider.append(directionNavScaffold);
           slider.directionNav = $('.flex-direction-nav li a', slider);
         }
+
+        //Auto Hide Direction nav
+        if (slider.vars.directionNavAutoHide) {
+          $('.flex-direction-nav', slider).hide();
+          slider.hover(function() {
+            $('.flex-direction-nav', slider).show();
+          }, function() {
+            $('.flex-direction-nav', slider).hide();
+          });
+        }
         
         //Set initial disable styles if necessary
         if (!slider.vars.animationLoop) {
@@ -545,6 +555,7 @@
     slideshowSpeed: 7000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
     animationDuration: 600,         //Integer: Set the speed of animations, in milliseconds
     directionNav: true,             //Boolean: Create navigation for previous/next navigation? (true/false)
+    directionNavAutoHide: false,    //Boolean: Auto hide direction navigation and show only when hovering over the slider
     controlNav: true,               //Boolean: Create navigation for paging control of each clide? Note: Leave true for manualControls usage
     keyboardNav: true,              //Boolean: Allow slider navigating via keyboard left/right keys
     mousewheel: false,              //Boolean: Allow slider navigating via mousewheel
