@@ -1,7 +1,7 @@
 jQuery FlexSlider v1.8
-http://flex.madebymufffin.com
+http://www.woothemes.com/flexslider/
 
-Copyright (c) 2011 Tyler Smith
+Copyright (c) 2012 WooThemes
 
 ---
 
