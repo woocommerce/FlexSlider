@@ -1,8 +1,8 @@
 /*
  * jQuery FlexSlider v1.8
- * http://flex.madebymufffin.com
+ * http://www.woothemes.com/flexslider/
  *
- * Copyright 2011, Tyler Smith
+ * Copyright 2012 WooThemes
  * Free to use under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  *
