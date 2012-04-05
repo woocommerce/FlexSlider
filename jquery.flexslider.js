@@ -18,8 +18,8 @@
     slider.init = function() {
       slider.vars = $.extend({}, $.flexslider.defaults, options);
       slider.data('flexslider', true);
-	  slider.container = $('.slides', slider).first();
-	  slider.slides = $('.slides:first > li', slider);
+      slider.container = $('.slides', slider).first();
+      slider.slides = $('.slides:first > li', slider);
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
@@ -33,9 +33,12 @@
       slider.prop = (slider.vertical) ? "top" : "marginLeft";
       slider.args = {};
       
-      //Test for webbkit CSS3 Animations
-      slider.transitions = "webkitTransition" in document.body.style;
-      if (slider.transitions) slider.prop = "-webkit-transform";
+      //Only enter if we need to
+      if(slider.vars.useNativeTransitions){
+        //Test for webbkit CSS3 Animations
+        slider.transitions = "webkitTransition" in document.body.style;
+        if (slider.transitions) slider.prop = "-webkit-transform";
+      }
       
       //Test for controlsContainer
       if (slider.vars.controlsContainer != "") {
@@ -540,6 +543,7 @@
   //FlexSlider: Default Settings
   $.flexslider.defaults = {
     animation: "fade",              //String: Select your animation type, "fade" or "slide"
+    useNativeTransitions: true,     //Boolean: Attempt to use CSS Transitions for Animations
     slideDirection: "horizontal",   //String: Select the sliding direction, "horizontal" or "vertical"
     slideshow: true,                //Boolean: Animate slider automatically
     slideshowSpeed: 7000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
