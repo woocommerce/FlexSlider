@@ -13,13 +13,16 @@
   
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
-    var slider = el;
+    var slider = $(el);
+    
+    // slider DOM reference for use outside of the plugin
+    $.data(el, "flexslider", slider);
 
     slider.init = function() {
       slider.vars = $.extend({}, $.flexslider.defaults, options);
-      slider.data('flexslider', true);
-	  slider.container = $('.slides', slider).first();
-	  slider.slides = $('.slides:first > li', slider);
+      $.data(el, 'flexsliderInit', true);
+	    slider.container = $('.slides', slider).first();
+	    slider.slides = $('.slides:first > li', slider);
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
@@ -195,7 +198,7 @@
         slider.bind(slider.mousewheelEvent, function(e) {
           e.preventDefault();
           e = e ? e : window.event;
-          var wheelData = e.detail ? e.detail * -1 : e.wheelDelta / 40,
+          var wheelData = e.detail ? e.detail * -1 : e.originalEvent.wheelDelta / 40,
               target = (wheelData < 0) ? slider.getTarget('next') : slider.getTarget('prev');
           
           if (slider.canAdvance(target)) {
@@ -336,7 +339,7 @@
       //FlexSlider: Resize Functions (If necessary)
       if (slider.vars.animation.toLowerCase() == "slide") {
         $(window).resize(function(){
-          if (!slider.animating) {
+          if (!slider.animating && slider.is(":visible")) {
             if (slider.vertical) {
               slider.height(slider.slides.filter(':first').height());
               slider.args[slider.prop] = (-1 * (slider.currentSlide + slider.cloneOffset))* slider.slides.filter(':first').height() + "px";
@@ -359,34 +362,13 @@
       }
       //////////////////////////////////////////////////////////////////
       
-      //////////////////////////////////////////////////////////////////
-      //FlexSlider: Destroy the slider entity
-      //Destory is not included in the minified version right now, but this is a working function for anyone who wants to include it.
-      //Simply bind the actions you need from this function into a function in the start() callback to the event of your chosing
-      /*
-      slider.destroy = function() {
-        slider.pause();
-        if (slider.controlNav && slider.vars.manualControls == "") slider.controlNav.closest('.flex-control-nav').remove();
-        if (slider.directionNav) slider.directionNav.closest('.flex-direction-nav').remove();
-        if (slider.vars.pausePlay) slider.pausePlay.closest('.flex-pauseplay').remove();
-        if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).unbind('keyup', keyboardMove);
-        if (slider.vars.mousewheel) slider.unbind(slider.mousewheelEvent);
-        if (slider.transitions) slider.each(function(){this.removeEventListener('touchstart', onTouchStart, false);});
-        if (slider.vars.animation == "slide" && slider.vars.animationLoop) slider.newSlides.filter('.clone').remove();
-        if (slider.vertical) slider.height("auto");
-        slider.slides.hide();
-        slider.removeData('flexslider');
-      }
-      */
-      //////////////////////////////////////////////////////////////////
-      
       //FlexSlider: start() Callback
       slider.vars.start(slider);
     }
     
     //FlexSlider: Animation Actions
     slider.flexAnimate = function(target, pause) {
-      if (!slider.animating) {
+      if (!slider.animating && slider.is(":visible")) {
         //Animating flag
         slider.animating = true;
         
@@ -572,8 +554,8 @@
       if ($(this).find('.slides li').length == 1) {
         $(this).find('.slides li').fadeIn(400);
       }
-      else if ($(this).data('flexslider') != true) {
-        new $.flexslider($(this), options);
+      else if ($(this).data('flexsliderInit') != true) {
+        new $.flexslider(this, options);
       }
     });
   }  
