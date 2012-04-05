@@ -176,10 +176,11 @@
           } else if (event.keyCode != 39 && event.keyCode != 37){
             return;
           } else {
+            var target;
             if (event.keyCode == 39) {
-              var target = slider.getTarget('next');
+              target = slider.getTarget('next');
             } else if (event.keyCode == 37){
-              var target = slider.getTarget('prev');
+              target = slider.getTarget('prev');
             }
         
             if (slider.canAdvance(target)) {
@@ -385,7 +386,7 @@
       
       //FlexSlider: start() Callback
       slider.vars.start(slider);
-    }
+    };
     
     //FlexSlider: Animation Actions
     slider.flexAnimate = function(target, pause) {
@@ -455,7 +456,7 @@
           });
         }
       }
-    }
+    };
     
     //FlexSlider: Function to minify redundant animation actions
     slider.wrapup = function(dimension) {
@@ -481,14 +482,14 @@
       slider.currentSlide = slider.animatingTo;
       //FlexSlider: after() animation Callback
       slider.vars.after(slider);
-    }
+    };
     
     //FlexSlider: Automatic Slideshow
     slider.animateSlides = function() {
       if (!slider.animating) {
         slider.flexAnimate(slider.getTarget("next"));
       }
-    }
+    };
     
     //FlexSlider: Automatic Slideshow Pause
     slider.pause = function() {
@@ -496,7 +497,7 @@
       if (slider.vars.pausePlay) {
         slider.pausePlay.removeClass('pause').addClass('play').text(slider.vars.playText);
       }
-    }
+    };
     
     //FlexSlider: Automatic Slideshow Start/Resume
     slider.resume = function() {
@@ -504,7 +505,7 @@
       if (slider.vars.pausePlay) {
         slider.pausePlay.removeClass('play').addClass('pause').text(slider.vars.pauseText);
       }
-    }
+    };
     
     //FlexSlider: Helper function for non-looping sliders
     slider.canAdvance = function(target) {
@@ -519,7 +520,7 @@
       } else {
         return true;
       }  
-    }
+    };
     
     //FlexSlider: Helper function to determine animation target
     slider.getTarget = function(dir) {
@@ -529,16 +530,16 @@
       } else {
         return (slider.currentSlide == 0) ? slider.count - 1 : slider.currentSlide - 1;
       }
-    }
+    };
     
     //FlexSlider: Helper function to set CSS3 transitions
     slider.setTransition = function(dur) {
       slider.container.css({'-webkit-transition-duration': (dur/1000) + "s"});
-    }
+    };
 
     //FlexSlider: Initialize
     slider.init();
-  }
+  };
   
   //FlexSlider: Default Settings
   $.flexslider.defaults = {
@@ -568,7 +569,7 @@
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
     end: function(){}               //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
-  }
+  };
   
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
@@ -580,6 +581,6 @@
         new $.flexslider($(this), options);
       }
     });
-  }  
+  };
 
 })(jQuery);
