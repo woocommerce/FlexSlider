@@ -551,8 +551,8 @@
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
     return this.each(function() {
-      if ($(this).find('.slides li').length == 1) {
-        $(this).find('.slides li').fadeIn(400);
+      if ($(this).find('.slides > li').length == 1) {
+        $(this).find('.slides > li').fadeIn(400);
       }
       else if ($(this).data('flexsliderInit') != true) {
         new $.flexslider(this, options);
