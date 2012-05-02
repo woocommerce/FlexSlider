@@ -564,7 +564,7 @@
       }
       
       slider.args[slider.prop] = target;
-      if (slider.transitions) slider.container.css(slider.args);
+      if (slider.transitions || dur === undefined) slider.container.css(slider.args);
     }
     
     slider.setup = function(type) {
@@ -601,11 +601,11 @@
             slider.newSlides.css({"display": "block"});
             slider.doMath();
             slider.viewport.height(slider.h);
-            slider.setProps(sliderOffset * slider.h);
+            slider.setProps(sliderOffset * slider.h, "init");
           }, (type === "init") ? 100 : 0);
         } else {
           slider.container.width((slider.count + slider.cloneCount) * 200 + "%");
-          slider.setProps(sliderOffset * slider.w);
+          slider.setProps(sliderOffset * slider.w, "init");
           setTimeout(function(){
             slider.doMath();
             slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
