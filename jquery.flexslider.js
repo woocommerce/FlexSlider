@@ -37,7 +37,7 @@
       slider.args = {};
       
       //Test for webbkit CSS3 Animations
-      slider.transitions = "webkitTransition" in document.body.style;
+      slider.transitions = "webkitTransition" in document.body.style && slider.vars.useCSS;
       if (slider.transitions) slider.prop = "-webkit-transform";
       
       //Test for controlsContainer
@@ -261,7 +261,7 @@
       //Some brilliant concepts adapted from the following sources
       //Source: TouchSwipe - http://www.netcu.de/jquery-touchwipe-iphone-ipad-library
       //Source: SwipeJS - http://swipejs.com
-      if ('ontouchstart' in document.documentElement) {
+      if ('ontouchstart' in document.documentElement && slider.vars.touch) {
         //For brevity, variables are named for x-axis scrolling
         //The variables are then swapped if vertical sliding is applied
         //This reduces redundant code...I think :)
@@ -319,7 +319,7 @@
             var target = (dx > 0) ? slider.getTarget('next') : slider.getTarget('prev');
             if (slider.canAdvance(target) && Number(new Date()) - startT < 550 && Math.abs(dx) > 20 || Math.abs(dx) > cwidth/2) {
               slider.flexAnimate(target, slider.vars.pauseOnAction);
-            } else {
+            } else if (slider.vars.animation !== "fade") {
               slider.flexAnimate(slider.currentSlide, slider.vars.pauseOnAction);
             }
           }
@@ -540,6 +540,8 @@
     animationLoop: true,            //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
+    useCSS: true,                   //Boolean: Override the use of CSS3 Translate3d animations
+    touch: true,                    //Boolean: Disable touchswipe events
     controlsContainer: "",          //Selector: Declare which container the navigation elements should be appended too. Default container is the flexSlider element. Example use would be ".flexslider-container", "#container", etc. If the given element is not found, the default action will be taken.
     manualControls: "",             //Selector: Declare custom control navigation. Example would be ".flex-control-nav li" or "#tabs-nav li img", etc. The number of elements in your controlNav should match the number of slides/tabs.
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
