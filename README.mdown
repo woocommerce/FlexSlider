@@ -35,6 +35,7 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 - [Slider w/thumbnail slider](http://flex.madebymufffin.com/examples/thumbnail-slider.html)
 - [Basic Carousel](http://flex.madebymufffin.com/examples/basic-carousel.html)
 - [Carousel with min and max ranges](http://flex.madebymufffin.com/examples/carousel-min-max.html)
+- [Video with Vimeo API](http://flex.madebymufffin.com/examples/video.html)
 
 
 ## Properties
