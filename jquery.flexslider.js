@@ -21,7 +21,7 @@
     slider.init = function() {
       slider.vars = $.extend({}, $.flexslider.defaults, options);
       $.data(el, 'flexsliderInit', true);
-	    slider.container = $('.slides', slider).first();
+	    slider.container = $('.slides', slider).eq(0);
 	    slider.slides = $('.slides:first > li', slider);
       slider.count = slider.slides.length;
       slider.animating = false;
