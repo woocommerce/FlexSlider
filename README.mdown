@@ -50,8 +50,8 @@ The markup structure for FlexSlider has been limited to a "ul.slide li" pattern 
 
 *Examples: "section > article", ".slides > .slide", "#hero .slide"*
 
-### animation: *{new}*
-`animation` has been updated to allow support for jQuery easing! Default options provided by jQuery are "swing" and "linear," but more can be used by included the jQuery Easing plugin. FlexSlider will convert "slide" to "swing" for compatibility.
+### easing: *{new}*
+`easing` allows support for jQuery easing! Default options provided by jQuery are "swing" and "linear," but more can be used by included the jQuery Easing plugin. *If you chose a non-existent easing method, the slider will break.*
 
 *Optional: [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/)*
 
