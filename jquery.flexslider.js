@@ -151,16 +151,11 @@
       },
       controlNav: {
         setup: function() {
-          if (typeof vars.controlNav === "number") {
-            methods.controlNav.setupThumbSlider();
-          } else if (!slider.manualExists) {
+          if (!slider.manualExists) {
             methods.controlNav.setupPaging();
           } else { // MANUALCONTROLS:
             methods.controlNav.setupManual();
           }
-        },
-        setupThumbSlider: function() {
-          var thumbScaffold = $('<div class="slider"></div>');
         },
         setupPaging: function() {
           var type = (vars.controlNav === "thumbnails") ? 'control-thumbs' : 'control-paging',
@@ -212,7 +207,6 @@
         },
         update: function(action, pos) {
           (action === "add") ? slider.controlNav.closest('.' + namespace + 'control-nav').append($('<li><a>' + slider.count + '</a></li>')) : slider.controlNav.eq(pos).closest('li').remove();
-          // slider.controlNav = $('.' + namespace + 'control-nav li a', (slider.containerExists) ? slider.controlsContainer : slider);
           methods.controlNav.set();
           (slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
         }
@@ -614,7 +608,7 @@
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE: 
-        slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%"});
+        slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%", "position": "relative"});
         if (type === "init") slider.slides.eq(slider.currentSlide).fadeIn(vars.animationSpeed, vars.easing);
         // SMOOTH HEIGHT:
         if (vars.smoothHeight) methods.smoothHeight();

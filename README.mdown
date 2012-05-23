@@ -4,7 +4,7 @@ Welcome to the **beta** branch for FlexSlider 2. Before jumping into the plugin,
 Furthermore, comments in the jquery.flexslider.js file are currently only serving the purposing of identifying feature locations within the plugin. These are my bookmarks for creating the download builder tool, which I will compile when I am confident the plugin is *mostly* bug free. Unfortunately, this means you don't get any help from me, via comments, quite yet.
 
 ## General Notes
-FlexSlider is no longer licensed under the MIT license. FlexSlider now shares the common licensed used for all WooThemes themes, GPLv2. Please keep this in mind for before undertaking proprietary forking adventures.
+FlexSlider is no longer licensed under the MIT license. FlexSlider now shares the common licensed used for all WooThemes themes, GPLv2.
 
 In an effort to move the plugin forward, support for jQuery 1.3.2 has been dropped. The plugin now requires jQuery 1.4+. If you don't have access to the later versions of jQuery, FlexSlider 1.8 should be a perfectly suitable substitute for your needs!
 
@@ -53,6 +53,7 @@ The markup structure for FlexSlider has been limited to a "ul.slide li" pattern 
 ### easing: *{new}*
 `easing` allows support for jQuery easing! Default options provided by jQuery are "swing" and "linear," but more can be used by included the jQuery Easing plugin. *If you chose a non-existent easing method, the slider will break.*
 
+*Note: You need to set `useCCS: false` to force transitions in browsers that support translate3d.*
 *Optional: [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/)*
 
 ### direction: *{changed}*
