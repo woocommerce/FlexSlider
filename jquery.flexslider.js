@@ -136,7 +136,7 @@
       },
       asNav: {
         setup: function() {
-          slider.currentItem = slider.currentSlide;
+          slider.currentItem = $(vars.asNavFor).data('flexslider').currentSlide;
           slider.slides.removeClass(namespace + "active-slide").eq(slider.currentItem).addClass(namespace + "active-slide");
           slider.slides.click(function(e){
             e.preventDefault();
