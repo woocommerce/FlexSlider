@@ -553,13 +553,15 @@
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
     return this.each(function() {
-      if ($(this).find('.slides > li').length == 1) {
-        $(this).find('.slides > li').fadeIn(400);
+      var $slides = $(this).find('.slides > li');
+      if ($slides.length === 1) {
+        $slides.find('.slides > li').fadeIn(400);
+        if (options && options.start) options.start($(this));
       }
       else if ($(this).data('flexsliderInit') != true) {
         new $.flexslider(this, options);
       }
     });
-  }  
+  }
 
 })(jQuery);
