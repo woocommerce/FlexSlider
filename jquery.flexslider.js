@@ -555,7 +555,7 @@
     return this.each(function() {
       var $slides = $(this).find('.slides > li');
       if ($slides.length === 1) {
-        $slides.find('.slides > li').fadeIn(400);
+        $slides.fadeIn(400);
         if (options && options.start) options.start($(this));
       }
       else if ($(this).data('flexsliderInit') != true) {
