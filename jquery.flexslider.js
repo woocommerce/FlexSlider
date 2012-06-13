@@ -24,7 +24,7 @@
 					directionNavScaffold,
 					pausePlayScaffold,pausePlayState,
 					startX,startY,offset,cwidth,dx,startT,scrolling;
-			
+					
       slider.vars = $.extend({}, $.flexslider.defaults, options);
       $.data(el, 'flexsliderInit', true);
 	    slider.container = $('.slides', slider).eq(0)
@@ -253,12 +253,6 @@
         
             if (slider.canAdvance(target)) {
               slider.flexAnimate(target, slider.vars.pauseOnAction);
-							slider.controlNav.removeClass('active')
-								/* update wai-aria properties and tabindex for inactive tabs */
-									.attr({'tabindex':'-1', 'aria-selected':'false'})
-								.eq(target).addClass('active')
-								/* update wai-aria properties and tabindex for and set focus on active tab */
-									.attr({'tabindex':'0', 'aria-selected':'true'}).focus();
             }
           }
         }
@@ -438,6 +432,9 @@
     //FlexSlider: Animation Actions
     slider.flexAnimate = function(target, pause) {
       if (!slider.animating && slider.is(":visible")) {
+				var dimension, 
+						activeElement = $(document.activeElement);
+				
         //Animating flag
         slider.animating = true;
         
@@ -459,8 +456,15 @@
 							/* update wai-aria properties and tabindex for and set focus on active tab */
 							.attr({'tabindex':'0', 'aria-selected':'true'});
 					
-					// if	the document focus is on a menu item in the controlNav, focus the currentNav item
-					if (slider.controlNav.index($(document.activeElement))!=-1) {
+					// if	the document focus is either a menu item in the controlNav 
+					// or a descendant of the slider but neither a descendant of the current slide 
+					// nor the previous or next button,
+					// set focus to the currentNav item
+					if (activeElement 
+							&& (slider.controlNav.index(activeElement)!=-1 
+							|| (slider.isFocusInSlider()
+									&& slider.slides.eq(target).find(activeElement).length==0) 
+									&& !(slider.directionNav && slider.directionNav.index(activeElement)!=-1))) {
 						slider.controlNav.eq(target).focus();
 					}
         }
@@ -484,7 +488,7 @@
         }
         
         if (slider.vars.animation.toLowerCase() == "slide") {
-          var dimension = (slider.vertical) ? slider.slides.filter(':first').height() : slider.slides.filter(':first').width();
+          dimension = (slider.vertical) ? slider.slides.filter(':first').height() : slider.slides.filter(':first').width();
           
           if (slider.currentSlide == 0 && target == slider.count - 1 && slider.vars.animationLoop && slider.direction != "next") {
             slider.slideString = "0px";
