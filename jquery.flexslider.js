@@ -19,10 +19,20 @@
     $.data(el, "flexslider", slider);
 
     slider.init = function() {
+			var sliderOffset,
+					controlNavScaffold,j,i,tabpanel,tabpanelId,tabId,tabpanelLabel,
+					directionNavScaffold,
+					pausePlayScaffold,pausePlayState,
+					startX,startY,offset,cwidth,dx,startT,scrolling;
+			
       slider.vars = $.extend({}, $.flexslider.defaults, options);
       $.data(el, 'flexsliderInit', true);
-	    slider.container = $('.slides', slider).eq(0);
-	    slider.slides = $('.slides:first > li', slider);
+	    slider.container = $('.slides', slider).eq(0)
+				/* wai-aria role for container */
+				.attr({'role':'presentation'});
+	    slider.slides = $('.slides:first > li', slider)
+				/* initial wai-aria properties and tabindex for all slides */
+				.attr({'role':'tabpanel', 'aria-hidden':'true', 'aria-expanded':'false', 'tabindex':'-1'});
       slider.count = slider.slides.length;
       slider.animating = false;
       slider.currentSlide = slider.vars.slideToStart;
@@ -69,11 +79,16 @@
         if (slider.vars.animationLoop) {
           slider.cloneCount = 2;
           slider.cloneOffset = 1;
-          slider.container.append(slider.slides.filter(':first').clone().addClass('clone')).prepend(slider.slides.filter(':last').clone().addClass('clone'));
+          slider.container.append(slider.slides.filter(':first').clone().addClass('clone')
+								/* change duplicate id for clone, set its role=presentation */
+								.attr({'id':slider.slides.filter(':first').attr('id')+'_clone', 'role':'presentation'}))
+							.prepend(slider.slides.filter(':last').clone().addClass('clone')
+								/* change duplicate id for clone, set its role=presentation */
+								.attr({'id':slider.slides.filter(':last').attr('id')+'_clone', 'role':'presentation'}));
         }
         //create newSlides to capture possible clones
-		slider.newSlides = $('.slides:first > li', slider);
-        var sliderOffset = (-1 * (slider.currentSlide + slider.cloneOffset));
+				slider.newSlides = $('.slides:first > li', slider);
+        sliderOffset = (-1 * (slider.currentSlide + slider.cloneOffset));
         if (slider.vertical) {
           slider.newSlides.css({"display": "block", "width": "100%", "float": "left"});
           slider.container.height((slider.count + slider.cloneCount) * 200 + "%").css("position", "absolute").width("100%");
@@ -82,6 +97,11 @@
             slider.css({"position": "relative"}).height(slider.slides.filter(':first').height());
             slider.args[slider.prop] = (slider.transitions) ? "translate3d(0," + sliderOffset * slider.height() + "px,0)" : sliderOffset * slider.height() + "px";
             slider.container.css(slider.args);
+						// remove tabbable descendants of cloned slides from the tab order
+						slider.newSlides.filter('.clone').find(':tabbable').attr('tabindex','-1');
+						// Adds tabbable descendants of current slide to the tab order
+						// while removing tabbable descendants of inactive slides from the tab order
+						slider.fixTabOrder(slider.currentSlide);
           }, 100);
 
         } else {
@@ -90,13 +110,25 @@
           //Timeout function to give browser enough time to get proper width initially
           setTimeout(function() {
             slider.newSlides.width(slider.width()).css({"float": "left", "display": "block"});
+						// remove tabbable descendants of cloned slides from the tab order
+						slider.newSlides.filter('.clone').find(':tabbable').attr('tabindex','-1');
+						// add tabbable descendants of current slide to the tab order
+						// while removing tabbable descendants of inactive slides from the tab order
+						slider.fixTabOrder(slider.currentSlide);
           }, 100);
         }
         
       } else { //Default to fade
         //Not supporting fade CSS3 transitions right now
         slider.transitions = false;
-        slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%"}).eq(slider.currentSlide).fadeIn(slider.vars.animationDuration); 
+        slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%"})
+					.eq(slider.currentSlide)
+					.fadeIn(slider.vars.animationDuration
+							,function() {
+								// add tabbable descendants of current slide to the tab order
+								// while removing tabbable descendants of inactive slides from the tab order
+								slider.fixTabOrder(slider.currentSlide);
+							}); 
       }
       ///////////////////////////////////////////////////////////////////
       
@@ -106,38 +138,65 @@
         if (slider.manualExists) {
           slider.controlNav = slider.manualControls;
         } else {
-          var controlNavScaffold = $('<ol class="flex-control-nav"></ol>');
-          var j = 1;
-          for (var i = 0; i < slider.count; i++) {
-            controlNavScaffold.append('<li><a>' + j + '</a></li>');
-            j++;
+					// wai-aria role=tablist for navigation menu 
+          controlNavScaffold = $('<ol role="tablist" class="flex-control-nav"></ol>');
+          j = 1;
+          for (i = 0; i < slider.count; i++) {
+						// wai-aria properties and tabindex for navigation menu link
+						tabpanel = slider.slides.eq(i);
+						tabpanelId = tabpanel.attr('id') || 'tabpanel_'+i+'_'+(new Date()).getTime();
+						tabId = tabpanelId+'_tab';
+						tabpanelLabel = (tabpanel.attr('aria-label') || tabpanel.attr('title') || j);
+            controlNavScaffold.append('<li role="presentation"><a id="'+tabId+'" tabindex="-1" role="tab" aria-controls="' + tabpanelId + '" aria-selected="false">' + tabpanelLabel + '</a></li>');
+            // the tabpanel should be labelled by the tab
+						tabpanel.attr({'aria-labelledby':tabId});
+						j++;
           }
 
           if (slider.containerExists) {
-            $(slider.controlsContainer).append(controlNavScaffold);
+						// for accessibility prepend the navigation 
+						// so that it precedes the tabpanels in the read order 
+            $(slider.controlsContainer).prepend(controlNavScaffold);
             slider.controlNav = $('.flex-control-nav li a', slider.controlsContainer);
           } else {
-            slider.append(controlNavScaffold);
+						// for accessibility prepend the navigation 
+						// so that it precedes the tabpanels in the read order 
+            slider.prepend(controlNavScaffold);
             slider.controlNav = $('.flex-control-nav li a', slider);
           }
         }
 
-        slider.controlNav.eq(slider.currentSlide).addClass('active');
+        slider.controlNav.eq(slider.currentSlide).addClass('active')
+					/* add aria-selected and tabindex=0 for current tab */
+					.attr({'tabindex':'0','aria-selected':'true'});
 
         slider.controlNav.bind(slider.eventType, function(event) {
           event.preventDefault();
-          if (!$(this).hasClass('active')) {
-            (slider.controlNav.index($(this)) > slider.currentSlide) ? slider.direction = "next" : slider.direction = "prev";
-            slider.flexAnimate(slider.controlNav.index($(this)), slider.vars.pauseOnAction);
+					var controlNavItem = $(this),
+							controlNavIndex;
+          if (!controlNavItem.hasClass('active')) {
+						controlNavIndex = slider.controlNav.index(controlNavItem);
+            (controlNavIndex > slider.currentSlide) ? slider.direction = "next" : slider.direction = "prev";
+            slider.flexAnimate(controlNavIndex, slider.vars.pauseOnAction);
+						slider.controlNav.removeClass('active')
+								/* update wai-aria properties and tabindex for inactive tabs */
+								.attr({'tabindex':'-1', 'aria-selected':'false'})
+							.eq(controlNavIndex).addClass('active')
+								/* update wai-aria properties and tabindex for and set focus on active tab */
+								.attr({'tabindex':'0', 'aria-selected':'true'}).focus();
           }
         });
       }
+			
+			// hide all but current slide from assistive technology
+			slider.setAriaHidden(slider.currentSlide);
+			
       ///////////////////////////////////////////////////////////////////
       
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Direction Nav
       if (slider.vars.directionNav) {
-        var directionNavScaffold = $('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + slider.vars.prevText + '</a></li><li><a class="next" href="#">' + slider.vars.nextText + '</a></li></ul>');
+        directionNavScaffold = $('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + slider.vars.prevText + '</a></li><li><a class="next" href="#">' + slider.vars.nextText + '</a></li></ul>');
         
         if (slider.containerExists) {
           $(slider.controlsContainer).append(directionNavScaffold);
@@ -173,17 +232,33 @@
         function keyboardMove(event) {
           if (slider.animating) {
             return;
-          } else if (event.keyCode != 39 && event.keyCode != 37){
+          } else if (event.keyCode != 39 && event.keyCode != 37
+											&& event.keyCode != 38 && event.keyCode != 40) {
             return;
           } else {
-            if (event.keyCode == 39) {
-              var target = slider.getTarget('next');
-            } else if (event.keyCode == 37){
-              var target = slider.getTarget('prev');
-            }
+						var target = -1;
+						if (slider.vertical) {
+							if (event.keyCode == 40) {
+								target = slider.getTarget('next');
+							} else if (event.keyCode == 38) {
+								target = slider.getTarget('prev');
+							}
+						} else {
+							if (event.keyCode == 39) {
+								target = slider.getTarget('next');
+							} else if (event.keyCode == 37){
+								target = slider.getTarget('prev');
+							}
+						}
         
             if (slider.canAdvance(target)) {
               slider.flexAnimate(target, slider.vars.pauseOnAction);
+							slider.controlNav.removeClass('active')
+								/* update wai-aria properties and tabindex for inactive tabs */
+									.attr({'tabindex':'-1', 'aria-selected':'false'})
+								.eq(target).addClass('active')
+								/* update wai-aria properties and tabindex for and set focus on active tab */
+									.attr({'tabindex':'0', 'aria-selected':'true'}).focus();
             }
           }
         }
@@ -230,7 +305,7 @@
       //////////////////////////////////////////////////////////////////
       //FlexSlider: Pause/Play
       if (slider.vars.pausePlay) {
-        var pausePlayScaffold = $('<div class="flex-pauseplay"><span></span></div>');
+        pausePlayScaffold = $('<div class="flex-pauseplay"><span></span></div>');
       
         if (slider.containerExists) {
           slider.controlsContainer.append(pausePlayScaffold);
@@ -240,7 +315,7 @@
           slider.pausePlay = $('.flex-pauseplay span', slider);
         }
         
-        var pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
+        pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
         slider.pausePlay.addClass(pausePlayState).text((pausePlayState == 'pause') ? slider.vars.pauseText : slider.vars.playText);
         
         slider.pausePlay.bind(slider.eventType, function(event) {
@@ -266,13 +341,7 @@
         //The variables are then swapped if vertical sliding is applied
         //This reduces redundant code...I think :)
         //If debugging, recognize variables are named for horizontal scrolling
-        var startX,
-          startY,
-          offset,
-          cwidth,
-          dx,
-          startT,
-          scrolling = false;
+        scrolling = false;
               
         slider.each(function() {
           if ('ontouchstart' in document.documentElement) {
@@ -381,9 +450,19 @@
           slider.pause();
         }
         
-        //Update controlNav   
+        // Update controlNav   
         if (slider.vars.controlNav) {
-          slider.controlNav.removeClass('active').eq(target).addClass('active');
+          slider.controlNav.removeClass('active')
+							/* update wai-aria properties and tabindex for inactive tabs */
+							.attr({'tabindex':'-1', 'aria-selected':'false'})
+						.eq(target).addClass('active')
+							/* update wai-aria properties and tabindex for and set focus on active tab */
+							.attr({'tabindex':'0', 'aria-selected':'true'});
+					
+					// if	the document focus is on a menu item in the controlNav, focus the currentNav item
+					if (slider.controlNav.index($(document.activeElement))!=-1) {
+						slider.controlNav.eq(target).focus();
+					}
         }
         
         //Is the slider at either end
@@ -458,13 +537,23 @@
       }
       slider.animating = false;
       slider.currentSlide = slider.animatingTo;
+			
+			// Set aria-hidden to expose current slide 
+			// and hide inactive slides from screen readers 
+			slider.setAriaHidden(slider.currentSlide);
+			// Add tabbable descendants of current slide to the tab order
+			// while removing tabbable descendants of inactive slides from the tab order
+			slider.fixTabOrder(slider.currentSlide);
+			
       //FlexSlider: after() animation Callback
       slider.vars.after(slider);
     }
     
     //FlexSlider: Automatic Slideshow
     slider.animateSlides = function() {
-      if (!slider.animating) {
+      // animate if the slideshow is not is already animating 
+			// and the document.activeElement is not a descendant of the slider
+      if (!slider.animating && !slider.isFocusInSlider()) {
         slider.flexAnimate(slider.getTarget("next"));
       }
     }
@@ -514,10 +603,43 @@
     slider.setTransition = function(dur) {
       slider.container.css({'-webkit-transition-duration': (dur/1000) + "s"});
     }
-
+		
+		//FlexSlider: Helper function to remove tabbables 
+		// from the tab order in hidden slides and restore 
+		// elements to the tab order for the current slide
+		slider.setAriaHidden = function(target) {
+			slider.slides.attr({'aria-hidden':'true','aria-expanded':'false'})
+				.eq(target).attr({'aria-hidden':'false','aria-expanded':'true'});
+		}
+		
+		//FlexSlider: Helper function to remove tabbables 
+		// from the tab order in hidden slides and restore 
+		// elements to the tab order for the current slide
+		slider.fixTabOrder = function(target) {
+			slider.slides.not(target).attr('tabindex','-1').find(':tabbable').each(function(){
+					$(this).addClass('not-tabbable');
+					if ($(this).attr('tabindex')) {
+						$(this).data('cached-tabindex',$(this).attr('tabindex'))
+					}
+					$(this).attr('tabindex','-1');
+				});
+			slider.slides.eq(target).attr('tabindex','0').find('.not-tabbable').each(function(){
+					$(this).removeClass('not-tabbable').removeAttr('tabindex');
+					if ($(this).data('cached-tabindex')) {
+						$(this).attr('tabindex',$(this).data('cached-tabindex')).removeData('cached-tabindex')
+					}
+				});
+		}
+		
+		slider.isFocusInSlider = function() {
+			return slider.find($(document.activeElement)).length==1;
+		}
+		
     //FlexSlider: Initialize
     slider.init();
   }
+	
+	
   
   //FlexSlider: Default Settings
   $.flexslider.defaults = {
@@ -563,5 +685,55 @@
       }
     });
   }
+	
+	///////////////////////////////////////////////////////////////////
+  // Selectors for :focusable and :tabbable borrowed from jquery-ui
+	function focusable( element, isTabIndexNotNaN ) {
+		var nodeName = element.nodeName.toLowerCase(),
+				map,
+				mapName,
+				img;
+		if ( "area" === nodeName ) {
+			map = element.parentNode;
+			mapName = map.name;
+			if ( !element.href || !mapName || map.nodeName.toLowerCase() !== "map" ) {
+				return false;
+			}
+			img = $( "img[usemap=#" + mapName + "]" )[0];
+			return !!img && visible( img );
+		}
+				
+		return ( /input|select|textarea|button|object/.test( nodeName )
+			? !element.disabled
+			: "a" == nodeName
+				? element.href || isTabIndexNotNaN
+				: isTabIndexNotNaN)
+			// the element and all of its ancestors must be visible
+			&& visible( element );
+	}
+	
+	function visible( element ) {
+		return !$( element ).parents().andSelf().filter(function() {
+			return $.curCSS( this, "visibility" ) === "hidden" ||
+				$.expr.filters.hidden( this );
+		}).length;
+	}
+	
+	$.extend( $.expr[ ":" ], {
+		data: function( elem, i, match ) {
+			return !!$.data( elem, match[ 3 ] );
+		},
+	
+		focusable: function( element ) {
+			return focusable( element, !isNaN( $.attr( element, "tabindex" ) ) );
+		},
+	
+		tabbable: function( element ) {
+			var tabIndex = $.attr( element, "tabindex" ),
+				isTabIndexNaN = isNaN( tabIndex );
+			return ( isTabIndexNaN || tabIndex >= 0 ) && focusable( element, !isTabIndexNaN );
+		}
+	});
+	///////////////////////////////////////////////////////////////////
 
 })(jQuery);
