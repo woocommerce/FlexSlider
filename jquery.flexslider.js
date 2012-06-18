@@ -176,7 +176,7 @@
           
           methods.controlNav.active();
         
-          slider.controlNav.closest('.' + namespace + 'control-nav').delegate('a', eventType, function(event) {
+          slider.controlNav.closest('.' + namespace + 'control-nav').delegate('a, img', eventType, function(event) {
             event.preventDefault();
             var $this = $(this),
                 target = slider.controlNav.index($this);
