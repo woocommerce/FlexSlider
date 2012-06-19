@@ -160,23 +160,26 @@
         },
         setupPaging: function() {
           var type = (vars.controlNav === "thumbnails") ? 'control-thumbs' : 'control-paging',
-              controlNavScaffold = $('<ol class="'+ namespace + 'control-nav ' + namespace + type + '"></ol>'),
               j = 1,
               item;
           
-          for (var i = 0; i < slider.pagingCount; i++) {
-            item = (vars.controlNav === "thumbnails") ? '<img src="' + slider.slides.eq(i).attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
-            controlNavScaffold.append('<li>' + item + '</li>');
-            j++;
+          slider.controlNavScaffold = $('<ol class="'+ namespace + 'control-nav ' + namespace + type + '"></ol>');
+          
+          if (slider.pagingCount > 1) {
+            for (var i = 0; i < slider.pagingCount; i++) {
+              item = (vars.controlNav === "thumbnails") ? '<img src="' + slider.slides.eq(i).attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
+              slider.controlNavScaffold.append('<li>' + item + '</li>');
+              j++;
+            }
           }
           
           // CONTROLSCONTAINER:
-          (slider.controlsContainer) ? $(slider.controlsContainer).append(controlNavScaffold) : slider.append(controlNavScaffold);
+          (slider.controlsContainer) ? $(slider.controlsContainer).append(slider.controlNavScaffold) : slider.append(slider.controlNavScaffold);
           methods.controlNav.set();
           
           methods.controlNav.active();
         
-          slider.controlNav.closest('.' + namespace + 'control-nav').delegate('a, img', eventType, function(event) {
+          slider.controlNavScaffold.delegate('a, img', eventType, function(event) {
             event.preventDefault();
             var $this = $(this),
                 target = slider.controlNav.index($this);
@@ -188,7 +191,7 @@
           });
           // Prevent iOS click event bug
           if (touch) {
-            slider.controlNav.closest('.' + namespace + 'control-nav').delegate('a', "click touchstart", function(event) {
+            slider.controlNavScaffold.delegate('a', "click touchstart", function(event) {
               event.preventDefault();
             });
           }
@@ -222,9 +225,15 @@
           slider.controlNav.removeClass(namespace + "active").eq(slider.animatingTo).addClass(namespace + "active");
         },
         update: function(action, pos) {
-          (action === "add") ? slider.controlNav.closest('.' + namespace + 'control-nav').append($('<li><a>' + slider.count + '</a></li>')) : slider.controlNav.eq(pos).closest('li').remove();
+          if (slider.pagingCount > 1 && action === "add") {
+            slider.controlNavScaffold.append($('<li><a>' + slider.count + '</a></li>'));
+          } else if (slider.pagingCount === 1) {
+            slider.controlNavScaffold.find('li').remove();
+          } else {
+            slider.controlNav.eq(pos).closest('li').remove();
+          }
           methods.controlNav.set();
-          (slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
+          (slider.pagingCount > 1 && slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
         }
       },
       directionNav: {
@@ -257,7 +266,9 @@
         update: function() {
           var disabledClass = namespace + 'disabled';
           if (!vars.animationLoop) {
-            if (slider.animatingTo === 0) {
+            if (slider.pagingCount === 1) {
+             slider.directionNav.addClass(disabledClass);
+            } else if (slider.animatingTo === 0) {
               slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "prev").addClass(disabledClass);
             } else if (slider.animatingTo === slider.last) {
               slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "next").addClass(disabledClass);
@@ -676,7 +687,8 @@
         slider.move = (vars.move > 0 && vars.move < slider.visible ) ? vars.move : slider.visible;
         slider.pagingCount = Math.ceil(((slider.count - slider.visible)/slider.move) + 1);
         slider.last =  slider.pagingCount - 1;
-        slider.limit = (vars.itemWidth > slider.w) ? ((slider.itemW + (slideMargin * 2)) * slider.count) - slider.w - slideMargin : ((slider.itemW + slideMargin) * slider.count) - slider.w;
+        slider.limit = (slider.pagingCount === 1) ? 0 :
+                       (vars.itemWidth > slider.w) ? ((slider.itemW + (slideMargin * 2)) * slider.count) - slider.w - slideMargin : ((slider.itemW + slideMargin) * slider.count) - slider.w;
       } else {
         slider.itemW = slider.w;
         slider.pagingCount = slider.count;
