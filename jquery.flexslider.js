@@ -495,14 +495,14 @@
           }
           slider.setProps(slideString, "", vars.animationSpeed);
           if (slider.transitions) {
-            if (vars.animationLoop && slider.atEnd) {
-              slider.container.one("webkitTransitionEnd transitionend", function(){
-                slider.wrapup(dimension);
-              });
-            } else {
+            if (!vars.animationLoop || !slider.atEnd) {
               slider.animating = false;
               slider.currentSlide = slider.animatingTo;
             }
+            slider.container.unbind("webkitTransitionEnd transitionend");
+            slider.container.bind("webkitTransitionEnd transitionend", function() {
+              slider.wrapup(dimension);
+            });
           } else {
             slider.container.animate(slider.args, vars.animationSpeed, vars.easing, function(){
               slider.wrapup(dimension);
@@ -510,9 +510,7 @@
           }
         } else { // FADE:
           slider.slides.eq(slider.currentSlide).fadeOut(vars.animationSpeed, vars.easing);
-          slider.slides.eq(target).fadeIn(vars.animationSpeed, vars.easing, function() {
-            slider.wrapup();
-          });
+          slider.slides.eq(target).fadeIn(vars.animationSpeed, vars.easing, slider.wrapup);
         }
         // SMOOTH HEIGHT:
         if (vars.smoothHeight) methods.smoothHeight(vars.animationSpeed);
