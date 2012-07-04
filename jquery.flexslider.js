@@ -861,6 +861,7 @@
       // Helper strings to quickly perform functions on the slider
       var $slider = $(this).data('flexslider');
       switch (options) {
+        case "isPlaying": return $slider.playing;
         case "play": $slider.play(); break;
         case "pause": $slider.pause(); break;
         case "next": $slider.flexAnimate($slider.getTarget("next"), true); break;
