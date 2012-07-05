@@ -30,11 +30,11 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 
 ## Examples
 
-- [Basic Slider](http://flex.madebymufffin.com/examples/basic.html)
-- [Slider w/thumbnail controlNav pattern](http://flex.madebymufffin.com/examples/thumbnail-controlnav.html)
-- [Slider w/thumbnail slider](http://flex.madebymufffin.com/examples/thumbnail-slider.html)
-- [Basic Carousel](http://flex.madebymufffin.com/examples/basic-carousel.html)
-- [Carousel with min and max ranges](http://flex.madebymufffin.com/examples/carousel-min-max.html)
+- [Basic Slider](http://flexslider.woothemes.com/)
+- [Slider w/thumbnail controlNav pattern](http://flexslider.woothemes.com/thumbnail-controlnav.html)
+- [Slider w/thumbnail slider](http://flexslider.woothemes.com/thumbnail-slider.html)
+- [Basic Carousel](http://flexslider.woothemes.com/basic-carousel.html)
+- [Carousel with min and max ranges](http://flexslider.woothemes.com/carousel-min-max.html)
 - [Video with Vimeo API](http://flex.madebymufffin.com/examples/video.html)
 
 
