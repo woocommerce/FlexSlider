@@ -265,16 +265,18 @@
         },
         update: function() {
           var disabledClass = namespace + 'disabled';
-          if (!vars.animationLoop) {
-            if (slider.pagingCount === 1) {
-             slider.directionNav.addClass(disabledClass);
-            } else if (slider.animatingTo === 0) {
+          if (slider.pagingCount === 1) {
+            slider.directionNav.addClass(disabledClass);
+          } else if (!vars.animationLoop) {
+            if (slider.animatingTo === 0) {
               slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "prev").addClass(disabledClass);
             } else if (slider.animatingTo === slider.last) {
               slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "next").addClass(disabledClass);
             } else {
               slider.directionNav.removeClass(disabledClass);
             }
+          } else {
+            slider.directionNav.removeClass(disabledClass);
           }
         }
       },
@@ -611,7 +613,7 @@
         var sliderOffset, arr;
             
         if (type === "init") {
-          slider.viewport = $('<div class="flex-viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo(slider).append(slider.container);
+          slider.viewport = $('<div class="' + namespace + 'viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo(slider).append(slider.container);
           // INFINITE LOOP:
           slider.cloneCount = 0;
           slider.cloneOffset = 0;
@@ -686,7 +688,7 @@
         slider.pagingCount = Math.ceil(((slider.count - slider.visible)/slider.move) + 1);
         slider.last =  slider.pagingCount - 1;
         slider.limit = (slider.pagingCount === 1) ? 0 :
-                       (vars.itemWidth > slider.w) ? ((slider.itemW + (slideMargin * 2)) * slider.count) - slider.w - slideMargin : ((slider.itemW + slideMargin) * slider.count) - slider.w;
+                       (vars.itemWidth > slider.w) ? ((slider.itemW + (slideMargin * 2)) * slider.count) - slider.w - slideMargin : ((slider.itemW + slideMargin) * slider.count) - slider.w - slideMargin;
       } else {
         slider.itemW = slider.w;
         slider.pagingCount = slider.count;
@@ -843,7 +845,8 @@
 
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
-    options = options || {};
+    if (options === undefined) options = {};
+    
     if (typeof options === "object") {
       return this.each(function() {
         var $this = $(this),
