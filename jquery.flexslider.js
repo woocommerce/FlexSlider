@@ -112,9 +112,9 @@
         if (vars.slideshow) {
           if (vars.pauseOnHover) {
             slider.hover(function() {
-              slider.pause();
+              if (!slider.manualPlay && !slider.manualPause) slider.pause();
             }, function() {
-              if (!slider.manualPause) slider.play();
+              if (!slider.manualPause && !slider.manualPlay) slider.play();
             });
           }
           // initialize animation
@@ -292,18 +292,19 @@
             slider.append(pausePlayScaffold);
             slider.pausePlay = $('.' + namespace + 'pauseplay a', slider);
           }
-        
-          // slider.pausePlay.addClass(pausePlayState).text((pausePlayState == 'pause') ? vars.pauseText : vars.playText);
+
           methods.pausePlay.update((vars.slideshow) ? namespace + 'pause' : namespace + 'play');
-        
+
           slider.pausePlay.bind(eventType, function(event) {
             event.preventDefault();
             if ($(this).hasClass(namespace + 'pause')) {
-              slider.pause();
               slider.manualPause = true;
+              slider.manualPlay = false;
+              slider.pause();
             } else {
-              slider.play();
               slider.manualPause = false;
+              slider.manualPlay = true;
+              slider.play();
             }
           });
           // Prevent iOS click event bug
