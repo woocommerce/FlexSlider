@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v2.0
+ * jQuery FlexSlider v2.1
  * http://www.woothemes.com/flexslider/
  *
  * Copyright 2012 WooThemes
@@ -370,7 +370,7 @@
             var updateDx = (reverse) ? -dx : dx,
                 target = (updateDx > 0) ? slider.getTarget('next') : slider.getTarget('prev');
             
-            if (slider.canAdvance(target) && (Number(new Date()) - startT < 550 && Math.abs(updateDx) > 20 || Math.abs(updateDx) > cwidth/2)) {
+            if (slider.canAdvance(target) && (Number(new Date()) - startT < 550 && Math.abs(updateDx) > 50 || Math.abs(updateDx) > cwidth/2)) {
               slider.flexAnimate(target, vars.pauseOnAction);
             } else {
               slider.flexAnimate(slider.currentSlide, vars.pauseOnAction, true);
@@ -428,7 +428,9 @@
     
     // public methods
     slider.flexAnimate = function(target, pause, override, withSync, fromNav) {
-      if (!slider.animating && (slider.canAdvance(target) || override) && slider.is(":visible")) {
+      if (asNav && slider.pagingCount === 1) slider.direction = (slider.currentItem < target) ? "next" : "prev";
+
+      if (!slider.animating && (slider.canAdvance(target, fromNav) || override) && slider.is(":visible")) {
         if (asNav && withSync) {
           var master = $(vars.asNavFor).data('flexslider');
           slider.atEnd = target === 0 || target === slider.count - 1;
@@ -556,10 +558,12 @@
       // SYNC:
       if (slider.syncExists) methods.sync("play");
     }
-    slider.canAdvance = function(target) {
+    slider.canAdvance = function(target, fromNav) {
       // ASNAV:
       var last = (asNav) ? slider.pagingCount - 1 : slider.last;
-      return (asNav && slider.currentItem === 0 && target === slider.pagingCount - 1 && slider.direction !== "next") ? false :
+      return (fromNav) ? true :
+             (asNav && slider.currentItem === slider.count - 1 && target === 0 && slider.direction === "prev") ? true :
+             (asNav && slider.currentItem === 0 && target === slider.pagingCount - 1 && slider.direction !== "next") ? false :
              (target === slider.currentSlide && !asNav) ? false :
              (vars.animationLoop) ? true :
              (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction !== "next") ? false :
