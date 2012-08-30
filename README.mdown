@@ -1,4 +1,4 @@
-# FlexSlider 2
+# FlexSlider 2.1
 http://www.woothemes.com/flexslider/ - Copyright (c) 2012 WooThemes
 
 Documentation guides for properties and theming are coming soon. Shortly thereafter, the download builder will be released, where you can create minified FlexSlider scripts that contain only the properties you need. It's a brave new world.
