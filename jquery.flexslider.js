@@ -542,6 +542,10 @@
     }
     // SLIDESHOW:
     slider.pause = function() {
+      // Only pause if running
+      if(slider.animatedSlides == null) {
+        return;
+      }
       clearInterval(slider.animatedSlides);
       slider.playing = false;
       // PAUSEPLAY:
@@ -551,6 +555,10 @@
     }
     // SLIDESHOW:
     slider.play = function() {
+      // Only resume if paused
+      if(slider.animatedSlides != null) {
+        return;
+      }
       slider.animatedSlides = setInterval(slider.animateSlides, vars.slideshowSpeed);
       slider.playing = true;
       // PAUSEPLAY:
