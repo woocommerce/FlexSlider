@@ -544,6 +544,7 @@
     // SLIDESHOW:
     slider.pause = function() {
       clearInterval(slider.animatedSlides);
+      slider.animatedSlides = null;
       slider.playing = false;
       // PAUSEPLAY:
       if (vars.pausePlay) methods.pausePlay.update("play");
@@ -552,7 +553,7 @@
     }
     // SLIDESHOW:
     slider.play = function() {
-      slider.animatedSlides = setInterval(slider.animateSlides, vars.slideshowSpeed);
+      slider.animatedSlides = slider.animatedSlides || setInterval(slider.animateSlides, vars.slideshowSpeed);
       slider.playing = true;
       slider.stopped = false;
       // PAUSEPLAY:
