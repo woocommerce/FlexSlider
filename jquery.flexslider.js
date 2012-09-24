@@ -674,10 +674,12 @@
       var slide = slider.slides.first(),
           slideMargin = vars.itemMargin,
           minItems = vars.minItems,
-          maxItems = vars.maxItems;
+          maxItems = vars.maxItems,
+          items = slider.slides.length,
+          viewportItems = Math.min(maxItems, Math.max(minItems, items));;
       
       slider.w = slider.width();
-      slider.h = slide.height();
+      slider.h = slide.height() * viewportItems;
       slider.boxPadding = slide.outerWidth() - slide.width();
 
       // CAROUSEL:
