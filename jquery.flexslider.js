@@ -25,6 +25,7 @@
         asNav = vars.asNavFor !== "",
         methods = {};
     
+    
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
     
@@ -70,6 +71,8 @@
           slider.slides.sort(function() { return (Math.round(Math.random())-0.5); });
           slider.container.empty().append(slider.slides);
         }
+        
+        slider.fixedHeightMiddleAlign = vars.fixedHeightMiddleAlign;
         
         slider.doMath();
         
@@ -126,7 +129,6 @@
         
         // FADE&&SMOOTHHEIGHT || SLIDE:
         if (!fade || (fade && vars.smoothHeight)) $(window).bind("resize focus", methods.resize);
-        
         
         // API: start() Callback
         setTimeout(function(){
@@ -404,6 +406,8 @@
           } else {
             // SMOOTH HEIGHT:
             if (vars.smoothHeight) methods.smoothHeight();
+            // fixedHeightMiddleAlign:
+            if (slider.fixedHeightMiddleAlign) methods.middleAlign();
             slider.newSlides.width(slider.computedW);
             slider.setProps(slider.computedW, "setTotal");
           }
@@ -414,6 +418,19 @@
           var $obj = (fade) ? slider : slider.viewport;
           (dur) ? $obj.animate({"height": slider.slides.eq(slider.animatingTo).height()}, dur) : $obj.height(slider.slides.eq(slider.animatingTo).height());
         }
+      },
+      middleAlign: function() {
+        slider.maxHeight = 0;
+        slider.slides.each(function() {
+          if ($(this).height() > slider.maxHeight) slider.maxHeight = $(this).height();
+        });
+        slider.slides.each(function() {
+          $this = $(this);
+          if (slider.maxHeight > $this.height()) {
+            paddingTop = Math.round((slider.maxHeight - $this.height())/2);
+            $this.css({'padding-top': paddingTop});
+          }
+        });
       },
       sync: function(action) {
         var $obj = $(vars.sync).data("flexslider"),
@@ -665,6 +682,8 @@
             slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
             // SMOOTH HEIGHT:
             if (vars.smoothHeight) methods.smoothHeight();
+            // fixedHeightMiddleAlign:
+            if (slider.fixedHeightMiddleAlign) methods.middleAlign();
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE: 
@@ -678,6 +697,8 @@
         }
         // SMOOTH HEIGHT:
         if (vars.smoothHeight) methods.smoothHeight();
+        // fixedHeightMiddleAlign:
+        if (slider.fixedHeightMiddleAlign) methods.middleAlign();
       }
       // !CAROUSEL:
       // CANDIDATE: active slide
@@ -811,6 +832,7 @@
     reverse: false,                 //{NEW} Boolean: Reverse the animation direction
     animationLoop: true,             //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
     smoothHeight: false,            //{NEW} Boolean: Allow height of the slider to animate smoothly in horizontal mode  
+    fixedHeightMiddleAlign: false,  // {NEW} Boolean: Set the height of the slider to accomodate the tallest, then pad each slide to center it vertically
     startAt: 0,                     //Integer: The slide that the slider should start on. Array notation (0 = first slide)
     slideshow: true,                //Boolean: Animate slider automatically
     slideshowSpeed: 7000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
