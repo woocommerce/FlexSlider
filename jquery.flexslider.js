@@ -143,7 +143,10 @@
             e.preventDefault();
             var $slide = $(this),
                 target = $slide.index();
-            if (!$(vars.asNavFor).data('flexslider').animating && !$slide.hasClass('active')) {
+            var posFromLeft = $slide.offset().left - $(slider).scrollLeft(); //Find position of slide relative to left of slider container
+            if(posFromLeft <= 0 && $slide.hasClass(namespace + 'active-slide')){
+              slider.flexAnimate(slider.getTarget("prev"), true);
+            } else if (!$(vars.asNavFor).data('flexslider').animating && !$slide.hasClass('active')) {
               slider.direction = (slider.currentItem < target) ? "next" : "prev";
               slider.flexAnimate(target, vars.pauseOnAction, false, true, true);
             }
