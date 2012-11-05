@@ -19,6 +19,7 @@ Helper strings have been added for performing actions quickly on FlexSlider elem
 
 - `$('#slider').flexslider("play")  //Play slideshow`
 - `$('#slider').flexslider("pause") //Pause slideshow`
+- `$('#slider').flexslider("stop")  //Stop slideshow`
 - `$('#slider').flexslider("next")  //Go to next slide`
 - `$('#slider').flexslider("prev")  //Go to previous slide`
 - `$('#slider').flexslider(3)       //Go fourth slide`

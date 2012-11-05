@@ -47,6 +47,7 @@
         slider.args = {};
         // SLIDESHOW:
         slider.manualPause = false;
+        slider.stopped = false;
         // TOUCH/USECSS:
         slider.transitions = !vars.video && !fade && vars.useCSS && (function() {
           var obj = document.createElement('div'),
@@ -114,7 +115,7 @@
             slider.hover(function() {
               if (!slider.manualPlay && !slider.manualPause) slider.pause();
             }, function() {
-              if (!slider.manualPause && !slider.manualPlay) slider.play();
+              if (!slider.manualPause && !slider.manualPlay && !slider.stopped) slider.play();
             });
           }
           // initialize animation
@@ -551,6 +552,7 @@
     // SLIDESHOW:
     slider.pause = function() {
       clearInterval(slider.animatedSlides);
+      slider.animatedSlides = null;
       slider.playing = false;
       // PAUSEPLAY:
       if (vars.pausePlay) methods.pausePlay.update("play");
@@ -559,12 +561,18 @@
     }
     // SLIDESHOW:
     slider.play = function() {
-      slider.animatedSlides = setInterval(slider.animateSlides, vars.slideshowSpeed);
+      slider.animatedSlides = slider.animatedSlides || setInterval(slider.animateSlides, vars.slideshowSpeed);
       slider.playing = true;
+      slider.stopped = false;
       // PAUSEPLAY:
       if (vars.pausePlay) methods.pausePlay.update("pause");
       // SYNC:
       if (slider.syncExists) methods.sync("play");
+    }
+    // SLIDESHOW:
+    slider.stop = function() {
+      slider.pause();
+      slider.stopped = true;
     }
     slider.canAdvance = function(target, fromNav) {
       // ASNAV:
@@ -883,10 +891,11 @@
       // Helper strings to quickly perform functions on the slider
       var $slider = $(this).data('flexslider');
       switch (options) {
-        case "play": $slider.play(); break;
-        case "pause": $slider.pause(); break;
-        case "next": $slider.flexAnimate($slider.getTarget("next"), true); break;
-        case "prev":
+        case "play"  : $slider.play(); break;
+        case "pause" : $slider.pause(); break;
+        case "stop"  : $slider.stop(); break;
+        case "next"  : $slider.flexAnimate($slider.getTarget("next"), true); break;
+        case "prev"  :
         case "previous": $slider.flexAnimate($slider.getTarget("prev"), true); break;
         default: if (typeof options === "number") $slider.flexAnimate(options, true);
       }
