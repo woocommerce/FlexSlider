@@ -23,6 +23,7 @@
         carousel = (vars.itemWidth > 0),
         fade = vars.animation === "fade",
         asNav = vars.asNavFor !== "",
+        disabledClass = namespace + 'disabled',
         methods = {};
     
     // Store a reference to the slider object
@@ -195,6 +196,7 @@
               event.preventDefault();
             });
           }
+          methods.controlNav.update();
         },
         setupManual: function() {
           slider.controlNav = slider.manualControls;
@@ -226,8 +228,10 @@
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
+            slider.controlNavScaffold.removeClass(disabledClass);
             slider.controlNavScaffold.append($('<li><a>' + slider.count + '</a></li>'));
           } else if (slider.pagingCount === 1) {
+            slider.controlNavScaffold.addClass(disabledClass);
             slider.controlNavScaffold.find('li').remove();
           } else {
             slider.controlNav.eq(pos).closest('li').remove();
@@ -264,7 +268,6 @@
           }
         },
         update: function() {
-          var disabledClass = namespace + 'disabled';
           if (slider.pagingCount === 1) {
             slider.directionNav.addClass(disabledClass);
           } else if (!vars.animationLoop) {
