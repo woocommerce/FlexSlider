@@ -429,6 +429,15 @@
     
     // public methods
     slider.flexAnimate = function(target, pause, override, withSync, fromNav) {
+      // Fixes when we slide to the last slide using 'touch' or 'mousewheel' events,
+      // and then call flexslider(<number>)
+      // See issue https://github.com/woothemes/FlexSlider/issues/284
+      if (target !== slider.currentSlide) {
+        slider.direction = (target > slider.currentSlide) ? "next" : "prev";
+      }
+      // End of fix
+
+
       if (asNav && slider.pagingCount === 1) slider.direction = (slider.currentItem < target) ? "next" : "prev";
       
       if (!slider.animating && (slider.canAdvance(target, fromNav) || override) && slider.is(":visible")) {
