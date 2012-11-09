@@ -641,7 +641,8 @@
       // SLIDE:
       if (!fade) {
         var sliderOffset, arr;
-            
+        // fixedHeightMiddleAlign:
+        if (slider.fixedHeightMiddleAlign) methods.middleAlign();
         if (type === "init") {
           slider.viewport = $('<div class="' + namespace + 'viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo(slider).append(slider.container);
           // INFINITE LOOP:
@@ -660,6 +661,7 @@
           slider.cloneOffset = 1;
           // clear out old clones
           if (type !== "init") slider.container.find('.clone').remove();
+          // THIS IS WHERE THEY ADD THE CLONED FIRST SLIDE MPMPMP
           slider.container.append(slider.slides.first().clone().addClass('clone')).prepend(slider.slides.last().clone().addClass('clone'));
         }
         slider.newSlides = $(vars.selector, slider);
@@ -682,8 +684,6 @@
             slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
             // SMOOTH HEIGHT:
             if (vars.smoothHeight) methods.smoothHeight();
-            // fixedHeightMiddleAlign:
-            if (slider.fixedHeightMiddleAlign) methods.middleAlign();
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE: 
