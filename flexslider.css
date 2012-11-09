@@ -73,22 +73,69 @@ html[xmlns] .slides {display: block;}
 
 /* Lightbox Styles
 *********************************/ 
-.flexslider.lightbox {
+.flexslider.lightbox:hover {
+	cursor: pointer;
+}
+
+#flex-lightbox .flexslider.lightbox:hover {
+	cursor: default;
+}
+
+#flex-lightbox {
 	position: fixed;
-	z-index: 999;
+	z-index: 999999;
 	width: auto;
-	max-width: 800px;
+	max-width: 900px;
 	top: 50px;
 	left: 15%;
 	right: 15%;
 	margin: 0 auto;
 	display: block;
-	box-shadow: 0 0 1px 1000px rgba(0, 0, 0, .5);
-	background: white;
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear;
-	transition: all .2s linear;
+	-webkit-transition: all .5s linear;
+	-moz-transition: all .5s linear;
+	transition: all .5s linear;
 }
+
+	#flex-lightbox .flexslider {
+	box-shadow: 0 0 1px 1000px rgba(0, 0, 0, .5);
+	   width: 100%;
+	}
+	
+	.flexslider .icon-close {
+	   padding: 10px 15px;
+	   position: absolute;
+	   top: -28px;
+	   right: -28px;
+	   background: rgba(100,100,100,.5);
+	   font-weight: bold;
+	   cursor: pointer !important;
+	   z-index: 99999999;
+	   border-radius: 1000px;
+	   color: #CCC;
+	   font-size: 25px;
+	   line-height: 1;
+	   border: 6px solid rgba(255,255,255,.65);
+	   box-shadow: 0 0 5px rgba(0,0,0,.5);
+	   display: none;
+	   -webkit-transition: all .2s linear;
+	   -moz-transition: all .2s linear;
+	   transition: all .2s linear;
+	}
+	
+		#flex-lightbox .flexslider .icon-close {
+			display: block;
+			opacity: .5;
+		}
+		
+		#flex-lightbox:hover .flexslider .icon-close {
+			opacity: 1;
+		}
+	
+		.flexslider .icon-close:hover {
+			background: #AAA;
+			border-color: #999;
+			color: #FFF;
+		}
 
 @media screen and (max-width: 860px) {
   .flex-direction-nav .flex-prev {opacity: 1; left: 0;}

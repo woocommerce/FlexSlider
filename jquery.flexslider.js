@@ -395,8 +395,13 @@
         }
       },
       resize: function() {
+		if (!slider.is(':visible')) {
+		}
         if (!slider.animating && slider.is(':visible')) {
-          if (!carousel) slider.doMath();
+		
+          if (!carousel) {
+			slider.doMath();
+		  }
           
           if (fade) {
             // SMOOTH HEIGHT:
@@ -438,12 +443,17 @@
           }
         });
       },
-      lightbox: function() {
-        slider.find("[rel=lightbox]").click(function(e) {
-		  slider.toggleClass("lightbox");
-		  methods.resize(); slider.doMath();
-		  e.preventDefault();
-		});	
+      lightbox: {
+		init : function() {
+			slider.find("img").click(function(e) {
+				slider.wrap('<div id="flex-lightbox"/>');
+				methods.resize();
+			});
+		},
+		close : function() {
+			slider.unwrap();
+			methods.resize();
+		}		
       },
       sync: function(action) {
         var $obj = $(vars.sync).data("flexslider"),
@@ -719,7 +729,14 @@
       if (!carousel) slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide");
 	  
       // if lightbox:
-      if (slider.lightbox) methods.lightbox();
+      if (slider.lightbox) {
+		slider.addClass("lightbox")
+		slider.prepend('<i class="icon-close">x</i>')
+		slider.find(".icon-close").click(function(){
+			methods.lightbox.close();
+		});
+		methods.lightbox.init();
+	  }
     }
     
     slider.doMath = function() {
