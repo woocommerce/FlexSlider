@@ -131,3 +131,6 @@ Description to be added.
 
 ### fixedHeightMiddleAlign: *{new}*
 `fixedHeightMiddleAlign` is a new parameter that will middle align all the images vertically when used with an image set of varying heights and/or mixed aspect ratios. For an example, view /demo/mixed-ratios-middle-align.html.
+
+### lightbox: *{new}*
+'lightbox()' is a new parameter that enables a lightbox mode when clicking on an image in the slider. 

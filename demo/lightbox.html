@@ -34,33 +34,43 @@
       <nav>
         <h3>Other Examples</h3>
         <ul>
+		  <li><a class="lightbox" href="lightbox.html">Lightbox</a></li>
           <li><a class="active" href="demo">Basic Slider</a></li>
           <li><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
           <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
           <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li>  
           <li><a href="video.html">Video & the api (vimeo)</a></li>
-		  		<li><a class="lightbox" href="lightbox.html">Lightbox</a></li>
         </ul>
       </nav>
     </header>
 
 	<div id="main" role="main">
       <section class="slider">
+		<style>
+			.flexslider {
+			  padding: 3px;
+			  background: #FFF;
+			  display: block;
+			  width: 200px;
+			  border-radius: 3px;
+			}
+		</style>
         <div class="flexslider">
+			
           <ul class="slides">
             <li>
-  	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
-  	    		</li>
-  	    		<li>
-  	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
-  	    		</li>
-  	    		<li>
-  	    	    <img src="images/kitchen_adventurer_donut.jpg" />
-  	    		</li>
-  	    		<li>
-  	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
-  	    		</li>
+				<img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+			</li>
+			<li>
+				<img src="images/kitchen_adventurer_lemon.jpg" />
+			</li>
+			<li>
+			    <img src="images/kitchen_adventurer_donut.jpg" />
+			</li>
+			<li>
+			    <img src="images/kitchen_adventurer_caramel.jpg" />
+			</li>
           </ul>
         </div>
       </section>
@@ -109,8 +119,7 @@
   </div>
   
   <!-- jQuery -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   
   <!-- FlexSlider -->
   <script defer src="../jquery.flexslider.js"></script>
@@ -124,7 +133,8 @@
         animation: "slide",
         start: function(slider){
           $('body').removeClass('loading');
-        }
+        },
+		lightbox: true
       });
     });
   </script>

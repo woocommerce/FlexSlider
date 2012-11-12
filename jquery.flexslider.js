@@ -98,10 +98,9 @@
                            (keycode === 37) ? slider.getTarget('prev') : false;
               slider.flexAnimate(target, vars.pauseOnAction);
             }
-			if ( keycode == 27 ) {
-			  slider.removeClass("lightbox");
-			  slider.resize();
-			  
+            // Close Lightbox with ESC
+			if ( slider.lightbox && keycode == 27 ) {
+			  methods.lightbox.close();
 			}
           });
         }
@@ -395,8 +394,13 @@
         }
       },
       resize: function() {
+		if (!slider.is(':visible')) {
+		}
         if (!slider.animating && slider.is(':visible')) {
-          if (!carousel) slider.doMath();
+		
+          if (!carousel) {
+			slider.doMath();
+		  }
           
           if (fade) {
             // SMOOTH HEIGHT:
@@ -438,12 +442,30 @@
           }
         });
       },
-      lightbox: function() {
-        slider.find("[rel=lightbox]").click(function(e) {
-		  slider.toggleClass("lightbox");
-		  methods.resize(); slider.doMath();
-		  e.preventDefault();
-		});	
+      lightbox: {
+		init : function() {
+			slider.find("img").click(function(e) {
+                var sWidth  = slider.width()
+                  , sHeight = slider.height()
+                  , sRatio  = sWidth / sHeight
+                  , wHeight = window.innerHeight-150
+                  // By removing 5% of the height, the math seems to work better.
+                  // When not removing this 5%, the image often hangs out the bottom.
+                  , wWidth  = (wHeight * .95) * sRatio
+				slider.wrap('<div id="flex-lightbox"/>');
+                $("#flex-lightbox").css({
+                    "max-height" : wHeight,     // By setting max-width, we allow for the screen/slider to resize down
+                    "max-width"  : wWidth       // By setting max-width, we allow for the screen/slider to resize down
+                });
+                $("#flex-lightbox-coverall").show();
+				methods.resize();
+			});
+		},
+		close : function() {
+			slider.unwrap();
+            $("#flex-lightbox-coverall").hide();
+			methods.resize();
+		}		
       },
       sync: function(action) {
         var $obj = $(vars.sync).data("flexslider"),
@@ -719,7 +741,14 @@
       if (!carousel) slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide");
 	  
       // if lightbox:
-      if (slider.lightbox) methods.lightbox();
+      if (slider.lightbox) {
+		slider.addClass("lightbox");
+		slider.prepend('<i class="icon-close"></i>');
+        slider.after('<div id="flex-lightbox-coverall" />');
+        $("#flex-lightbox-coverall").click(function(){methods.lightbox.close();});
+        slider.find(".icon-close").on('click',function(){methods.lightbox.close();});
+		methods.lightbox.init();
+	  }
     }
     
     slider.doMath = function() {
