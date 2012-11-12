@@ -25,6 +25,7 @@
         asNav = vars.asNavFor !== "",
         methods = {};
     
+    
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
     
@@ -71,6 +72,9 @@
           slider.container.empty().append(slider.slides);
         }
         
+        slider.fixedHeightMiddleAlign = vars.fixedHeightMiddleAlign;
+        slider.lightbox = vars.lightbox;
+        
         slider.doMath();
         
         // ASNAV:
@@ -94,6 +98,10 @@
                            (keycode === 37) ? slider.getTarget('prev') : false;
               slider.flexAnimate(target, vars.pauseOnAction);
             }
+            // Close Lightbox with ESC
+			if ( slider.lightbox && keycode == 27 ) {
+			  methods.lightbox.close();
+			}
           });
         }
         // MOUSEWHEEL:
@@ -126,7 +134,6 @@
         
         // FADE&&SMOOTHHEIGHT || SLIDE:
         if (!fade || (fade && vars.smoothHeight)) $(window).bind("resize focus", methods.resize);
-        
         
         // API: start() Callback
         setTimeout(function(){
@@ -387,8 +394,13 @@
         }
       },
       resize: function() {
+		if (!slider.is(':visible')) {
+		}
         if (!slider.animating && slider.is(':visible')) {
-          if (!carousel) slider.doMath();
+		
+          if (!carousel) {
+			slider.doMath();
+		  }
           
           if (fade) {
             // SMOOTH HEIGHT:
@@ -404,6 +416,8 @@
           } else {
             // SMOOTH HEIGHT:
             if (vars.smoothHeight) methods.smoothHeight();
+            // fixedHeightMiddleAlign:
+            if (slider.fixedHeightMiddleAlign) methods.middleAlign();
             slider.newSlides.width(slider.computedW);
             slider.setProps(slider.computedW, "setTotal");
           }
@@ -414,6 +428,44 @@
           var $obj = (fade) ? slider : slider.viewport;
           (dur) ? $obj.animate({"height": slider.slides.eq(slider.animatingTo).height()}, dur) : $obj.height(slider.slides.eq(slider.animatingTo).height());
         }
+      },
+      middleAlign: function() {
+        slider.maxHeight = 0;
+        slider.slides.each(function() {
+          if ($(this).height() > slider.maxHeight) slider.maxHeight = $(this).height();
+        });
+        slider.slides.each(function() {
+          $this = $(this);
+          if (slider.maxHeight > $this.height()) {
+            paddingTop = Math.round((slider.maxHeight - $this.height())/2);
+            $this.css({'padding-top': paddingTop});
+          }
+        });
+      },
+      lightbox: {
+		init : function() {
+			slider.find("img").click(function(e) {
+                var sWidth  = slider.width()
+                  , sHeight = slider.height()
+                  , sRatio  = sWidth / sHeight
+                  , wHeight = window.innerHeight-150
+                  // By removing 5% of the height, the math seems to work better.
+                  // When not removing this 5%, the image often hangs out the bottom.
+                  , wWidth  = (wHeight * .95) * sRatio
+				slider.wrap('<div id="flex-lightbox"/>');
+                $("#flex-lightbox").css({
+                    "max-height" : wHeight,     // By setting max-width, we allow for the screen/slider to resize down
+                    "max-width"  : wWidth       // By setting max-width, we allow for the screen/slider to resize down
+                });
+                $("#flex-lightbox-coverall").show();
+				methods.resize();
+			});
+		},
+		close : function() {
+			slider.unwrap();
+            $("#flex-lightbox-coverall").hide();
+			methods.resize();
+		}		
       },
       sync: function(action) {
         var $obj = $(vars.sync).data("flexslider"),
@@ -621,6 +673,7 @@
     }
     
     slider.setup = function(type) {
+
       // SLIDE:
       if (!fade) {
         var sliderOffset, arr;
@@ -665,6 +718,8 @@
             slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
             // SMOOTH HEIGHT:
             if (vars.smoothHeight) methods.smoothHeight();
+            // fixedHeightMiddleAlign:
+            if (slider.fixedHeightMiddleAlign) methods.middleAlign();
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE: 
@@ -678,10 +733,22 @@
         }
         // SMOOTH HEIGHT:
         if (vars.smoothHeight) methods.smoothHeight();
+        // fixedHeightMiddleAlign:
+        if (slider.fixedHeightMiddleAlign) methods.middleAlign();
       }
       // !CAROUSEL:
       // CANDIDATE: active slide
       if (!carousel) slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide");
+	  
+      // if lightbox:
+      if (slider.lightbox) {
+		slider.addClass("lightbox");
+		slider.prepend('<i class="icon-close"></i>');
+        slider.after('<div id="flex-lightbox-coverall" />');
+        $("#flex-lightbox-coverall").click(function(){methods.lightbox.close();});
+        slider.find(".icon-close").on('click',function(){methods.lightbox.close();});
+		methods.lightbox.init();
+	  }
     }
     
     slider.doMath = function() {
@@ -811,6 +878,7 @@
     reverse: false,                 //{NEW} Boolean: Reverse the animation direction
     animationLoop: true,             //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
     smoothHeight: false,            //{NEW} Boolean: Allow height of the slider to animate smoothly in horizontal mode  
+    fixedHeightMiddleAlign: false,  // {NEW} Boolean: Set the height of the slider to accomodate the tallest, then pad each slide to center it vertically
     startAt: 0,                     //Integer: The slide that the slider should start on. Array notation (0 = first slide)
     slideshow: true,                //Boolean: Animate slider automatically
     slideshowSpeed: 7000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
@@ -858,7 +926,8 @@
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
-    removed: function(){}           //{NEW} Callback: function(slider) - Fires after a slide is removed
+    removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
+	lightbox: false                 // {NEW} Boolean: Creates a lightbox-esque effect
   }
 
 

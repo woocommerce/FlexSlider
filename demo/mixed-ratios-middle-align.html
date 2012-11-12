@@ -40,7 +40,6 @@
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
           <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li>  
           <li><a href="video.html">Video & the api (vimeo)</a></li>
-		  		<li><a class="lightbox" href="lightbox.html">Lightbox</a></li>
         </ul>
       </nav>
     </header>
@@ -54,6 +53,9 @@
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
+  	    		</li>
+  	    		<li>
+  	    	    <img src="images/kitchen_adventurer_lemon_sideways.jpg" />
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_donut.jpg" />
@@ -122,9 +124,8 @@
     $(window).load(function(){
       $('.flexslider').flexslider({
         animation: "slide",
-        start: function(slider){
-          $('body').removeClass('loading');
-        }
+        start: function() {$('body').removeClass('loading');},
+        fixedHeightMiddleAlign: true
       });
     });
   </script>
