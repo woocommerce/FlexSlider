@@ -521,8 +521,7 @@
           } else {
             slider.slides.eq(slider.currentSlide).css({ "opacity": 0, "zIndex": 1 });
             slider.slides.eq(target).css({ "opacity": 1, "zIndex": 2 });
-            slider.animating = false;
-            slider.currentSlide = slider.animatingTo;
+            slider.wrapup();
           }
         }
         // SMOOTH HEIGHT:
