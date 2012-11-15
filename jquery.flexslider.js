@@ -882,7 +882,7 @@
         if ($slides.length === 1) {
           $slides.fadeIn(400);
           if (options.start) options.start($this);
-        } else if ($this.data('flexslider') === undefined) {
+        } else if ($this.data('flexslider') == undefined) {
           new $.flexslider(this, options);
         }
       });
