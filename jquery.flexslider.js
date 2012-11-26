@@ -143,7 +143,7 @@
             e.preventDefault();
             var $slide = $(this),
                 target = $slide.index();
-            if (!$(vars.asNavFor).data('flexslider').animating && !$slide.hasClass('active')) {
+            if (!$(vars.asNavFor).data('flexslider').animating && !$slide.hasClass(namespace + "active-slide")) {
               slider.direction = (slider.currentItem < target) ? "next" : "prev";
               slider.flexAnimate(target, vars.pauseOnAction, false, true, true);
             }
