@@ -28,7 +28,7 @@
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
     
-    // Privat slider methods
+    // Private slider methods
     methods = {
       init: function() {
         slider.animating = false;
