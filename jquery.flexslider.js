@@ -554,7 +554,7 @@
     
     // SLIDESHOW:
     slider.animateSlides = function() {
-      if (!slider.animating) slider.flexAnimate(slider.getTarget("next"));
+      if (!slider.animating && focused) slider.flexAnimate(slider.getTarget("next"));
     }
     // SLIDESHOW:
     slider.pause = function() {
