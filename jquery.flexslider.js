@@ -27,6 +27,9 @@
 
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
+    
+    // expose options for API
+    slider.options = vars;
 
     // Privat slider methods
     methods = {
