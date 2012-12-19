@@ -715,6 +715,16 @@
         slider.last =  slider.pagingCount - 1;
         slider.limit = (slider.pagingCount === 1) ? 0 :
                        (vars.itemWidth > slider.w) ? ((slider.itemW + (slideMargin * 2)) * slider.count) - slider.w - slideMargin : ((slider.itemW + slideMargin) * slider.count) - slider.w - slideMargin;
+
+        // Check if the total width is greater than the sum of the item widths
+        // If so, completely hide the control nav
+        if('directionNav' in slider) {
+          if(slider.w > slider.itemT * slider.count) {
+            slider.directionNav.hide();
+          } else {
+            slider.directionNav.show();
+          }
+        }
       } else {
         slider.itemW = slider.w;
         slider.pagingCount = slider.count;
