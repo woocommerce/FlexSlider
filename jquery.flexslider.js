@@ -171,7 +171,7 @@
               slide = slider.slides.eq(i);
               item = (vars.controlNav === "thumbnails") ? '<img src="' + slide.attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
               if(vars.thumbnailCaptions===true) {
-                  var captn = slide.find('.flexCaption').html();
+                  var captn = slide.attr('data-thumbcaption');
                   item = item + '<span class="caption">'+captn+'</span>';
               }
               slider.controlNavScaffold.append('<li>' + item + '</li>');
