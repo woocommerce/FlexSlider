@@ -200,7 +200,7 @@
           slider.controlNav = slider.manualControls;
           methods.controlNav.active();
           
-          slider.controlNav.live(eventType, function(event) {
+          slider.controlNav.on(eventType, function(event) {
             event.preventDefault();
             var $this = $(this),
                 target = slider.controlNav.index($this);
@@ -212,7 +212,7 @@
           });
           // Prevent iOS click event bug
           if (touch) {
-            slider.controlNav.live("click touchstart", function(event) {
+            slider.controlNav.on("click touchstart", function(event) {
               event.preventDefault();
             });
           }
