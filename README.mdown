@@ -1,7 +1,17 @@
 # FlexSlider 2
 http://www.woothemes.com/flexslider/ - Copyright (c) 2012 WooThemes
 
-Documentation guides for properties and theming are coming soon. Shortly thereafter, the download builder will be released, where you can create minified FlexSlider scripts that contain only the properties you need. It's a brave new world.
+## Updates
+
+** Version 2.2 / January 25, 2013**
+
+- Fixed event handler conflicts with devices that are both click and touch enabled. e.g., Windows 8.
+- Made all slider variables public, stored in `slider.vars`. This allows manipulation of `slider.vars.minItems` and `slider.vars.maxItems` on the fly to create different fluid grids at certain breakpoints. [Check out this example demonstrating a basic technique](http://flexslider.woothemes.com/dynamic-carousel-min-max.html)
+- Fixed calculations that were causing strange issues with paging and certain FlexSliders to out of alignment.
+
+*Be sure to test v2.2 with your current slider, before pushing live, to ensure everything is playing nicely.*
+
+-----
 
 ## General Notes
 FlexSlider is no longer licensed under the MIT license. FlexSlider now shares the common licensed used for all WooThemes themes, GPLv2.
@@ -10,7 +20,6 @@ In an effort to move the plugin forward, support for jQuery 1.3.2 has been dropp
 
 Your old styles and properties *might not work out of the box*. Some property names have been changed, noted below, as well as namespacing prefixes being applied to all elements. This means that `.flex-direction-nav .next` is now `.flex-direction-nav .flex-next` by default. The namespacing property is exposed, free for you to change.
 
-## Updates
 No more overflow hidden woes! The plugin now generates a viewport element to handle the tedious task of working around overflow hidden. Yay!
 
 The slider element is now accessible outside of the callback API via the jQuery .data() method. Example use: `$('#slider').data('flexslider')`
