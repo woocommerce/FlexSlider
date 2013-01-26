@@ -3,13 +3,13 @@ http://www.woothemes.com/flexslider/ - Copyright (c) 2012 WooThemes
 
 ## Updates
 
-** Version 2.2 / January 25, 2013**
+** Version 2.2.0 / January 25, 2013**
 
 - Fixed event handler conflicts with devices that are both click and touch enabled. e.g., Windows 8.
 - Made all slider variables public, stored in `slider.vars`. This allows manipulation of `slider.vars.minItems` and `slider.vars.maxItems` on the fly to create different fluid grids at certain breakpoints. [Check out this example demonstrating a basic technique](http://flexslider.woothemes.com/dynamic-carousel-min-max.html)
-- Fixed calculations that were causing strange issues with paging and certain FlexSliders to out of alignment.
+- Fixed calculations that were causing strange issues with paging and certain FlexSliders to move out of alignment.
 
-*Be sure to test v2.2 with your current slider, before pushing live, to ensure everything is playing nicely.*
+*Be sure to test v2.2.0 with your current slider, before pushing live, to ensure everything is playing nicely.*
 
 -----
 
