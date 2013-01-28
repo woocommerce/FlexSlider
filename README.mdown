@@ -62,7 +62,7 @@ The markup structure for FlexSlider has been limited to a "ul.slide li" pattern 
 ### easing: *{new}*
 `easing` allows support for jQuery easing! Default options provided by jQuery are "swing" and "linear," but more can be used by included the jQuery Easing plugin. *If you chose a non-existent easing method, the slider will break.*
 
-*Note: You need to set `useCCS: false` to force transitions in browsers that support translate3d.*
+*Note: You need to set `useCSS: false` to force transitions in browsers that support translate3d.*
 *Optional: [jQuery Easing Plugin](http://gsgd.co.uk/sandbox/jquery/easing/)*
 
 ### direction: *{changed}*
