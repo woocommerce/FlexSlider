@@ -24,6 +24,7 @@
         fade = vars.animation === "fade",
         asNav = vars.asNavFor !== "",
         methods = {};
+        focused=true;
     
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
@@ -553,7 +554,7 @@
     
     // SLIDESHOW:
     slider.animateSlides = function() {
-      if (!slider.animating) slider.flexAnimate(slider.getTarget("next"));
+      if (!slider.animating && focused) slider.flexAnimate(slider.getTarget("next"));
     }
     // SLIDESHOW:
     slider.pause = function() {
@@ -806,7 +807,13 @@
     
     //FlexSlider: Initialize
     methods.init();
-  }
+    
+    $(window).blur(function() {
+    focused = false;
+    }).focus(function() {
+        focused = true;
+      });
+    }
   
   //FlexSlider: Default Settings
   $.flexslider.defaults = {
