@@ -29,7 +29,7 @@
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
     
-    // Privat slider methods
+    // Private slider methods
     methods = {
       init: function() {
         slider.animating = false;
@@ -144,7 +144,7 @@
             e.preventDefault();
             var $slide = $(this),
                 target = $slide.index();
-            if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass('active')) {
+            if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass(namespace + "active-slide")) {
               slider.direction = (slider.currentItem < target) ? "next" : "prev";
               slider.flexAnimate(target, slider.vars.pauseOnAction, false, true, true);
             }
@@ -278,17 +278,17 @@
         update: function() {
           var disabledClass = namespace + 'disabled';
           if (slider.pagingCount === 1) {
-            slider.directionNav.addClass(disabledClass);
+            slider.directionNav.addClass(disabledClass).attr('tabindex', '-1');
           } else if (!slider.vars.animationLoop) {
             if (slider.animatingTo === 0) {
-              slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "prev").addClass(disabledClass);
+              slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "prev").addClass(disabledClass).attr('tabindex', '-1');
             } else if (slider.animatingTo === slider.last) {
-              slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "next").addClass(disabledClass);
+              slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "next").addClass(disabledClass).attr('tabindex', '-1');
             } else {
-              slider.directionNav.removeClass(disabledClass);
+              slider.directionNav.removeClass(disabledClass).removeAttr('tabindex');
             }
           } else {
-            slider.directionNav.removeClass(disabledClass);
+            slider.directionNav.removeClass(disabledClass).removeAttr('tabindex');
           }
         }
       },
