@@ -161,13 +161,19 @@
         setupPaging: function() {
           var type = (vars.controlNav === "thumbnails") ? 'control-thumbs' : 'control-paging',
               j = 1,
-              item;
+              item,
+              slide;
           
           slider.controlNavScaffold = $('<ol class="'+ namespace + 'control-nav ' + namespace + type + '"></ol>');
           
           if (slider.pagingCount > 1) {
             for (var i = 0; i < slider.pagingCount; i++) {
-              item = (vars.controlNav === "thumbnails") ? '<img src="' + slider.slides.eq(i).attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
+              slide = slider.slides.eq(i);
+              item = (vars.controlNav === "thumbnails") ? '<img src="' + slide.attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
+              if(vars.thumbnailCaptions===true) {
+                  var captn = slide.attr('data-thumbcaption');
+                  item = item + '<span class="caption">'+captn+'</span>';
+              }
               slider.controlNavScaffold.append('<li>' + item + '</li>');
               j++;
             }
@@ -429,6 +435,7 @@
     
     // public methods
     slider.flexAnimate = function(target, pause, override, withSync, fromNav) {
+
       if (asNav && slider.pagingCount === 1) slider.direction = (slider.currentItem < target) ? "next" : "prev";
       
       if (!slider.animating && (slider.canAdvance(target, fromNav) || override) && slider.is(":visible")) {
@@ -824,6 +831,7 @@
     animationSpeed: 600,            //Integer: Set the speed of animations, in milliseconds
     initDelay: 0,                   //{NEW} Integer: Set an initialization delay, in milliseconds
     randomize: false,               //Boolean: Randomize slide order
+    thumbnailCaptions: false,       //Boolean: whether or not to put captions on thumbnails as well
     
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
