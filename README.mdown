@@ -28,6 +28,7 @@ Helper strings have been added for performing actions quickly on FlexSlider elem
 
 - `$('#slider').flexslider("play")  //Play slideshow`
 - `$('#slider').flexslider("pause") //Pause slideshow`
+- `$('#slider').flexslider("stop") //Stop slideshow`
 - `$('#slider').flexslider("next")  //Go to next slide`
 - `$('#slider').flexslider("prev")  //Go to previous slide`
 - `$('#slider').flexslider(3)       //Go fourth slide`
@@ -45,6 +46,7 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 - [Basic Carousel](http://flexslider.woothemes.com/basic-carousel.html)
 - [Carousel with min and max ranges](http://flexslider.woothemes.com/carousel-min-max.html)
 - [Video with Vimeo API](http://flexslider.woothemes.com/video.html)
+- [Video with Wistia API](http://flexslider.woothemes.com/video-wistia.html)
 
 
 ## Properties
