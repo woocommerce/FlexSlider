@@ -4,31 +4,31 @@
 	<meta content="charset=utf-8">
 	<title>FlexSlider 2</title>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
-	
+
   <!-- Syntax Highlighter -->
 	<link href="css/shCore.css" rel="stylesheet" type="text/css" />
   <link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
   <!-- Demo CSS -->
 	<link rel="stylesheet" href="css/demo.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../flexslider.css" type="text/css" media="screen" />
-	
+
 	<!-- Modernizr -->
   <script src="js/modernizr.js"></script>
 
   <!-- Wistia iframe API -->
   <script src="//fast.wistia.com/static/iframe-api-v1.js"></script>
-  
+
 </head>
 <body class="loading">
 
 	<div id="top">
-		
+
 		<a href="http://www.woothemes.com" title="WooThemes">
 			<img src="images/logo.png" alt="WooThemes" />
 		</a>
-	
+
 	</div>
-  
+
   <div id="container" class="cf">
     <header role="navigation">
       <h1>FlexSlider 2</h1>
@@ -41,10 +41,10 @@
           <li><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
           <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
-          <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li> 
+          <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li>
           <li><a href="dynamic-carousel-min-max.html">Carousel with dynamic min/max ranges</a></li>
           <li><a href="video.html">Video & the api (vimeo)</a></li>
-          <li><a class="active" href="video-wistia.html">Video & the api (wistia)</a></li>         
+          <li><a class="active" href="video-wistia.html">Video & the api (wistia)</a></li>
         </ul>
       </nav>
     </header>
@@ -53,7 +53,7 @@
         <div class="flexslider">
           <ul class="slides">
             <li>
-              <iframe id="player_1" src="http://fast.wistia.com/embed/iframe/t4yniozocs?controlsVisibleOnLoad=true&amp;playerColor=474745&amp;version=v1&amp;videoHeight=366&amp;videoWidth=650&amp;volumeControl=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="650" height="366"></iframe>
+              <iframe id="player_1" src="http://fast.wistia.com/embed/iframe/t4yniozocs?controlsVisibleOnLoad=true&amp;playerColor=474745&amp;version=v1&amp;videoHeight=366&amp;videoWidth=650&amp;volumeControl=true&videoFoam=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="650" height="366"></iframe>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
@@ -92,7 +92,7 @@
                 smoothHeight: true,
                 start: function( slider ) {
                   $('body').removeClass( 'loading' );
-                }, 
+                },
                 before: function ( slider ) {
                   wistiaEmbed.pause();
                 }
@@ -114,7 +114,7 @@
             &lt;div class="flexslider">
               &lt;ul class="slides">
                 &lt;li>
-                  &lt;iframe id="player_1" src="http://fast.wistia.com/embed/iframe/t4yniozocs?controlsVisibleOnLoad=true&amp;playerColor=474745&amp;version=v1&amp;videoHeight=366&amp;videoWidth=650&amp;volumeControl=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="650" height="366"&gt;&lt;/iframe&gt;
+                  &lt;iframe id="player_1" src="http://fast.wistia.com/embed/iframe/t4yniozocs?controlsVisibleOnLoad=true&amp;playerColor=474745&amp;version=v1&amp;videoHeight=366&amp;videoWidth=650&amp;volumeControl=true&videoFoam=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="650" height="366"&gt;&lt;/iframe&gt;
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide2.jpg" />
@@ -131,16 +131,16 @@
         </div>
       </aside>
     </div>
-  
+
   </div>
-    
+
   <!-- jQuery -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
-  
+
   <!-- FlexSlider -->
   <script defer src="../jquery.flexslider.js"></script>
-  
+
   <script type="text/javascript">
     $(function(){
       SyntaxHighlighter.all();
@@ -159,7 +159,7 @@
           smoothHeight: true,
           start: function( slider ) {
             $('body').removeClass( 'loading' );
-          }, 
+          },
           before: function ( slider ) {
             wistiaEmbed.pause();
           }
@@ -174,15 +174,15 @@
       });
     });
   </script>
-  
+
    <!-- Syntax Highlighter -->
 	<script type="text/javascript" src="js/shCore.js"></script>
 	<script type="text/javascript" src="js/shBrushXml.js"></script>
 	<script type="text/javascript" src="js/shBrushJScript.js"></script>
-  
+
   <!-- Optional FlexSlider Additions -->
 	<script src="js/jquery.fitvid.js"></script>
 	<script src="js/demo.js"></script>
-  
+
 </body>
 </html>
