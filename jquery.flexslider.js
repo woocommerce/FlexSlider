@@ -506,8 +506,10 @@
               slider.currentSlide = slider.animatingTo;
             }
             slider.container.unbind("webkitTransitionEnd transitionend");
-            slider.container.bind("webkitTransitionEnd transitionend", function() {
+            slider.container.bind("webkitTransitionEnd transitionend", function(event) {
+            if (slider.container[0] === event.srcElement) {
               slider.wrapup(dimension);
+            }
             });
           } else {
             slider.container.animate(slider.args, vars.animationSpeed, vars.easing, function(){
