@@ -3,7 +3,16 @@
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
-;(function ($) {
+;
+(function(factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
 
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
@@ -942,4 +951,4 @@
       }
     }
   }
-})(jQuery);
+}))(jQuery);
