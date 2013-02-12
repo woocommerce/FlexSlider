@@ -128,3 +128,6 @@ Description to be added.
 
 ### removed: *{new}*
 `removed()` is a new callback event fired in the new slider.removeSlide() function.
+
+### resumeOnPause: *{new}*
+`resumeOnPause` is used to resume the slideshow if it was paused due to user action.
