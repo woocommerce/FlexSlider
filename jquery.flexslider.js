@@ -347,32 +347,64 @@
           startT,
           scrolling = false;
 
+        var localX = 0;
+        var localY = 0;
+
         el.addEventListener('touchstart', onTouchStart, false);
+        // Cater for Windows-device touch events.
+        if (window.navigator.msPointerEnabled) {
+          el.addEventListener('MSPointerDown', onTouchStart, false);
+        }
         function onTouchStart(e) {
           if (slider.animating) {
             e.preventDefault();
-          } else if (e.touches.length === 1) {
+          } else if ( e.touches.length === 1 || ( window.navigator.msPointerEnabled && e.isPrimary ) ) {
             slider.pause();
             // CAROUSEL:
             cwidth = (vertical) ? slider.h : slider. w;
             startT = Number(new Date());
             // CAROUSEL:
+
+            // Local vars for X and Y points.
+            localX = e.touches[0].pageX;
+            localY = e.touches[0].pageY;
+            // Cater for Windows-device touch events.
+            if (window.navigator.msPointerEnabled) {
+              localX = e.pageX;
+              localY = e.pageY;
+            }
+
             offset = (carousel && reverse && slider.animatingTo === slider.last) ? 0 :
                      (carousel && reverse) ? slider.limit - (((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.animatingTo) :
                      (carousel && slider.currentSlide === slider.last) ? slider.limit :
                      (carousel) ? ((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.currentSlide :
                      (reverse) ? (slider.last - slider.currentSlide + slider.cloneOffset) * cwidth : (slider.currentSlide + slider.cloneOffset) * cwidth;
-            startX = (vertical) ? e.touches[0].pageY : e.touches[0].pageX;
-            startY = (vertical) ? e.touches[0].pageX : e.touches[0].pageY;
+            startX = (vertical) ? localY : localX;
+            startY = (vertical) ? localX : localY;
 
             el.addEventListener('touchmove', onTouchMove, false);
             el.addEventListener('touchend', onTouchEnd, false);
+
+            // Cater for Windows-device touch events.
+            if (window.navigator.msPointerEnabled) {
+              el.addEventListener('MSPointerMove', onTouchMove, false);
+              el.addEventListener('MSPointerUp', onTouchEnd, false);
+            }
           }
         }
 
         function onTouchMove(e) {
-          dx = (vertical) ? startX - e.touches[0].pageY : startX - e.touches[0].pageX;
-          scrolling = (vertical) ? (Math.abs(dx) < Math.abs(e.touches[0].pageX - startY)) : (Math.abs(dx) < Math.abs(e.touches[0].pageY - startY));
+          // Local vars for X and Y points.
+          localX = e.touches[0].pageX;
+          localY = e.touches[0].pageY;
+          // Cater for Windows-device touch events.
+          if (window.navigator.msPointerEnabled) {
+            localX = e.pageX;
+            localY = e.pageY;
+          }
+
+          dx = (vertical) ? startX - localY : startX - localX;
+          scrolling = (vertical) ? (Math.abs(dx) < Math.abs(localX - startY)) : (Math.abs(dx) < Math.abs(localY - startY));
 
           if (!scrolling || Number(new Date()) - startT > 500) {
             e.preventDefault();
@@ -388,6 +420,10 @@
         function onTouchEnd(e) {
           // finish the touch by undoing the touch session
           el.removeEventListener('touchmove', onTouchMove, false);
+          // Cater for Windows-device touch events.
+          if (window.navigator.msPointerEnabled) {
+            el.removeEventListener('MSPointerMove', onTouchMove, false);
+          }
 
           if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
             var updateDx = (reverse) ? -dx : dx,
@@ -400,6 +436,10 @@
             }
           }
           el.removeEventListener('touchend', onTouchEnd, false);
+          // Cater for Windows-device touch events.
+          if (window.navigator.msPointerEnabled) {
+            el.removeEventListener('MSPointerUp', onTouchEnd, false);
+          }
           startX = null;
           startY = null;
           dx = null;
@@ -552,8 +592,7 @@
           } else {
             slider.slides.eq(slider.currentSlide).css({ "opacity": 0, "zIndex": 1 });
             slider.slides.eq(target).css({ "opacity": 1, "zIndex": 2 });
-            slider.animating = false;
-            slider.currentSlide = slider.animatingTo;
+            slider.wrapup(dimension);
           }
         }
         // SMOOTH HEIGHT:
