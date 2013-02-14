@@ -581,7 +581,7 @@
              (asNav && slider.currentItem === 0 && target === slider.pagingCount - 1 && slider.direction !== "next") ? false :
              (target === slider.currentSlide && !asNav) ? false :
              (vars.animationLoop) ? true :
-             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction !== "next") ? false :
+             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction === "prev") ? false :
              (slider.atEnd && slider.currentSlide === last && target === 0 && slider.direction === "next") ? false :
              true;
     }
