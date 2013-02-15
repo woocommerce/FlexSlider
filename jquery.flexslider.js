@@ -14,10 +14,10 @@
     slider.vars = $.extend({}, $.flexslider.defaults, options);
 
     var namespace = slider.vars.namespace,
-        touch = (("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
+        touch = (( "ontouchstart" in window ) || ( "MSPointerDown" in window ) || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
         // depricating this idea, as devices are being released with both of these events
         //eventType = (touch) ? "touchend" : "click",
-        eventType = "click touchend",
+        eventType = "click touchend MSPointerUp",
         watchedEvent = "",
         watchedEventClearTimer,
         vertical = slider.vars.direction === "vertical",
