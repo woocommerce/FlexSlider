@@ -129,7 +129,7 @@
         if (touch && slider.vars.touch) methods.touch();
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize focus", methods.resize);
+        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize orientationchange focus", methods.resize);
 
 
         // API: start() Callback
