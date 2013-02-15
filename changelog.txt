@@ -1,0 +1,4 @@
+FLEXSLIDER CHANGELOG
+
+2013.02.15 - Version 2.0
+ * Added changelog.txt
