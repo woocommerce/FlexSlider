@@ -206,7 +206,6 @@ nav li.active a  { cursor: default; }
 		z-index: 9999;
 		border: 1px solid #1e5486;
 		background: #255a8c;
-		border: 1px solid 
 		-webkit-border-radius: 3px;
 		   -moz-border-radius: 3px;
 		        border-radius: 3px;
@@ -254,9 +253,9 @@ nav li.active a  { cursor: default; }
 	nav ul:hover .active {
 		border: 1px solid #1e5486!important;
 		background: #255a8c;
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
-		border-radius: 5px;
+		-webkit-border-radius: 1px;
+		-moz-border-radius: 1px;
+		border-radius: 1px;
 	}
 	nav ul:hover .active a:after  {
 		display: none;
