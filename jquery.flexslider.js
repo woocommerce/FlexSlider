@@ -4,15 +4,7 @@
  * Contributing Author: Tyler Smith
  */
 ;
-(function(factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
+(function ($) {
 
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
@@ -22,10 +14,10 @@
     slider.vars = $.extend({}, $.flexslider.defaults, options);
 
     var namespace = slider.vars.namespace,
-        touch = (("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
+        touch = (( "ontouchstart" in window ) || ( window.navigator.msPointerEnabled ) || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
         // depricating this idea, as devices are being released with both of these events
         //eventType = (touch) ? "touchend" : "click",
-        eventType = "click touchend",
+        eventType = "click touchend MSPointerUp",
         watchedEvent = "",
         watchedEventClearTimer,
         vertical = slider.vars.direction === "vertical",
@@ -137,7 +129,7 @@
         if (touch && slider.vars.touch) methods.touch();
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize focus", methods.resize);
+        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize orientationchange focus", methods.resize);
 
 
         // API: start() Callback
@@ -176,13 +168,19 @@
         setupPaging: function() {
           var type = (slider.vars.controlNav === "thumbnails") ? 'control-thumbs' : 'control-paging',
               j = 1,
-              item;
+              item,
+              slide;
 
           slider.controlNavScaffold = $('<ol class="'+ namespace + 'control-nav ' + namespace + type + '"></ol>');
 
           if (slider.pagingCount > 1) {
             for (var i = 0; i < slider.pagingCount; i++) {
-              item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slider.slides.eq(i).attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
+              slide = slider.slides.eq(i);
+              item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"/>' : '<a>' + j + '</a>';
+              if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
+                var captn = slide.attr( 'data-thumbcaption' );
+                if ( '' != captn && undefined != captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
+              }
               slider.controlNavScaffold.append('<li>' + item + '</li>');
               j++;
             }
@@ -367,7 +365,7 @@
         function onTouchStart(e) {
           if (slider.animating) {
             e.preventDefault();
-          } else if ( e.touches.length === 1 || ( window.navigator.msPointerEnabled && e.isPrimary ) ) {
+          } else if ( ( window.navigator.msPointerEnabled ) || e.touches.length === 1 ) {
             slider.pause();
             // CAROUSEL:
             cwidth = (vertical) ? slider.h : slider. w;
@@ -397,25 +395,32 @@
             // Cater for Windows-device touch events.
             if (window.navigator.msPointerEnabled) {
               el.addEventListener('MSPointerMove', onTouchMove, false);
-              el.addEventListener('MSPointerUp', onTouchEnd, false);
+              el.addEventListener('MSPointerOut', onTouchEnd, false);
             }
           }
         }
 
         function onTouchMove(e) {
           // Local vars for X and Y points.
-          localX = e.touches[0].pageX;
-          localY = e.touches[0].pageY;
           // Cater for Windows-device touch events.
-          if (window.navigator.msPointerEnabled) {
+          if ( window.navigator.msPointerEnabled ) {
             localX = e.pageX;
             localY = e.pageY;
+          } else {
+            localX = e.touches[0].pageX;
+            localY = e.touches[0].pageY;
           }
 
           dx = (vertical) ? startX - localY : startX - localX;
           scrolling = (vertical) ? (Math.abs(dx) < Math.abs(localX - startY)) : (Math.abs(dx) < Math.abs(localY - startY));
 
-          if (!scrolling || Number(new Date()) - startT > 500) {
+          if ( window.navigator.msPointerEnabled ) {
+            var fxms = 100;
+          } else {
+            var fxms = 500;
+          }
+
+          if ( ! scrolling || Number( new Date() ) - startT > fxms ) {
             e.preventDefault();
             if (!fade && slider.transitions) {
               if (!slider.vars.animationLoop) {
@@ -447,7 +452,7 @@
           el.removeEventListener('touchend', onTouchEnd, false);
           // Cater for Windows-device touch events.
           if (window.navigator.msPointerEnabled) {
-            el.removeEventListener('MSPointerUp', onTouchEnd, false);
+            el.removeEventListener('MSPointerOut', onTouchEnd, false);
           }
           startX = null;
           startY = null;
@@ -907,10 +912,10 @@
     namespace: "flex-",             //{NEW} String: Prefix string attached to the class of every element generated by the plugin
     selector: ".slides > li",       //{NEW} Selector: Must match a simple pattern. '{container} > {slide}' -- Ignore pattern at your own peril
     animation: "fade",              //String: Select your animation type, "fade" or "slide"
-    easing: "swing",               //{NEW} String: Determines the easing method used in jQuery transitions. jQuery easing plugin is supported!
+    easing: "swing",                //{NEW} String: Determines the easing method used in jQuery transitions. jQuery easing plugin is supported!
     direction: "horizontal",        //String: Select the sliding direction, "horizontal" or "vertical"
     reverse: false,                 //{NEW} Boolean: Reverse the animation direction
-    animationLoop: true,             //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
+    animationLoop: true,            //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
     smoothHeight: false,            //{NEW} Boolean: Allow height of the slider to animate smoothly in horizontal mode
     startAt: 0,                     //Integer: The slide that the slider should start on. Array notation (0 = first slide)
     slideshow: true,                //Boolean: Animate slider automatically
@@ -918,6 +923,7 @@
     animationSpeed: 600,            //Integer: Set the speed of animations, in milliseconds
     initDelay: 0,                   //{NEW} Integer: Set an initialization delay, in milliseconds
     randomize: false,               //Boolean: Randomize slide order
+    thumbCaptions: false,           //Boolean: Whether or not to put captions on thumbnails when using the "thumbnails" controlNav.
 
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
@@ -994,4 +1000,4 @@
       }
     }
   }
-}))(jQuery);
+})(jQuery);
