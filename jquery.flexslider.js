@@ -14,7 +14,7 @@
     slider.vars = $.extend({}, $.flexslider.defaults, options);
 
     var namespace = slider.vars.namespace,
-        touch = (( "ontouchstart" in window ) || ( "MSPointerDown" in window ) || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
+        touch = (( "ontouchstart" in window ) || ( window.navigator.msPointerEnabled ) || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
         // depricating this idea, as devices are being released with both of these events
         //eventType = (touch) ? "touchend" : "click",
         eventType = "click touchend MSPointerUp",
@@ -365,7 +365,7 @@
         function onTouchStart(e) {
           if (slider.animating) {
             e.preventDefault();
-          } else if ( e.touches.length === 1 || ( window.navigator.msPointerEnabled && e.isPrimary ) ) {
+          } else if ( ( window.navigator.msPointerEnabled ) || e.touches.length === 1 ) {
             slider.pause();
             // CAROUSEL:
             cwidth = (vertical) ? slider.h : slider. w;
@@ -395,25 +395,32 @@
             // Cater for Windows-device touch events.
             if (window.navigator.msPointerEnabled) {
               el.addEventListener('MSPointerMove', onTouchMove, false);
-              el.addEventListener('MSPointerUp', onTouchEnd, false);
+              el.addEventListener('MSPointerOut', onTouchEnd, false);
             }
           }
         }
 
         function onTouchMove(e) {
           // Local vars for X and Y points.
-          localX = e.touches[0].pageX;
-          localY = e.touches[0].pageY;
           // Cater for Windows-device touch events.
-          if (window.navigator.msPointerEnabled) {
+          if ( window.navigator.msPointerEnabled ) {
             localX = e.pageX;
             localY = e.pageY;
+          } else {
+            localX = e.touches[0].pageX;
+            localY = e.touches[0].pageY;
           }
 
           dx = (vertical) ? startX - localY : startX - localX;
           scrolling = (vertical) ? (Math.abs(dx) < Math.abs(localX - startY)) : (Math.abs(dx) < Math.abs(localY - startY));
 
-          if (!scrolling || Number(new Date()) - startT > 500) {
+          if ( window.navigator.msPointerEnabled ) {
+            var fxms = 100;
+          } else {
+            var fxms = 500;
+          }
+
+          if ( ! scrolling || Number( new Date() ) - startT > fxms ) {
             e.preventDefault();
             if (!fade && slider.transitions) {
               if (!slider.vars.animationLoop) {
@@ -445,7 +452,7 @@
           el.removeEventListener('touchend', onTouchEnd, false);
           // Cater for Windows-device touch events.
           if (window.navigator.msPointerEnabled) {
-            el.removeEventListener('MSPointerUp', onTouchEnd, false);
+            el.removeEventListener('MSPointerOut', onTouchEnd, false);
           }
           startX = null;
           startY = null;
