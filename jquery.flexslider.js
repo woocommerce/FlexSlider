@@ -89,10 +89,21 @@
         if (vars.keyboard && ($(slider.containerSelector).length === 1 || vars.multipleKeyboard)) {
           $(document).bind('keyup', function(event) {
             var keycode = event.keyCode;
-            if (!slider.animating && (keycode === 39 || keycode === 37)) {
-              var target = (keycode === 39) ? slider.getTarget('next') :
-                           (keycode === 37) ? slider.getTarget('prev') : false;
-              slider.flexAnimate(target, vars.pauseOnAction);
+            if (vars.direction === 'vertical')
+            {
+                if (!slider.animating && (keycode === 40 || keycode === 38)) {
+                  var target = (keycode === 40) ? slider.getTarget('next') :
+                               (keycode === 38) ? slider.getTarget('prev') : false;
+                  slider.flexAnimate(target, vars.pauseOnAction);
+                }
+            }
+            else
+            {
+                if (!slider.animating && (keycode === 39 || keycode === 37)) {
+                    var target = (keycode === 39) ? slider.getTarget('next') :
+                        (keycode === 37) ? slider.getTarget('prev') : false;
+                    slider.flexAnimate(target, vars.pauseOnAction);
+                }
             }
           });
         }
