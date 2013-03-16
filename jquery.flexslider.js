@@ -200,7 +200,7 @@
           slider.controlNav = slider.manualControls;
           methods.controlNav.active();
 
-          slider.controlNav.live(eventType, function(event) {
+          var setupManualCallback = function(event) {
             event.preventDefault();
             var $this = $(this),
                 target = slider.controlNav.index($this);
@@ -209,12 +209,27 @@
               (target > slider.currentSlide) ? slider.direction = "next" : slider.direction = "prev";
               slider.flexAnimate(target, vars.pauseOnAction);
             }
-          });
-          // Prevent iOS click event bug
-          if (touch) {
-            slider.controlNav.live("click touchstart", function(event) {
-              event.preventDefault();
-            });
+          };
+
+          // detect if 'on' method is supported
+          if(slider.controlNav.on)
+          {
+            slider.controlNav.on(eventType, setupManualCallback);
+            // Prevent iOS click event bug
+            if (touch) {
+              slider.controlNav.on("click touchstart", function(event) {
+                event.preventDefault();
+              });
+            }
+          }
+          else
+          {
+            slider.controlNav.live(eventType, setupManualCallback);
+            if (touch) {
+              slider.controlNav.live("click touchstart", function(event) {
+                event.preventDefault();
+              });
+            }
           }
         },
         set: function() {
