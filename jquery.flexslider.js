@@ -32,7 +32,9 @@
     methods = {
       init: function() {
         slider.animating = false;
-        slider.currentSlide = vars.startAt;
+        // Get current slide and make sure it is a number
+        slider.currentSlide = parseInt( ( vars.startAt ? vars.startAt : 0) );
+        if ( isNaN( slider.currentSlide ) ) slider.currentSlide = 0;
         slider.animatingTo = slider.currentSlide;
         slider.atEnd = (slider.currentSlide === 0 || slider.currentSlide === slider.last);
         slider.containerSelector = vars.selector.substr(0,vars.selector.search(' '));
