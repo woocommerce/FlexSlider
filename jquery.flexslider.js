@@ -858,7 +858,8 @@
     minItems: 0,                    //{NEW} Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
-                                    
+    allowSingle: false,             //{NEW} Boolean: Wether or not to allow a slider comprised of a single slide
+    
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
@@ -877,9 +878,10 @@
       return this.each(function() {
         var $this = $(this),
             selector = (options.selector) ? options.selector : ".slides > li",
+            allowSingle = (options.allowSingle) ? options.allowSingle : false,
             $slides = $this.find(selector);
 
-        if ($slides.length === 1) {
+        if ($slides.length === 1 && !allowSingle) {
           $slides.fadeIn(400);
           if (options.start) options.start($this);
         } else if ($this.data('flexslider') == undefined) {
