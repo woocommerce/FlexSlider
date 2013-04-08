@@ -315,7 +315,7 @@
           }
         },
         update: function(state) {
-          (state === "play") ? slider.pausePlay.removeClass(namespace + 'pause').addClass(namespace + 'play').text(vars.playText) : slider.pausePlay.removeClass(namespace + 'play').addClass(namespace + 'pause').text(vars.pauseText);
+          (state === "play") ? slider.pausePlay.removeClass(namespace + 'pause').addClass(namespace + 'play').html(vars.playText) : slider.pausePlay.removeClass(namespace + 'play').addClass(namespace + 'pause').html(vars.pauseText);
         }
       },
       touch: function() {
