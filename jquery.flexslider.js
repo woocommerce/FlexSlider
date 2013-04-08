@@ -424,7 +424,14 @@
           case "play": if (!$obj.playing && !$obj.asNav) { $obj.play(); } break;
           case "pause": $obj.pause(); break;
         }
-      }
+      },
+	  uniqueID: function($clone) {
+		$clone.find( '[id]' ).each(function() {
+			var $this = $(this);
+			$this.attr( 'id', $this.attr( 'id' ) + '_clone' );
+		});
+		return $clone;
+	  }
     }
 
     // public methods
@@ -651,7 +658,9 @@
           slider.cloneOffset = 1;
           // clear out old clones
           if (type !== "init") slider.container.find('.clone').remove();
-          slider.container.append(slider.slides.first().clone().addClass('clone')).prepend(slider.slides.last().clone().addClass('clone'));
+
+		  methods.uniqueID( slider.slides.first().clone().addClass('clone') ).appendTo( slider.container );
+		  methods.uniqueID( slider.slides.last().clone().addClass('clone') ).prependTo( slider.container );
         }
         slider.newSlides = $(vars.selector, slider);
 
