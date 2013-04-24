@@ -1,0 +1,241 @@
+/* Reset Styles
+***********************/
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+body {line-height: 1;}
+ol, ul {list-style: none;}
+blockquote, q demo
+blockquote:before, blockquote:after,q:before, q:after {content: ''; content: none;}
+table {border-collapse: collapse; border-spacing: 0;}
+strong {font-weight: bold;}
+em {font-style: italic;}
+
+
+/*
+ * MyFonts Webfont Build ID 1114443, 2011-09-02T06:08:04-0400 - REGULAR
+ * MyFonts Webfont Build ID 1118460, 2011-09-05T07:13:16-0400 - MEDIUM
+ * MyFonts Webfont Build ID 825795, 2011-05-26T03:42:08-0400 - SEMIBOLD
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below
+ *
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=1114443 - REGULAR
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=1118460 - MEDIUM
+ * License: http://www.myfonts.com/viewlicense?1056 - SEMIBOLD
+ * 
+ * Webfont: Geogrotesque SemiBold
+ * URL: http://new.myfonts.com/fonts/emtype/geogrotesque/semibold/
+ * Foundry: Emtype Foundry
+ * Copyright: Copyright © 2009 by Eduardo Manso. All rights reserved.
+ * Licensed pageviews: 10,000,000/month
+ * 
+ * © 2011 Bitstream Inc
+*/
+
+/* GEO - Semibold */
+@font-face {font-family: 'Geogrotesque-SemiBold';src: url('../fonts/webfonts/geo-semibold/eot/style_169898.eot');src: url('../fonts/webfonts/geo-semibold/eot/style_169898.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-semibold/woff/style_169898.woff') format('woff'),url('../fonts/webfonts/geo-semibold/ttf/style_169898.ttf') format('truetype'),url('../fonts/webfonts/geo-semibold/svg/style_169898.svg#Geogrotesque-SemiBold') format('svg');}
+
+/* GEO - Medium */
+@font-face {font-family: 'Geogrotesque-Medium';src: url('../fonts/webfonts/geo-medium/eot/1110FC_0.eot');src: url('../fonts/webfonts/geo-medium/eot/1110FC_0.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-medium/woff/1110FC_0.woff') format('woff'),url('../fonts/webfonts/geo-medium/ttf/1110FC_0.ttf') format('truetype'),url('webfonts/1110FC_0.svg#wf') format('svg');}
+
+/* GEO - Regular */
+ @font-face {font-family: 'Geogrotesque-Regular';src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot');src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-regular/woff/11014B_0.woff') format('woff'),url('../fonts/webfonts/geo-regular/ttf/11014B_0.ttf') format('truetype'),url('../fonts/webfonts/geo-regular/svg/11014B_0.svg#wf') format('svg');}
+
+
+
+/* General
+***********************/
+body {
+	background: #fff; font-size: 14px; font-family: Helvetica, 'Arial', sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+	height: auto;
+	background: rgb(113,153,183); /* Old browsers */
+	background: -moz-radial-gradient(top, ellipse cover,  rgba(113,153,183,1) 0%, rgba(48,100,148,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, top center, 0px, center center, 100%, color-stop(0%,rgba(113,153,183,1)), color-stop(100%,rgba(48,100,148,1))); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(top, ellipse cover,  rgba(113,153,183,1) 0%,rgba(48,100,148,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(top, ellipse cover,  rgba(113,153,183,1) 0%,rgba(48,100,148,1) 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(top, ellipse cover,  rgba(113,153,183,1) 0%,rgba(48,100,148,1) 100%); /* IE10+ */
+	background: radial-gradient(top, ellipse cover,  rgba(113,153,183,1) 0%,rgba(48,100,148,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7199b7', endColorstr='#306494',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+a {color: #fff; text-decoration: none;}
+
+h3 { margin: 0 0 8px; color: #fff; font: normal 24px Geogrotesque-semibold, Helvetica, Arial, sans-serif;  text-shadow: 0 1px 0 #2F4C63; }
+p {font-size: 14px; line-height: 18px;}
+
+.toggle {margin: 2px 0 0 14px; float: left; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; }
+.toggle li {float: left;}
+.toggle li a {width: 50px; padding: 6px 0; text-align: center; display: block; text-shadow: 1px 1px 0 #fff; font-size: 12px; font-weight: 600; color: #666; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0; -o-border-radius: 0 4px 4px 0; border-radius: 0 4px 4px 0; 
+
+background: #ffffff; /* Old browsers */
+background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #ffffff 0%,#ededed 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #ffffff 0%,#ededed 100%); /* IE10+ */
+background: linear-gradient(top, #ffffff 0%,#ededed 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+
+box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #fff;
+-moz-box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #fff;
+-webkit-box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #fff;
+
+}
+.toggle li:first-child a {-webkit-border-radius: 4px 0 0 4px; -moz-border-radius: 4px 0 0 4px; -o-border-radius: 4px 0 0 4px; border-radius: 4px 0 0 4px;}
+.toggle li a:hover { background: #ededed; color: #222; }
+.toggle li a.active { background: #c8e0f3; color: #325874; cursor: default; box-shadow: inset 0 0 3px rgba(0,0,0,0.4); -moz-box-shadow: inset 0 0 3px rgba(0,0,0,0.4); -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.4); }
+
+#slider {margin: 0 0 10px!important;}
+#carousel li {margin-right: 5px;}
+#carousel img {display: block; opacity: .5; cursor: pointer;}
+#carousel img:hover {opacity: 1;}
+#carousel .flex-active-slide img {opacity: 1; cursor: default;}
+
+
+/* Loading
+***********************/
+.loading aside {opacity: 0;}
+aside {width: 100%; float: left; opacity: 1; -webkit-transition: opacity 1s ease;}
+aside h3 {float: left;}
+
+/* Layout
+***********************/
+#top { position: relative; z-index: 999; height:65px; padding: 5px 0; border-bottom: 1px solid #577794;
+
+background: rgb(226,232,239); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(226,232,239,1) 0%, rgba(210,219,228,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,232,239,1)), color-stop(100%,rgba(210,219,228,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(226,232,239,1) 0%,rgba(210,219,228,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(226,232,239,1) 0%,rgba(210,219,228,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(226,232,239,1) 0%,rgba(210,219,228,1) 100%); /* IE10+ */
+background: linear-gradient(top,  rgba(226,232,239,1) 0%,rgba(210,219,228,1) 100%); /* W3C */ 
+
+ }
+#top  { text-align: center; }
+#top .top-inner  { max-width: 800px; width: auto; }
+#top img  { float: none; display: inline; margin-top: 12px; }
+#container {padding: 60px 40px 100px;	border-top: 1px solid #93b6d2;}
+header {width: 420px; float: left;}
+#main {margin-left: 420px; margin-top: -25px;overflow: hidden;}
+
+/* Header
+***********************/
+header h1 { font-family: Geogrotesque-Semibold, Helvetica, Arial, sans-serif; margin: 0 0 10px; text-shadow: 0 1px 0 #2F4C63; color: #fff; font-size: 42px; }
+header h2 { margin: 0 0 30px; font: normal 20px Geogrotesque-regular, Helvetica, Arial, sans-serif; text-shadow: 0 1px 1px #555; color: #fff; }
+header .button { margin: 0 0 50px; padding: 10px 15px 10px 15px; display: block; float: left; position: relative; -webkit-transition: all .2s ease; -moz-transition: all .2s ease; transition: all .2s ease;}
+nav {clear: both;}
+nav h3 {margin: 0 0 10px; padding: 0 0 3px; font-size: 18px;text-shadow: 0 1px 1px #555; color: #fff; font-family: Geogrotesque-Regular, Helvetica, Arial, sans-serif; border-bottom: 1px solid #fff; border-bottom: 1px solid rgba(255,255,255,0.5); display: inline-block; }
+nav li {margin: 0 0 7px; font-size: 15px; text-transform: lowercase;}
+nav li a:hover,
+nav li a.active {border-bottom: 1px dotted #fff; border-bottom: 1px dotted rgba(255,255,255,0.3); background: none;}
+nav li a.active   { cursor: default; }
+
+/* SyntaxHighlighter
+***********************/
+.syntaxhighlighter {width: auto!important; font-size: 13px !important; line-height: 21px !important; font-family: Courier, "Courier New", monospace; -webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; background-color: #fff !important; box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -moz-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);}
+.syntaxhighlighter .string, .syntaxhighlighter .string a {color: #ff5454 !important;}
+.syntaxhighlighter .line.alt1,
+.syntaxhighlighter .line.alt2 {width: 100% !important; padding: 0 !important; background-color: #fff !important;}
+.syntaxhighlighter .line.highlighted.alt1,
+.syntaxhighlighter .line.highlighted.alt2 {background-color: #fff !important;}
+.syntaxhighlighter table td.code {width: auto !important; padding: 10px 12px!important;}
+.syntaxhighlighter table td.code .line {width: auto !important; padding: 0 !important;}
+.syntaxhighlighter .color1, .syntaxhighlighter .color1 a {color: #cc7ac6!important;}
+.syntaxhighlighter .plain, .syntaxhighlighter .plain a {color: #888!important;}
+.syntaxhighlighter .comments, .syntaxhighlighter .comments a {color: #999!important;}
+.syntaxhighlighter .keyword {color: #2a93b9!important;}
+
+/* --Clearfix */
+.cf:before,
+.cf:after {content:""; display:table;}
+.cf:after {clear:both;}
+.cf {zoom:1;}
+
+/* Media Queries
+***********************/
+
+.button {
+	display: inline-block;
+	margin: 2px 0;
+	padding: 5px 15px 3px;
+	border: 1px solid #336693;
+	border-bottom-color: #336693;
+	color: #fff!important;
+	text-align: center;
+	text-decoration: none !important;
+	text-shadow: 0 -1px 0 hsla(0,0%,0%,.3);
+	text-transform: uppercase;
+	font: bold 12px/16px sans-serif;
+	cursor:pointer;
+
+	/*Border radius*/
+	-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+	
+	/*Background*/
+	background: #274d70; /*Fallback*/
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(.2, #336693), color-stop(1, #274d70));
+	background: -moz-linear-gradient( center top, #336693 20%, #274d70 100% );
+	
+	/*Box shadow*/
+	-webkit-box-shadow: inset 0 1px 0 hsla(0,100%,100%,.3) /*Top*/, inset 0 0 2px hsla(0,100%,100%,.3) /*Shine*/, 0 1px 2px hsla(0, 0%, 0%, .29) /*Shadow*/;
+	-moz-box-shadow: inset 0 1px 0 hsla(0,100%,100%,.3) /*Top*/, inset 0 0 2px hsla(0,100%,100%,.3) /*Shine*/, 0 1px 2px hsla(0, 0%, 0%, .29) /*Shadow*/;
+	box-shadow: inset 0 1px 0 hsla(0,100%,100%,.3) /*Top*/, inset 0 0 2px hsla(0,100%,100%,.3) /*Shine*/, 0 1px 2px hsla(0, 0%, 0%, .29) /*Shadow*/;
+}
+
+.button:hover {
+	color: #fff;
+	text-decoration: none!important;
+	/*Background*/
+	background: #396083; /*Fallback*/
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(.2, #3c77ab), color-stop(1, #396083) );
+	background: -moz-linear-gradient( center top, #3c77ab 20%, #396083 100% );
+}
+
+/* GREEN */
+
+.button.green  {
+	border: 1px solid #467d16;
+	border-bottom-color: #467d16;
+	
+	/*Background*/
+	background: #447e12; /*Fallback*/
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(.2, #71b02f), color-stop(1, #447e12));
+	background: -moz-linear-gradient( center top, #71b02f 20%, #447e12 100% );
+}
+
+.button.green:hover  {
+	/*Background*/
+	background: #508e1b; /*Fallback*/
+	background: -webkit-gradient( linear, left top, left bottom, color-stop(.2, #7cbc3a), color-stop(1, #508e1b));
+	background: -moz-linear-gradient( center top, #7cbc3a 20%, #508e1b 100% );
+}
+
+
+/* Media Queries
+***********************/
+@media screen and (max-width: 960px) {
+  #container {padding: 35px;}
+  header {width: 380px;}
+  #main {margin-left: 380px;}
+}
+@media screen and (max-width: 768px) {
+  #container {padding: 20px 30px;}
+  header {width: 100%; float: none; text-align: center;}
+  header h1 {margin: 0 auto 10px;}
+  header .button,
+  header nav {display: none;}
+  #main {margin-left: 0;}
+}
+@media screen and (max-width: 500px) {
+  header h1 {width: 246px;  }
+}
