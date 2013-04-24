@@ -28,7 +28,7 @@
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
 
-    // Privat slider methods
+    // Private slider methods
     methods = {
       init: function() {
         slider.animating = false;
@@ -778,6 +778,7 @@
       //FlexSlider: added() Callback
       vars.added(slider);
     }
+
     slider.removeSlide = function(obj) {
       var pos = (isNaN(obj)) ? slider.slides.index($(obj)) : obj;
 
@@ -803,6 +804,10 @@
 
       // FlexSlider: removed() Callback
       vars.removed(slider);
+    }
+
+    slider.setOption = function(prop, val){
+      if(prop !== undefined && val !== undefined) vars[prop] = val;
     }
 
     //FlexSlider: Initialize
