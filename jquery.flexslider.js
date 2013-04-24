@@ -13,64 +13,6 @@
 
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
-<<<<<<< HEAD
-    var
-      slider = el,
-      plugin = this;
-
-    slider.init = function() {
-      slider.vars = $.extend({}, $.flexslider.defaults, options);
-      slider.data('flexslider', true);
-      slider.container = $('.slides', slider);
-      slider.slides = $('.slides > li', slider);
-      slider.count = slider.slides.length;
-      slider.animating = false;
-      slider.currentSlide = slider.vars.slideToStart;
-      slider.animatingTo = slider.currentSlide;
-      slider.atEnd = (slider.currentSlide == 0) ? true : false;
-      slider.eventType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
-      slider.cloneCount = 0;
-      slider.cloneOffset = 0;
-      slider.manualPause = false;
-      slider.vertical = (slider.vars.slideDirection == "vertical");
-      slider.prop = (slider.vertical) ? "top" : "marginLeft";
-      slider.args = {};
-      
-      //Test for webbkit CSS3 Animations
-      slider.transitions = "webkitTransition" in document.body.style;
-      if (slider.transitions) slider.prop = "-webkit-transform";
-      
-      //Test for controlsContainer
-      if (slider.vars.controlsContainer != "") {
-        slider.controlsContainer = $(slider.vars.controlsContainer).eq($('.slides').index(slider.container));
-        slider.containerExists = slider.controlsContainer.length > 0;
-      }
-      //Test for manualControls
-      if (slider.vars.manualControls != "") {
-        slider.manualControls = $(slider.vars.manualControls, ((slider.containerExists) ? slider.controlsContainer : slider));
-        slider.manualExists = slider.manualControls.length > 0;
-      }
-      
-      ///////////////////////////////////////////////////////////////////
-      // FlexSlider: Randomize Slides
-      if (slider.vars.randomize) {
-        slider.slides.sort(function() { return (Math.round(Math.random())-0.5); });
-        slider.container.empty().append(slider.slides);
-      }
-      ///////////////////////////////////////////////////////////////////
-      
-      ///////////////////////////////////////////////////////////////////
-      // FlexSlider: Slider Animation Initialize
-      if (slider.vars.animation.toLowerCase() == "slide") {
-        if (slider.transitions) {
-          slider.setTransition(0);
-        }
-        slider.css({"overflow": "hidden"});
-        if (slider.vars.animationLoop) {
-          slider.cloneCount = 2;
-          slider.cloneOffset = 1;
-          slider.container.append(slider.slides.filter(':first').clone().addClass('clone')).prepend(slider.slides.filter(':last').clone().addClass('clone'));
-=======
     var slider = $(el),
         vars = $.extend({}, $.flexslider.defaults, options),
         namespace = vars.namespace,
@@ -127,7 +69,6 @@
         if (vars.randomize) {
           slider.slides.sort(function() { return (Math.round(Math.random())-0.5); });
           slider.container.empty().append(slider.slides);
->>>>>>> upstream/master
         }
 
         slider.doMath();
@@ -183,29 +124,6 @@
         // TOUCH
         if (touch && vars.touch) methods.touch();
 
-<<<<<<< HEAD
-        slider.controlNav.on(slider.eventType, function(event) {
-          event.preventDefault();
-          if (!$(this).hasClass('active')) {
-            (slider.controlNav.index($(this)) > slider.currentSlide) ? slider.direction = "next" : slider.direction = "prev";
-            slider.flexAnimate(slider.controlNav.index($(this)), slider.vars.pauseOnAction);
-          }
-        });
-      }
-      ///////////////////////////////////////////////////////////////////
-      
-      //////////////////////////////////////////////////////////////////
-      //FlexSlider: Direction Nav
-      if (slider.vars.directionNav) {
-        var directionNavScaffold = $('<ul class="flex-direction-nav"><li><a class="prev" href="#">' + slider.vars.prevText + '</a></li><li><a class="next" href="#">' + slider.vars.nextText + '</a></li></ul>');
-        
-        if (slider.containerExists) {
-          $(slider.controlsContainer).append(directionNavScaffold);
-          slider.directionNav = $('.flex-direction-nav li a', slider.controlsContainer);
-        } else {
-          slider.append(directionNavScaffold);
-          slider.directionNav = $('.flex-direction-nav li a', slider);
-=======
         // FADE&&SMOOTHHEIGHT || SLIDE:
         if (!fade || (fade && vars.smoothHeight)) $(window).bind("resize focus", methods.resize);
 
@@ -230,7 +148,6 @@
               slider.flexAnimate(target, vars.pauseOnAction, false, true, true);
             }
           });
->>>>>>> upstream/master
         }
       },
       controlNav: {
@@ -240,16 +157,6 @@
           } else { // MANUALCONTROLS:
             methods.controlNav.setupManual();
           }
-<<<<<<< HEAD
-        }
-        
-        slider.directionNav.on(slider.eventType, function(event) {
-          event.preventDefault();
-          var target = ($(this).hasClass('next')) ? slider.getTarget('next') : slider.getTarget('prev');
-          
-          if (slider.canAdvance(target)) {
-            slider.flexAnimate(target, slider.vars.pauseOnAction);
-=======
         },
         setupPaging: function() {
           var type = (vars.controlNav === "thumbnails") ? 'control-thumbs' : 'control-paging',
@@ -264,7 +171,6 @@
               slider.controlNavScaffold.append('<li>' + item + '</li>');
               j++;
             }
->>>>>>> upstream/master
           }
 
           // CONTROLSCONTAINER:
@@ -329,24 +235,6 @@
           methods.controlNav.set();
           (slider.pagingCount > 1 && slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
         }
-<<<<<<< HEAD
-        $(document).on('keyup', keyboardMove);
-      }
-      //////////////////////////////////////////////////////////////////
-      
-      ///////////////////////////////////////////////////////////////////
-      // FlexSlider: Mousewheel interaction
-      if (slider.vars.mousewheel) {
-        slider.mousewheelEvent = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel";
-        slider.on(slider.mousewheelEvent, function(e) {
-          e.preventDefault();
-          e = e ? e : window.event;
-          var wheelData = e.detail ? e.detail * -1 : e.wheelDelta / 40,
-              target = (wheelData < 0) ? slider.getTarget('next') : slider.getTarget('prev');
-          
-          if (slider.canAdvance(target)) {
-            slider.flexAnimate(target, slider.vars.pauseOnAction);
-=======
       },
       directionNav: {
         setup: function() {
@@ -359,7 +247,6 @@
           } else {
             slider.append(directionNavScaffold);
             slider.directionNav = $('.' + namespace + 'direction-nav li a', slider);
->>>>>>> upstream/master
           }
 
           methods.directionNav.update();
@@ -397,39 +284,10 @@
         setup: function() {
           var pausePlayScaffold = $('<div class="' + namespace + 'pauseplay"><a></a></div>');
 
-<<<<<<< HEAD
-        //Initialize animation
-        slider.animatedSlides = setInterval(slider.animateSlides, slider.vars.slideshowSpeed);
-      }
-      //////////////////////////////////////////////////////////////////
-      
-      //////////////////////////////////////////////////////////////////
-      //FlexSlider: Pause/Play
-      if (slider.vars.pausePlay) {
-        var pausePlayScaffold = $('<div class="flex-pauseplay"><span></span></div>');
-      
-        if (slider.containerExists) {
-          slider.controlsContainer.append(pausePlayScaffold);
-          slider.pausePlay = $('.flex-pauseplay span', slider.controlsContainer);
-        } else {
-          slider.append(pausePlayScaffold);
-          slider.pausePlay = $('.flex-pauseplay span', slider);
-        }
-        
-        var pausePlayState = (slider.vars.slideshow) ? 'pause' : 'play';
-        slider.pausePlay.addClass(pausePlayState).text((pausePlayState == 'pause') ? slider.vars.pauseText : slider.vars.playText);
-        
-        slider.pausePlay.on(slider.eventType, function(event) {
-          event.preventDefault();
-          if ($(this).hasClass('pause')) {
-            slider.pause();
-            slider.manualPause = true;
-=======
           // CONTROLSCONTAINER:
           if (slider.controlsContainer) {
             slider.controlsContainer.append(pausePlayScaffold);
             slider.pausePlay = $('.' + namespace + 'pauseplay a', slider.controlsContainer);
->>>>>>> upstream/master
           } else {
             slider.append(pausePlayScaffold);
             slider.pausePlay = $('.' + namespace + 'pauseplay a', slider);
@@ -540,50 +398,6 @@
             slider.update(slider.pagingCount);
             slider.setProps();
           }
-<<<<<<< HEAD
-        });
-      }
-      //////////////////////////////////////////////////////////////////
-      
-      //////////////////////////////////////////////////////////////////
-      //FlexSlider: Destroy the slider entity
-      // accessible viw $('.flexsider').data('flexslider-api').destroy()      
-      plugin.destroy = function() {
-        slider.pause();
-        if (slider.controlNav && slider.vars.manualControls == "") slider.controlNav.closest('.flex-control-nav').remove();
-        if (slider.directionNav) slider.directionNav.closest('.flex-direction-nav').remove();
-        if (slider.vars.pausePlay) slider.pausePlay.closest('.flex-pauseplay').remove();
-        if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).off('keyup', keyboardMove);
-        if (slider.vars.mousewheel) slider.off(slider.mousewheelEvent);
-        if (slider.transitions) slider.each(function(){this.removeEventListener('touchstart', onTouchStart, false);});
-        if (slider.vars.animation == "slide" && slider.vars.animationLoop) slider.newSlides.filter('.clone').remove();
-        if (slider.vertical) slider.height("auto");
-        slider.slides.hide();
-        slider.removeData('flexslider');
-
-        slider.vars.destroyed(slider);
-      }
-      
-      //////////////////////////////////////////////////////////////////
-      
-      //FlexSlider: start() Callback
-      slider.vars.start(slider);
-    }
-    
-    //FlexSlider: Animation Actions
-    slider.flexAnimate = function(target, pause) {
-      if (!slider.animating) {
-        //Animating flag
-        slider.animating = true;
-        
-        //FlexSlider: before() animation Callback
-        slider.animatingTo = target;
-        slider.vars.before(slider);
-        
-        //Optional paramter to pause slider when making an anmiation call
-        if (pause) {
-          slider.pause();
-=======
           else if (vertical) { //VERTICAL:
             slider.viewport.height(slider.h);
             slider.setProps(slider.h, "setTotal");
@@ -599,7 +413,6 @@
         if (!vertical || fade) {
           var $obj = (fade) ? slider : slider.viewport;
           (dur) ? $obj.animate({"height": slider.slides.eq(slider.animatingTo).height()}, dur) : $obj.height(slider.slides.eq(slider.animatingTo).height());
->>>>>>> upstream/master
         }
       },
       sync: function(action) {
@@ -1052,26 +865,13 @@
     before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
-<<<<<<< HEAD
-    destroyed: function(){}         //Callback: function(slider) - Fires after the the slider's destroy() public API method is called
-=======
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){}           //{NEW} Callback: function(slider) - Fires after a slide is removed
->>>>>>> upstream/master
   }
 
 
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
-<<<<<<< HEAD
-    return this.each(function() {
-      if ($(this).find('.slides li').length == 1) {
-        $(this).find('.slides li').fadeIn(400);
-      }
-      else if ($(this).data('flexslider') != true) {
-        var api = new $.flexslider($(this), options);
-        $(this).data('flexslider-api', api);
-=======
     if (options === undefined) options = {};
 
     if (typeof options === "object") {
@@ -1097,7 +897,6 @@
         case "prev":
         case "previous": $slider.flexAnimate($slider.getTarget("prev"), true); break;
         default: if (typeof options === "number") $slider.flexAnimate(options, true);
->>>>>>> upstream/master
       }
     }
   }
