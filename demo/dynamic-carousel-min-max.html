@@ -211,10 +211,6 @@
       // check grid size on resize event
       $window.resize(function() {
         var gridSize = getGridSize();
-
-        console.log('window reszie, settingGridSize to:');
-        console.log(gridSize);
-
         flexslider.setOption('minItems', gridSize);
         flexslider.setOption('maxItems', gridSize);
       });
