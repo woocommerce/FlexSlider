@@ -139,7 +139,7 @@
           slider.animatingTo = Math.floor(slider.currentSlide/slider.move);
           slider.currentItem = slider.currentSlide;
           slider.slides.removeClass(namespace + "active-slide").eq(slider.currentItem).addClass(namespace + "active-slide");
-          slider.slides.click(function(e){
+          slider.delegate(vars.selector, "click", function(e) {
             e.preventDefault();
             var $slide = $(this),
                 target = $slide.index();
