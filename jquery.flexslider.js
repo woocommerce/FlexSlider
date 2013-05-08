@@ -88,9 +88,6 @@
 
                 slider.doMath();
 
-                // ASNAV:
-                //if (asNav) methods.asNav.setup();
-
                 // INIT
                 slider.setup("init");
 
@@ -175,14 +172,13 @@
                         slider.slides.each(function (){
                             var that = this;
                             that._gesture = new MSGesture();
-                            that._gesture.target = this;
+                            that._gesture.target = that;
                             that.addEventListener("MSPointerDown", function (e){
                                 e.preventDefault();
-
                                 if(e.currentTarget._gesture)
                                     e.currentTarget._gesture.addPointer(e.pointerId);
                             }, false);
-                            this.addEventListener("MSGestureTap", function (e){
+                            that.addEventListener("MSGestureTap", function (e){
                                 e.preventDefault();
                                 var $slide = $(this),
                                     target = $slide.index();
@@ -446,10 +442,8 @@
                         e.stopPropagation();
                         if (slider.animating) {
                             e.preventDefault();
-
                         }else{
                             slider.pause();
-                            console.log(e.pointerId);
                             el._gesture.addPointer(e.pointerId);
                             accDx = 0;
                             cwidth = (vertical) ? slider.h : slider.w;
@@ -472,10 +466,11 @@
                         var transX = -e.translationX,
                             transY = -e.translationY;
 
+                        //Accumulate translations.
                         accDx = accDx + ((vertical) ? transY : transX);
-
+                        dx = accDx;
                         scrolling = (vertical) ? (Math.abs(accDx) < Math.abs(-transX)) : (Math.abs(accDx) < Math.abs(-transY));
-                        console.log(accDx);
+
                         if(e.detail === e.MSGESTURE_FLAG_INERTIA){
                             el._gesture.stop();
                         }
