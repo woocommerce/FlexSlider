@@ -167,7 +167,7 @@
 
           if (slider.pagingCount > 1) {
             for (var i = 0; i < slider.pagingCount; i++) {
-              item = (vars.controlNav === "thumbnails") ? '<img src="' + slider.slides.eq(i).attr("data-thumb") + '"/>' : '<a>' + j + '</a>';
+              item = (vars.controlNav === "thumbnails") ? '<a href="#"><img src="' + slider.slides.eq(i).attr("data-thumb") + '"/></a>' : '<a>' + j + '</a>';
               slider.controlNavScaffold.append('<li>' + item + '</li>');
               j++;
             }
@@ -218,11 +218,11 @@
           }
         },
         set: function() {
-          var selector = (vars.controlNav === "thumbnails") ? 'img' : 'a';
+          var selector = 'a';
           slider.controlNav = $('.' + namespace + 'control-nav li ' + selector, (slider.controlsContainer) ? slider.controlsContainer : slider);
         },
         active: function() {
-          slider.controlNav.removeClass(namespace + "active").eq(slider.animatingTo).addClass(namespace + "active");
+          slider.controlNav.parent().removeClass(namespace + "active").eq(slider.animatingTo).addClass(namespace + "active");
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
