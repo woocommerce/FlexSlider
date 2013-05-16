@@ -128,3 +128,6 @@ Description to be added.
 
 ### removed: *{new}*
 `removed()` is a new callback event fired in the new slider.removeSlide() function.
+
+### allowOneSlide: *{new}*
+Boolean. Whether or not you'd like FlexSlider to initialize as usual if only one slide is present.
