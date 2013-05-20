@@ -502,6 +502,7 @@
                     setTimeout(function (){
                         el._gesture.stop();
                     }, 0);
+                    
                     return;
                 }
 
