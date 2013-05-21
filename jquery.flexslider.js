@@ -499,7 +499,11 @@
                 scrolling = (vertical) ? (Math.abs(accDx) < Math.abs(-transX)) : (Math.abs(accDx) < Math.abs(-transY));
 
                 if(e.detail === e.MSGESTURE_FLAG_INERTIA){
-                    el._gesture.stop();
+                    setImmediate(function (){
+                        el._gesture.stop();
+                    });
+
+                    return;
                 }
 
                 if (!scrolling || Number(new Date()) - startT > 500) {
