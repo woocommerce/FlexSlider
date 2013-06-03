@@ -440,7 +440,15 @@
           slider.direction = (slider.currentItem < target) ? "next" : "prev";
           master.direction = slider.direction;
 
-          if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
+
+          var toSlide;
+          if (slider.move === slider.visible || slider.move < 1) {
+          	toSlide = Math.ceil((target + 1)/slider.visible) - 1;
+          } else {
+          	// Counting the *minimum* slide/page the target item is on.
+          	toSlide = Math.floor(1 + (target - slider.count) / slider.move);
+          }
+          if (toSlide !== slider.currentSlide && target !== 0) {
             slider.currentItem = target;
             slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
             target = Math.floor(target/slider.visible);
