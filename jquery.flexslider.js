@@ -440,7 +440,6 @@
           slider.direction = (slider.currentItem < target) ? "next" : "prev";
           master.direction = slider.direction;
 
-
           var toSlide;
           if (slider.move === slider.visible || slider.move < 1) {
           	toSlide = Math.ceil((target + 1)/slider.visible) - 1;
