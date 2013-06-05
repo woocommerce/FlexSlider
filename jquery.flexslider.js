@@ -567,6 +567,7 @@
     }
     // SLIDESHOW:
     slider.play = function() {
+      if (slider.playing) clearInterval(slider.animatedSlides);
       slider.animatedSlides = setInterval(slider.animateSlides, vars.slideshowSpeed);
       slider.playing = true;
       // PAUSEPLAY:
