@@ -17,7 +17,7 @@
         touch = (( "ontouchstart" in window ) || ( window.navigator.msPointerEnabled ) || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
         // depricating this idea, as devices are being released with both of these events
         //eventType = (touch) ? "touchend" : "click",
-        eventType = "click touchend MSPointerUp",
+        eventType = "click.flexslider touchend.flexslider MSPointerUp.flexslider",
         watchedEvent = "",
         watchedEventClearTimer,
         vertical = slider.vars.direction === "vertical",
@@ -91,7 +91,7 @@
 
         // KEYBOARD:
         if (slider.vars.keyboard && ($(slider.containerSelector).length === 1 || slider.vars.multipleKeyboard)) {
-          $(document).bind('keyup', function(event) {
+          $(document).bind('keyup.flexslider', function(event) {
             var keycode = event.keyCode;
             if (!slider.animating && (keycode === 39 || keycode === 37)) {
               var target = (keycode === 39) ? slider.getTarget('next') :
@@ -102,7 +102,7 @@
         }
         // MOUSEWHEEL:
         if (slider.vars.mousewheel) {
-          slider.bind('mousewheel', function(event, delta, deltaX, deltaY) {
+          slider.bind('mousewheel.flexslider', function(event, delta, deltaX, deltaY) {
             event.preventDefault();
             var target = (delta < 0) ? slider.getTarget('next') : slider.getTarget('prev');
             slider.flexAnimate(target, slider.vars.pauseOnAction);
@@ -129,7 +129,7 @@
         if (touch && slider.vars.touch) methods.touch();
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize orientationchange focus", methods.resize);
+        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize.flexslider orientationchange.flexslider focus.flexslider", methods.resize);
 
 
         // API: start() Callback
@@ -590,8 +590,8 @@
               slider.animating = false;
               slider.currentSlide = slider.animatingTo;
             }
-            slider.container.unbind("webkitTransitionEnd transitionend");
-            slider.container.bind("webkitTransitionEnd transitionend", function() {
+            slider.container.unbind("webkitTransitionEnd.flexslider transitionend.flexslider");
+            slider.container.bind("webkitTransitionEnd.flexslider transitionend.flexslider", function() {
               slider.wrapup(dimension);
             });
           } else {
