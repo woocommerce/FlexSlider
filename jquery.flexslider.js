@@ -897,6 +897,21 @@
       // FlexSlider: removed() Callback
       slider.vars.removed(slider);
     }
+    slider.destroy = function() {
+      slider.pause(); // pause the timer
+      slider.transitions = false; // kill transitions
+      if (slider.vars.controlNav && slider.vars.manualControls == "") slider.controlNav.closest('.flex-control-nav').remove();
+      if (slider.vars.directionNav) slider.directionNav.closest('.flex-direction-nav').remove();
+      if (slider.vars.pausePlay) slider.pausePlay.closest('.flex-pauseplay').remove();
+      if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).unbind('keyup', keyboardMove);
+      if (slider.vars.mousewheel) slider.unbind(slider.mousewheelEvent);
+      if (slider.vars.animationLoop) slider.find('.clone').remove();
+      if (slider.vertical) slider.height("auto");
+      slider.find('.flex-viewport ul').unwrap(); // removes the .flex-viewport div
+      slider.find('.slides').removeAttr('style').find('li').removeAttr('style');
+      slider.removeData('flexslider');
+      $(window).unbind("resize.flexslider-" + slider.id + " focus.flexslider-" + slider.id)
+    }
 
     //FlexSlider: Initialize
     methods.init();
@@ -1000,6 +1015,7 @@
         case "next": $slider.flexAnimate($slider.getTarget("next"), true); break;
         case "prev":
         case "previous": $slider.flexAnimate($slider.getTarget("prev"), true); break;
+        case "destroy": $slider.destroy(); break;
         default: if (typeof options === "number") $slider.flexAnimate(options, true);
       }
     }
