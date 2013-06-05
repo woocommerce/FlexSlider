@@ -7,7 +7,7 @@
 (function ($) {
 
   //FlexSlider: Object Instance
-  $.flexslider = function(el, options) {
+  $.flexslider = function(el, options, instanceId) {
     var slider = $(el);
 
     // making variables public
@@ -34,6 +34,8 @@
     // Private slider methods
     methods = {
       init: function() {
+
+        slider.id = instanceId;
         slider.animating = false;
         slider.currentSlide = slider.vars.startAt;
         slider.animatingTo = slider.currentSlide;
@@ -129,7 +131,7 @@
         if (touch && slider.vars.touch) methods.touch();
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize.flexslider orientationchange.flexslider focus.flexslider", methods.resize);
+        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize.flexslider-" + slider.id + " orientationchange.flexslider-" + slider.id + " focus.flexslider-" + slider.id, methods.resize);
 
 
         // API: start() Callback
@@ -971,6 +973,8 @@
 
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
+    var instanceId = 0
+
     if (options === undefined) options = {};
 
     if (typeof options === "object") {
@@ -983,7 +987,7 @@
           $slides.fadeIn(400);
           if (options.start) options.start($this);
         } else if ($this.data('flexslider') === undefined) {
-          new $.flexslider(this, options);
+          new $.flexslider(this, options, instanceId++);
         }
       });
     } else {
