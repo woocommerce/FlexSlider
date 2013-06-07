@@ -156,7 +156,7 @@
           }
         }
         
-        slider.directionNav.bind(slider.eventType, function(event) {
+        slider.directionNav.bind('touchstart click', function(event) {
           event.preventDefault();
           var target = ($(this).hasClass('next')) ? slider.getTarget('next') : slider.getTarget('prev');
           
