@@ -131,6 +131,8 @@
         // FADE&&SMOOTHHEIGHT || SLIDE:
         if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize orientationchange focus", methods.resize);
 
+        //PAUSE WHEN INVISIBLE
+        if (slider.vars.slideshow && slider.vars.pauseInvisible) methods.pauseInvisible();
 
         // API: start() Callback
         setTimeout(function(){
@@ -497,6 +499,35 @@
           case "animate": $obj.flexAnimate(target, slider.vars.pauseOnAction, false, true); break;
           case "play": if (!$obj.playing && !$obj.asNav) { $obj.play(); } break;
           case "pause": $obj.pause(); break;
+        }
+      },
+      pauseInvisible: function() {
+        var visProp = getHiddenProp();
+
+        if (visProp) {
+          var evtname = visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
+          document.addEventListener(evtname, visChange);
+        }
+
+        function visChange() {
+          if (isHidden()) slider.pause();
+              else slider.play();
+        }
+        function getHiddenProp() {
+          var prefixes = ['webkit','moz','ms','o'];
+
+          if ('hidden' in document) return 'hidden';
+
+          for (var i = 0; i < prefixes.length; i++) {
+            if ((prefixes[i] + 'Hidden') in document) 
+            return prefixes[i] + 'Hidden';
+          }
+
+          return null;
+        }
+        function isHidden() {
+          var prop = getHiddenProp();
+          return document[prop] || false;
         }
       },
       setToClearWatchedEvent: function() {
@@ -928,6 +959,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
+    pauseInvisible: true,   //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
