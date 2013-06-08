@@ -51,6 +51,9 @@
         // SLIDESHOW:
         slider.manualPause = false;
         slider.stopped = false;
+        //PAUSEINVISIBLE
+        slider.started = false;
+        slider.startTimeout = null;
         // TOUCH/USECSS:
         slider.transitions = !slider.vars.video && !fade && slider.vars.useCSS && (function() {
           var obj = document.createElement('div'),
@@ -112,6 +115,9 @@
         // PAUSEPLAY
         if (slider.vars.pausePlay) methods.pausePlay.setup();
 
+        //PAUSE WHEN INVISIBLE
+        if (slider.vars.slideshow && slider.vars.pauseInvisible) methods.pauseInvisible.init();
+
         // SLIDSESHOW
         if (slider.vars.slideshow) {
           if (slider.vars.pauseOnHover) {
@@ -122,7 +128,10 @@
             });
           }
           // initialize animation
-          (slider.vars.initDelay > 0) ? setTimeout(slider.play, slider.vars.initDelay) : slider.play();
+          //If we're not hidden, and we use PageVisibility API
+          if(!slider.vars.pauseInvisible || !methods.pauseInvisible.isHidden()) {
+            (slider.vars.initDelay > 0) ? slider.startTimeout = setTimeout(slider.play, slider.vars.initDelay) : slider.play();
+          }
         }
 
         // TOUCH
@@ -130,9 +139,6 @@
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
         if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize orientationchange focus", methods.resize);
-
-        //PAUSE WHEN INVISIBLE
-        if (slider.vars.slideshow && slider.vars.pauseInvisible) methods.pauseInvisible();
 
         // API: start() Callback
         setTimeout(function(){
@@ -501,33 +507,32 @@
           case "pause": $obj.pause(); break;
         }
       },
-      pauseInvisible: function() {
-        var visProp = getHiddenProp();
-
-        if (visProp) {
-          var evtname = visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
-          document.addEventListener(evtname, visChange);
-        }
-
-        function visChange() {
-          if (isHidden()) slider.pause();
-              else slider.play();
-        }
-        function getHiddenProp() {
+      pauseInvisible: {
+        visProp: null,
+        init: function() {
           var prefixes = ['webkit','moz','ms','o'];
 
           if ('hidden' in document) return 'hidden';
-
           for (var i = 0; i < prefixes.length; i++) {
             if ((prefixes[i] + 'Hidden') in document) 
-            return prefixes[i] + 'Hidden';
+            methods.pauseInvisible.visProp = prefixes[i] + 'Hidden';
           }
-
-          return null;
-        }
-        function isHidden() {
-          var prop = getHiddenProp();
-          return document[prop] || false;
+          if (methods.pauseInvisible.visProp) {
+            var evtname = methods.pauseInvisible.visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
+            document.addEventListener(evtname, function() {
+              if (methods.pauseInvisible.isHidden()) {
+                if(slider.startTimeout) clearTimeout(slider.startTimeout); //If clock is ticking, stop timer and prevent from starting while invisible
+                else slider.pause(); //Or just pause
+              }
+              else {
+                if(slider.started) slider.play(); //Initiated before, just play
+                else (slider.vars.initDelay > 0) ? setTimeout(slider.play, slider.vars.initDelay) : slider.play(); //Didn't init before: simply init or wait for it
+              }
+            });
+          }       
+        },
+        isHidden: function() {
+          return document[methods.pauseInvisible.visProp] || false;
         }
       },
       setToClearWatchedEvent: function() {
@@ -680,7 +685,7 @@
     // SLIDESHOW:
     slider.play = function() {
       slider.animatedSlides = slider.animatedSlides || setInterval(slider.animateSlides, slider.vars.slideshowSpeed);
-      slider.playing = true;
+      slider.started = slider.playing = true;
       // PAUSEPLAY:
       if (slider.vars.pausePlay) methods.pausePlay.update("pause");
       // SYNC:
