@@ -32,7 +32,8 @@
     methods = {
       init: function() {
         slider.animating = false;
-        slider.currentSlide = vars.startAt;
+        slider.currentSlide = slider.currentItem = vars.startAt;
+        slider.direction = 'next';
         slider.animatingTo = slider.currentSlide;
         slider.atEnd = (slider.currentSlide === 0 || slider.currentSlide === slider.last);
         slider.containerSelector = vars.selector.substr(0,vars.selector.search(' '));
