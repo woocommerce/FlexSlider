@@ -54,6 +54,9 @@
         // SLIDESHOW:
         slider.manualPause = false;
         slider.stopped = false;
+        //PAUSE WHEN INVISIBLE
+        slider.started = false;
+        slider.startTimeout = null;
         // TOUCH/USECSS:
         slider.transitions = !slider.vars.video && !fade && slider.vars.useCSS && (function() {
           var obj = document.createElement('div'),
@@ -112,6 +115,9 @@
         // PAUSEPLAY
         if (slider.vars.pausePlay) methods.pausePlay.setup();
 
+        //PAUSE WHEN INVISIBLE
+        if (slider.vars.slideshow && slider.vars.pauseInvisible) methods.pauseInvisible.init();
+
         // SLIDSESHOW
         if (slider.vars.slideshow) {
           if (slider.vars.pauseOnHover) {
@@ -122,7 +128,10 @@
             });
           }
           // initialize animation
-          (slider.vars.initDelay > 0) ? setTimeout(slider.play, slider.vars.initDelay) : slider.play();
+          //If we're visible, or we don't use PageVisibility API
+          if(!slider.vars.pauseInvisible || !methods.pauseInvisible.isHidden()) {
+            (slider.vars.initDelay > 0) ? slider.startTimeout = setTimeout(slider.play, slider.vars.initDelay) : slider.play();
+          }
         }
 
         // ASNAV:
@@ -583,6 +592,34 @@
           case "pause": $obj.pause(); break;
         }
       },
+      pauseInvisible: {
+        visProp: null,
+        init: function() {
+          var prefixes = ['webkit','moz','ms','o'];
+
+          if ('hidden' in document) return 'hidden';
+          for (var i = 0; i < prefixes.length; i++) {
+            if ((prefixes[i] + 'Hidden') in document) 
+            methods.pauseInvisible.visProp = prefixes[i] + 'Hidden';
+          }
+          if (methods.pauseInvisible.visProp) {
+            var evtname = methods.pauseInvisible.visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
+            document.addEventListener(evtname, function() {
+              if (methods.pauseInvisible.isHidden()) {
+                if(slider.startTimeout) clearTimeout(slider.startTimeout); //If clock is ticking, stop timer and prevent from starting while invisible
+                else slider.pause(); //Or just pause
+              }
+              else {
+                if(slider.started) slider.play(); //Initiated before, just play
+                else (slider.vars.initDelay > 0) ? setTimeout(slider.play, slider.vars.initDelay) : slider.play(); //Didn't init before: simply init or wait for it
+              }
+            });
+          }       
+        },
+        isHidden: function() {
+          return document[methods.pauseInvisible.visProp] || false;
+        }
+      },
       setToClearWatchedEvent: function() {
         clearTimeout(watchedEventClearTimer);
         watchedEventClearTimer = setTimeout(function() {
@@ -733,7 +770,7 @@
     // SLIDESHOW:
     slider.play = function() {
       slider.animatedSlides = slider.animatedSlides || setInterval(slider.animateSlides, slider.vars.slideshowSpeed);
-      slider.playing = true;
+      slider.started = slider.playing = true;
       // PAUSEPLAY:
       if (slider.vars.pausePlay) methods.pausePlay.update("pause");
       // SYNC:
@@ -1012,6 +1049,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
+    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
