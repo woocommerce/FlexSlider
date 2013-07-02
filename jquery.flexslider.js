@@ -620,11 +620,12 @@
 
         slider.animating = true;
         slider.animatingTo = target;
-        // API: before() animation Callback
-        slider.vars.before(slider);
 
         // SLIDESHOW:
         if (pause) slider.pause();
+
+        // API: before() animation Callback
+        slider.vars.before(slider);
 
         // SYNC:
         if (slider.syncExists && !fromNav) methods.sync("animate");
