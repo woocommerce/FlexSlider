@@ -12,6 +12,13 @@
 	<!-- Modernizr -->
   <script src="js/modernizr.js"></script>
 
+    <!-- jQuery -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
+
+  <!-- Wistia iframe API -->
+  <script src="http://fast.wistia.com/static/iframe-api-v1.js"></script>
+
 </head>
 <body class="loading">
 
@@ -32,8 +39,8 @@
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
           <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li>
           <li><a href="dynamic-carousel-min-max.html">Carousel with dynamic min/max ranges</a></li>
-          <li class="active"><a href="video.html">Video & the api (vimeo)</a></li>
-          <li><a href="video-wistia.html">Video & the api (wistia)</a></li>
+          <li><a href="video.html">Video & the api (vimeo)</a></li>
+          <li class="active"><a href="video-wistia.html">Video & the api (wistia)</a></li>
         </ul>
       </nav>
     </header>
@@ -42,7 +49,7 @@
         <div class="flexslider">
           <ul class="slides">
             <li>
-              <iframe id="player_1" src="http://player.vimeo.com/video/39683393?api=1&amp;player_id=player_1" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+              <iframe id="player_1" src="http://fast.wistia.com/embed/iframe/t4yniozocs?controlsVisibleOnLoad=true&amp;playerColor=474745&amp;version=v1&amp;videoHeight=366&amp;videoWidth=650&amp;volumeControl=true&videoFoam=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="650" height="366"></iframe>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
@@ -67,44 +74,34 @@
         <div id="view-js" class="code">
           <pre class="brush: js; toolbar: false; gutter: false;">
             // Can also be used with $(document).ready()
-            $(window).load(function() {
+            $(window).load(function(){
+            // Wistia handler.
+            wistiaEmbed = document.getElementById( 'player_1' ).wistiaApi;
 
-              // Vimeo API nonsense
-              var player = document.getElementById('player_1');
-              $f(player).addEvent('ready', ready);
-
-              function addEvent(element, eventName, callback) {
-                if (element.addEventListener) {
-                  element.addEventListener(eventName, callback, false)
-                } else {
-                  element.attachEvent(eventName, callback, false);
+            // Call fitVid before FlexSlider initializes, so the proper initial height can be retrieved.
+            $( '.flexslider' )
+              .fitVids()
+              .flexslider({
+                animation: 'slide',
+                useCSS: false,
+                animationLoop: false,
+                smoothHeight: true,
+                start: function( slider ) {
+                  $('body').removeClass( 'loading' );
+                },
+                before: function ( slider ) {
+                  wistiaEmbed.pause();
                 }
-              }
-
-              function ready(player_id) {
-                var froogaloop = $f(player_id);
-                froogaloop.addEvent('play', function(data) {
-                  $('.flexslider').flexslider("pause");
-                });
-                froogaloop.addEvent('pause', function(data) {
-                  $('.flexslider').flexslider("play");
-                });
-              }
-
-
-              // Call fitVid before FlexSlider initializes, so the proper initial height can be retrieved.
-              $(".flexslider")
-                .fitVids()
-                .flexslider({
-                  animation: "slide",
-                  useCSS: false,
-                  animationLoop: false,
-                  smoothHeight: true,
-                  before: function(slider){
-                    $f(player).api('pause');
-                  }
-              });
             });
+
+            wistiaEmbed.bind( 'play', function() {
+              jQuery( '.flexslider' ).flexslider( 'pause' );
+            });
+
+            wistiaEmbed.bind( 'end', function() {
+              jQuery( '.flexslider' ).flexslider( 'play' );
+            });
+          });
           </pre>
         </div>
         <div id="view-html" class="code">
@@ -113,7 +110,7 @@
             &lt;div class="flexslider">
               &lt;ul class="slides">
                 &lt;li>
-                  &lt;iframe id="player_1" src="http://player.vimeo.com/video/39683393?api=1&amp;player_id=player_1" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen>&lt;/iframe>
+                  &lt;iframe id="player_1" src="http://fast.wistia.com/embed/iframe/t4yniozocs?controlsVisibleOnLoad=true&amp;playerColor=474745&amp;version=v1&amp;videoHeight=366&amp;videoWidth=650&amp;volumeControl=true&videoFoam=true" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" width="650" height="366"&gt;&lt;/iframe&gt;
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide2.jpg" />
@@ -133,10 +130,6 @@
 
   </div>
 
-  <!-- jQuery -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
-
   <!-- FlexSlider -->
   <script defer src="../jquery.flexslider.js"></script>
 
@@ -145,42 +138,31 @@
       SyntaxHighlighter.all();
     });
     $(window).load(function(){
-
-      // Vimeo API nonsense
-      var player = document.getElementById('player_1');
-      $f(player).addEvent('ready', ready);
-
-      function addEvent(element, eventName, callback) {
-        (element.addEventListener) ? element.addEventListener(eventName, callback, false) : element.attachEvent(eventName, callback, false);
-      }
-
-      function ready(player_id) {
-        var froogaloop = $f(player_id);
-
-        froogaloop.addEvent('play', function(data) {
-          $('.flexslider').flexslider("pause");
-        });
-
-        froogaloop.addEvent('pause', function(data) {
-          $('.flexslider').flexslider("play");
-        });
-      }
-
+      // Wistia handler.
+      wistiaEmbed = document.getElementById( 'player_1' ).wistiaApi;
 
       // Call fitVid before FlexSlider initializes, so the proper initial height can be retrieved.
-      $(".flexslider")
+      $( '.flexslider' )
         .fitVids()
         .flexslider({
-          animation: "slide",
+          animation: 'slide',
           useCSS: false,
           animationLoop: false,
           smoothHeight: true,
-          start: function(slider){
-            $('body').removeClass('loading');
+          start: function( slider ) {
+            $('body').removeClass( 'loading' );
           },
-          before: function(slider){
-            $f(player).api('pause');
+          before: function ( slider ) {
+            wistiaEmbed.pause();
           }
+      });
+
+      wistiaEmbed.bind( 'play', function() {
+        jQuery( '.flexslider' ).flexslider( 'pause' );
+      });
+
+      wistiaEmbed.bind( 'end', function() {
+        jQuery( '.flexslider' ).flexslider( 'play' );
       });
     });
   </script>
@@ -191,7 +173,6 @@
 	<script type="text/javascript" src="js/shBrushJScript.js"></script>
 
   <!-- Optional FlexSlider Additions -->
-    <script src="js/froogaloop.js"></script>
 	<script src="js/jquery.fitvid.js"></script>
 	<script src="js/demo.js"></script>
 
