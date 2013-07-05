@@ -323,7 +323,7 @@
           startY,
           offset,
           cwidth,
-          dx,
+          dx = null,
           startT,
           scrolling = false;
 
