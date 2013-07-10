@@ -48,8 +48,6 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 - [Carousel with min and max ranges](http://flexslider.woothemes.com/carousel-min-max.html)
 - [Video with Vimeo API](http://flexslider.woothemes.com/video.html)
 - [Video with Wistia API](http://flexslider.woothemes.com/video-wistia.html)
-- [Multiple Sliders w/destroy & init](http://flexslider.woothemes.com/multiple-carousel-destroy.html)
-
 
 ## Properties
 
