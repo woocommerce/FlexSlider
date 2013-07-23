@@ -804,6 +804,16 @@
       // FlexSlider: removed() Callback
       vars.removed(slider);
     }
+    // Get option hash or set options and reload
+    slider.options = function(opts) {
+      if(typeof opts != 'undefined'){
+        for (var opt in opts) {
+          vars[opt] = opts[opt];
+        }
+        slider.setup();
+      }
+      return vars;
+    }
 
     //FlexSlider: Initialize
     methods.init();
@@ -871,7 +881,7 @@
 
 
   //FlexSlider: Plugin Function
-  $.fn.flexslider = function(options) {
+  $.fn.flexslider = function(options, value) {
     if (options === undefined) options = {};
 
     if (typeof options === "object") {
@@ -896,6 +906,7 @@
         case "next": $slider.flexAnimate($slider.getTarget("next"), true); break;
         case "prev":
         case "previous": $slider.flexAnimate($slider.getTarget("prev"), true); break;
+        case "options": return $slider.options(value); break;
         default: if (typeof options === "number") $slider.flexAnimate(options, true);
       }
     }
