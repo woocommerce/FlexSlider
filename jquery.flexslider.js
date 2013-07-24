@@ -697,10 +697,15 @@
           slideMargin = vars.itemMargin,
           minItems = vars.minItems,
           maxItems = vars.maxItems;
+          boxSizing = slide.css('-moz-box-sizing') || slide.css('-webkit-box-sizing') || slide.css('box-sizing');
 
       slider.w = slider.width();
       slider.h = slide.height();
-      slider.boxPadding = slide.outerWidth() - slide.width();
+      if (boxSizing=='border-box') {
+        slider.boxPadding = 0;
+      } else {
+        slider.boxPadding = slide.outerWidth() - slide.width();
+      }
 
       // CAROUSEL:
       if (carousel) {
