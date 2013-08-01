@@ -265,7 +265,7 @@
         },
         update: function() {
           var disabledClass = namespace + 'disabled';
-          if (slider.pagingCount === 1) {
+          if (slider.pagingCount === 1 || slider.count == slider.visible + 1) {
             slider.directionNav.addClass(disabledClass);
           } else if (!vars.animationLoop) {
             if (slider.animatingTo === 0) {
@@ -420,7 +420,7 @@
             target = slider.animatingTo;
 
         switch (action) {
-          case "animate": $obj.flexAnimate(target, vars.pauseOnAction, false, true); break;
+          case "animate": $obj.flexAnimate(target, vars.pauseOnAction, false, true, true); break;
           case "play": if (!$obj.playing && !$obj.asNav) { $obj.play(); } break;
           case "pause": $obj.pause(); break;
         }
@@ -578,11 +578,11 @@
       // ASNAV:
       var last = (asNav) ? slider.pagingCount - 1 : slider.last;
       return (fromNav) ? true :
-             (asNav && slider.currentItem === slider.count - 1 && target === 0 && slider.direction === "prev") ? true :
-             (asNav && slider.currentItem === 0 && target === slider.pagingCount - 1 && slider.direction !== "next") ? false :
+             (asNav && slider.currentItem === slider.count - 1 && target === 0 && slider.direction === "next") ? false :
+             (asNav && slider.currentItem === 0 && target === slider.pagingCount - 1 && slider.direction === "prev") ? false :
              (target === slider.currentSlide && !asNav) ? false :
              (vars.animationLoop) ? true :
-             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction !== "next") ? false :
+             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction === "prev") ? false :
              (slider.atEnd && slider.currentSlide === last && target === 0 && slider.direction === "next") ? false :
              true;
     }
