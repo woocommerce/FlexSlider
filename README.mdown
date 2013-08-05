@@ -1,7 +1,17 @@
 # FlexSlider 2
 http://www.woothemes.com/flexslider/ - Copyright (c) 2012 WooThemes
 
-Documentation guides for properties and theming are coming soon. Shortly thereafter, the download builder will be released, where you can create minified FlexSlider scripts that contain only the properties you need. It's a brave new world.
+## Updates
+
+** Version 2.2.0**
+
+- Fixed event handler conflicts with devices that are both click and touch enabled. e.g., Windows 8.
+- Made all slider variables public, stored in `slider.vars`. This allows manipulation of `slider.vars.minItems` and `slider.vars.maxItems` on the fly to create different fluid grids at certain breakpoints. [Check out this example demonstrating a basic technique](http://flexslider.woothemes.com/dynamic-carousel-min-max.html)
+- Fixed calculations that were causing strange issues with paging and certain FlexSliders to move out of alignment.
+
+*Be sure to test v2.2.0 with your current slider, before pushing live, to ensure everything is playing nicely.*
+
+-----
 
 ## General Notes
 FlexSlider is no longer licensed under the MIT license. FlexSlider now shares the common licensed used for all WooThemes themes, GPLv2.
@@ -10,7 +20,6 @@ In an effort to move the plugin forward, support for jQuery 1.3.2 has been dropp
 
 Your old styles and properties *might not work out of the box*. Some property names have been changed, noted below, as well as namespacing prefixes being applied to all elements. This means that `.flex-direction-nav .next` is now `.flex-direction-nav .flex-next` by default. The namespacing property is exposed, free for you to change.
 
-## Updates
 No more overflow hidden woes! The plugin now generates a viewport element to handle the tedious task of working around overflow hidden. Yay!
 
 The slider element is now accessible outside of the callback API via the jQuery .data() method. Example use: `$('#slider').data('flexslider')`
@@ -19,6 +28,7 @@ Helper strings have been added for performing actions quickly on FlexSlider elem
 
 - `$('#slider').flexslider("play")  //Play slideshow`
 - `$('#slider').flexslider("pause") //Pause slideshow`
+- `$('#slider').flexslider("stop") //Stop slideshow`
 - `$('#slider').flexslider("next")  //Go to next slide`
 - `$('#slider').flexslider("prev")  //Go to previous slide`
 - `$('#slider').flexslider(3)       //Go fourth slide`
@@ -36,6 +46,7 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 - [Basic Carousel](http://flexslider.woothemes.com/basic-carousel.html)
 - [Carousel with min and max ranges](http://flexslider.woothemes.com/carousel-min-max.html)
 - [Video with Vimeo API](http://flexslider.woothemes.com/video.html)
+- [Video with Wistia API](http://flexslider.woothemes.com/video-wistia.html)
 
 
 ## Properties
@@ -128,3 +139,6 @@ Description to be added.
 
 ### removed: *{new}*
 `removed()` is a new callback event fired in the new slider.removeSlide() function.
+
+### allowOneSlide: *{new}*
+Boolean. Whether or not you'd like FlexSlider to initialize as usual if only one slide is present.
