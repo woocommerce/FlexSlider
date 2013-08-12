@@ -696,7 +696,7 @@
       var slide = slider.slides.first(),
           slideMargin = vars.itemMargin,
           minItems = vars.minItems,
-          maxItems = vars.maxItems;
+          maxItems = vars.maxItems,
           boxSizing = slide.css('-moz-box-sizing') || slide.css('-webkit-box-sizing') || slide.css('box-sizing');
 
       slider.w = slider.width();
