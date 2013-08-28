@@ -97,7 +97,7 @@
 
         // KEYBOARD:
         if (slider.vars.keyboard && ($(slider.containerSelector).length === 1 || slider.vars.multipleKeyboard)) {
-          $(document).bind('keyup' + slider.vars.eventNamespace, function(event) {
+          $(document).bind('keyup' + slider.vars.eventNamespace + "-" + slider.id, function(event) {
             var keycode = event.keyCode;
             if (!slider.animating && (keycode === 39 || keycode === 37)) {
               var target = (keycode === 39) ? slider.getTarget('next') :
@@ -1022,19 +1022,22 @@
     }
 
     slider.destroy = function() {
-      slider.pause(); // pause the timer
-      slider.transitions = false; // kill transitions
-      if (slider.vars.controlNav && slider.vars.manualControls == "") slider.controlNav.closest('.flex-control-nav').remove();
-      if (slider.vars.directionNav) slider.directionNav.closest('.flex-direction-nav').remove();
-      if (slider.vars.pausePlay) slider.pausePlay.closest('.flex-pauseplay').remove();
-      if (slider.vars.keyboardNav && $('ul.slides').length == 1) $(document).unbind('keyup', keyboardMove);
-      if (slider.vars.mousewheel) slider.unbind(slider.mousewheelEvent);
-      if (slider.vars.animationLoop) slider.find('.clone').remove();
-      if (slider.vertical) slider.height("auto");
-      slider.find('.flex-viewport ul').unwrap(); // removes the .flex-viewport div
-      slider.find('.slides').removeAttr('style').find('li').removeAttr('style');
-      slider.removeData('flexslider');
-      $(window).unbind("resize" + slider.vars.eventNamespace + "-" + slider.id + " focus" + slider.vars.eventNamespace + "-" + slider.id + " orientationchange" + slider.vars.eventNamespace + "-" + slider.id)
+      var classNamespace = '.' + slider.vars.namespace; // Namespaced class selector
+      if (slider.vars.controlNav) slider.controlNav.closest(classNamespace + 'control-nav').remove(); // Remove control elements if present
+      if (slider.vars.directionNav) slider.directionNav.closest(classNamespace + 'direction-nav').remove(); // Remove direction-nav elements if present
+      if (slider.vars.pausePlay) slider.pausePlay.closest(classNamespace + 'pauseplay').remove(); // Remove pauseplay elements if present
+      slider.find('.clone').remove(); // Remove any flexslider clones
+      slider.unbind(slider.vars.eventNamespace); // Remove events on slider
+      slider.container.unwrap(); // Remove the .flex-viewport div
+      slider.container.removeAttr('style') // Remove generated CSS (could collide with 3rd parties)
+      slider.container.unbind(slider.vars.eventNamespace); // Remove events on slider
+      slider.slides.removeAttr('style'); // Remove generated CSS (could collide with 3rd parties)
+      slider.slides.filter(classNamespace + 'active-slide').removeClass(slider.vars.namespace + 'active-slide'); // Remove slide active class
+      slider.slides.unbind(slider.vars.eventNamespace); // Remove events on slides
+      $(document).unbind(slider.vars.eventNamespace + "-" + slider.id); // Remove events from document for this instance only
+      $(window).unbind(slider.vars.eventNamespace + "-" + slider.id); // Remove events from window for this instance only 
+      slider.stop(); // Stop the interval
+      slider.removeData('flexslider'); // Remove data
     }
 
     //FlexSlider: Initialize
