@@ -6,6 +6,24 @@
 ;
 (function ($) {
 
+  function getProp (prop) {
+    var obj = document.createElement('div'),
+        uProp = prop.charAt(0).toUpperCase() + prop.slice(1),
+        props = [prop, prop+'Property', 'Webkit'+uProp, 'Mox'+uProp, 'O'+uProp, 'ms'+uProp],
+        pfx;
+    for (var i in props) {
+      if ( obj.style[ props[i] ] !== undefined ) {
+        pfx = props[i].replace(uProp, '').toLowerCase();
+        if (pfx === prop || pfx === prop+'Property') {
+          return prop;
+        } else {
+          return '-' + pfx + '-' + prop;
+        }
+      }
+    }
+    return '';
+  }
+
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
     var slider = $(el);
@@ -26,6 +44,9 @@
         carousel = (slider.vars.itemWidth > 0),
         fade = slider.vars.animation === "fade",
         asNav = slider.vars.asNavFor !== "",
+        transformProp = getProp('transform'),
+        transitionProp = getProp('transition'),
+        css3Denabled = !!getProp('perspective'),
         methods = {},
         focused = true;
 
@@ -58,18 +79,11 @@
         slider.started = false;
         slider.startTimeout = null;
         // TOUCH/USECSS:
-        slider.transitions = !slider.vars.video && !fade && slider.vars.useCSS && (function() {
-          var obj = document.createElement('div'),
-              props = ['perspectiveProperty', 'WebkitPerspective', 'MozPerspective', 'OPerspective', 'msPerspective'];
-          for (var i in props) {
-            if ( obj.style[ props[i] ] !== undefined ) {
-              slider.pfx = props[i].replace('Perspective','').toLowerCase();
-              slider.prop = "-" + slider.pfx + "-transform";
-              return true;
-            }
-          }
-          return false;
-        }());
+        slider.transitions = !slider.vars.video && !fade && slider.vars.useCSS && css3Denabled && transitionProp;
+
+        //CSS TRANSFORMS
+        if (css3Denabled) slider.prop = transformProp;
+
         // CONTROLSCONTAINER:
         if (slider.vars.controlsContainer !== "") slider.controlsContainer = $(slider.vars.controlsContainer).length > 0 && $(slider.vars.controlsContainer);
         // MANUAL:
@@ -831,7 +845,7 @@
       if (slider.transitions) {
         target = (vertical) ? "translate3d(0," + target + ",0)" : "translate3d(" + target + ",0,0)";
         dur = (dur !== undefined) ? (dur/1000) + "s" : "0s";
-        slider.container.css("-" + slider.pfx + "-transition-duration", dur);
+        slider.container.css(transitionProp + "-duration", dur);
       }
 
       slider.args[slider.prop] = target;
@@ -886,13 +900,17 @@
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE:
+        var transitionAttr = transitionProp.replace('-t', 'T').replace('-', '');
         slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%", "position": "relative"});
         if (type === "init") {
           if (!touch) {
             //slider.slides.eq(slider.currentSlide).fadeIn(slider.vars.animationSpeed, slider.vars.easing);
             slider.slides.css({ "opacity": 0, "display": "block", "zIndex": 1 }).eq(slider.currentSlide).css({"zIndex": 2}).animate({"opacity": 1},slider.vars.animationSpeed,slider.vars.easing);
           } else {
-            slider.slides.css({ "opacity": 0, "display": "block", "webkitTransition": "opacity " + slider.vars.animationSpeed / 1000 + "s ease", "zIndex": 1 }).eq(slider.currentSlide).css({ "opacity": 1, "zIndex": 2});
+            // Work-around for not being able to use variables as object keys.
+            var styles = { "opacity": 0, "display": "block", "zIndex": 1 };
+            styles[transitionAttr] = "opacity " + slider.vars.animationSpeed / 1000 + "s ease"
+            slider.slides.css(styles).eq(slider.currentSlide).css({ "opacity": 1, "zIndex": 2});
           }
         }
         // SMOOTH HEIGHT:
