@@ -1028,7 +1028,7 @@
       if (slider.vars.pausePlay) slider.pausePlay.closest(classNamespace + 'pauseplay').remove(); // Remove pauseplay elements if present
       slider.find('.clone').remove(); // Remove any flexslider clones
       slider.unbind(slider.vars.eventNamespace); // Remove events on slider
-      slider.container.unwrap(); // Remove the .flex-viewport div
+      if ( slider.vars.animation == "slide" ) slider.container.unwrap(); // Remove the .flex-viewport div
       slider.container.removeAttr('style') // Remove generated CSS (could collide with 3rd parties)
       slider.container.unbind(slider.vars.eventNamespace); // Remove events on slider
       slider.slides.removeAttr('style'); // Remove generated CSS (could collide with 3rd parties)

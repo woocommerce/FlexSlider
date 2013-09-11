@@ -130,8 +130,15 @@
     });
     $(window).load(function(){
 
-      $('.flexslider').flexslider({
+      $('.flexslider').eq(0).flexslider({
         animation: "slide",
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+      });
+
+      $('.flexslider').eq(1).flexslider({
+        animation: "fade",
         start: function(slider){
           $('body').removeClass('loading');
         }
@@ -162,7 +169,7 @@
             
           } else {
             $('.flexslider').eq(1).flexslider({
-              animation: "slide",
+              animation: "fade",
               start: function(slider){
                 $('body').removeClass('loading');
               }
