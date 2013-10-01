@@ -738,6 +738,9 @@
         // SMOOTH HEIGHT:
         if (slider.vars.smoothHeight) methods.smoothHeight(slider.vars.animationSpeed);
       }
+      // ALLOW CAPTION CSS3 ANIMATION:
+      var caption = $( ".flex-active-slide .flex-caption" ).detach();
+      caption.appendTo(".flex-active-slide");  
     }
     slider.wrapup = function(dimension) {
       // SLIDE:
