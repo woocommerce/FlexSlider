@@ -61,7 +61,6 @@ html[xmlns] .slides {display: block;}
 .carousel li { margin-right: 5px; }
 
 /* Alternate Caption CSS */
-#flex-main { font-family: 'Trebuchet MS' sans-serif; padding: 0 40px; max-width: 1200px; margin: 0 auto; }
 .flex-caption { width: 100%; margin: 0; }
 .text-container { width: 100%; padding: 20px; }
 .text-container a:hover { text-decoration: underline; }
