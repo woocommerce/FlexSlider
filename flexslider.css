@@ -12,6 +12,7 @@
 
 /* Browser Resets
 *********************************/
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 .flex-container a:active,
 .flexslider a:active,
 .flex-container a:focus,
@@ -59,6 +60,26 @@ html[xmlns] .slides {display: block;}
 .flexslider .slides { zoom: 1; }
 .carousel li { margin-right: 5px; }
 
+/* Alternate Caption CSS */
+#flex-main { font-family: 'Trebuchet MS' sans-serif; padding: 0 40px; max-width: 1200px; margin: 0 auto; }
+.flex-caption { width: 100%; margin: 0; }
+.text-container { width: 100%; padding: 20px; }
+.text-container a:hover { text-decoration: underline; }
+.caption-one { background-color: #45372c; color: white; }
+.caption-one a { color: white; }
+.caption-two { background-color: #056652; color: white; }
+.caption-two a { color: white; }
+.caption-three { background-color: #8c4200; color: white; }
+.caption-three a { color: white; }
+.caption-four { background-color: #6a2307; color: white; }
+.caption-four a { color: white; }
+
+/* 860px and above CSS of Alternate Caption */
+@media screen and (min-width: 860px) {
+  .flex-caption { width: 100%; max-width: 1600px; margin: 0 auto; position: absolute; top: 10%; z-index: 100; }
+  .caption-container { position: relative; width: 100%; margin: 0 auto; padding-left: 2%; }
+  .text-container { max-width: 320px; position: relative; -webkit-animation: slideIn; -moz-animation: slideIn; -o-animation: slideIn; animation: slideIn; -webkit-animation-duration: 2s; -moz-animation-duration: 2s; -o-animation-duration: 2s; animation-duration: 2s; } }
+
 /* Direction Nav */
 .flex-direction-nav {*height: 0;}
 .flex-direction-nav a  { display: block; width: 40px; height: 40px; margin: -20px 0 0; position: absolute; top: 50%; z-index: 10; overflow: hidden; opacity: 0; cursor: pointer; color: rgba(0,0,0,0.8); text-shadow: 1px 1px 0 rgba(255,255,255,0.3); -webkit-transition: all .3s ease; -moz-transition: all .3s ease; transition: all .3s ease; }
@@ -94,3 +115,17 @@ html[xmlns] .slides {display: block;}
   .flex-direction-nav .flex-prev { opacity: 1; left: 10px;}
   .flex-direction-nav .flex-next { opacity: 1; right: 10px;}
 }
+
+/* Alternate Caption slideIn CSS */
+/* Will not work properly without JS pull by Ryan Long https://github.com/woothemes/FlexSlider/pull/865 */
+@-webkit-keyframes slideIn { 0% { left: 9%; opacity: 0; }
+  100% { left: 0; opacity: 1; } }
+
+@-moz-keyframes slideIn { 0% { left: 9%; opacity: 0; }
+  100% { left: 0; opacity: 1; } }
+
+@-o-keyframes slideIn { 0% { left: 9%; opacity: 0; }
+  100% { left: 0; opacity: 1; } }
+
+@keyframes slideIn { 0% { left: 9%; opacity: 0; }
+  100% { left: 0; opacity: 1; } }
