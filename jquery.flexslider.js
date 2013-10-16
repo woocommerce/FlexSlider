@@ -26,6 +26,7 @@
         carousel = (slider.vars.itemWidth > 0),
         fade = slider.vars.animation === "fade",
         asNav = slider.vars.asNavFor !== "",
+        variableImageWidth = slider.vars.variableImageWidth && !vertical && !fade && !carousel,
         methods = {},
         focused = true;
 
@@ -403,7 +404,7 @@
               } else if ( ( window.navigator.msPointerEnabled ) || e.touches.length === 1 ) {
                 slider.pause();
                 // CAROUSEL:
-                cwidth = (vertical) ? slider.h : slider. w;
+                cwidth = (vertical) ? slider.h : (variableImageWidth) ? slider.currentWidth : slider.w;
                 startT = Number(new Date());
                 // CAROUSEL:
 
@@ -411,7 +412,8 @@
                 localX = e.touches[0].pageX;
                 localY = e.touches[0].pageY;
 
-                offset = (carousel && reverse && slider.animatingTo === slider.last) ? 0 :
+                offset = (variableImageWidth) ? slider.currentOffset :
+                         (carousel && reverse && slider.animatingTo === slider.last) ? 0 :
                          (carousel && reverse) ? slider.limit - (((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.animatingTo) :
                          (carousel && slider.currentSlide === slider.last) ? slider.limit :
                          (carousel) ? ((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.currentSlide :
@@ -484,11 +486,12 @@
                     slider.pause();
                     el._gesture.addPointer(e.pointerId);
                     accDx = 0;
-                    cwidth = (vertical) ? slider.h : slider. w;
+                    cwidth = (vertical) ? slider.h : (variableImageWidth) ? slider.currentWidth : slider.w;
                     startT = Number(new Date());
                     // CAROUSEL:
 
-                    offset = (carousel && reverse && slider.animatingTo === slider.last) ? 0 :
+                    offset = (variableImageWidth) ? slider.currentOffset :
+                      (carousel && reverse && slider.animatingTo === slider.last) ? 0 :
                         (carousel && reverse) ? slider.limit - (((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.animatingTo) :
                             (carousel && slider.currentSlide === slider.last) ? slider.limit :
                                 (carousel) ? ((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.currentSlide :
@@ -568,14 +571,33 @@
           }
           else if (vertical) { //VERTICAL:
             slider.viewport.height(slider.h);
-            slider.setProps(slider.h, "setTotal");
+            slider.setProps(slider.h, "setCurrent");
           } else {
+            slider.newSlides.width(slider.computedW);
+            // VARIABLE IMAGE WIDTH:
+            if (variableImageWidth) methods.variableImageWidth();
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) methods.smoothHeight();
-            slider.newSlides.width(slider.computedW);
-            slider.setProps(slider.computedW, "setTotal");
+            slider.setProps(slider.computedW, "setCurrent");
           }
         }
+      },
+      variableImageWidth: function() {
+        var minHeight = 0;
+        slider.newSlides.each(function(index) {
+          $(this).children('img').first().height('auto');
+          var imgHeight = $(this).children('img').first().height();
+
+          //FIND MIN SLIDE HEIGHT
+          if((imgHeight !== 0 && imgHeight !== null && imgHeight < minHeight) || minHeight === 0) minHeight = imgHeight;
+        });
+
+        slider.newSlides.children('img').height(minHeight);
+
+        slider.newSlides.each(function(index) {
+          imgWidth = $(this).children('img').first().width();
+          if(imgWidth !== 0 || imgWidth !== null) $(this).width(imgWidth);
+        });
       },
       smoothHeight: function(dur) {
         if (!vertical || fade) {
@@ -825,6 +847,7 @@
 
     // SLIDE:
     slider.setProps = function(pos, special, dur) {
+
       var target = (function() {
         var posCheck = (pos) ? pos : ((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.animatingTo,
             posCalc = (function() {
@@ -833,9 +856,43 @@
                        (reverse && slider.animatingTo === slider.last) ? 0 :
                        (reverse) ? slider.limit - (((slider.itemW + slider.vars.itemMargin) * slider.move) * slider.animatingTo) :
                        (slider.animatingTo === slider.last) ? slider.limit : posCheck;
+              } else if (variableImageWidth) {
+                var startWidth = 0,
+                  endWidth = 0,
+                  offsetWidth = 0,
+                  start = (reverse) ? ((slider.count - 1) - 0 + slider.cloneOffset) : (0 + slider.cloneOffset),
+                  offset = (reverse) ? ((slider.count - 1) - slider.currentSlide + slider.cloneOffset) : (slider.currentSlide + slider.cloneOffset),
+                  current = offset;
+
+                if(slider.animatingTo != slider.currentSlide) {
+                  offset = (reverse) ? ((slider.count - 1) - slider.animatingTo + slider.cloneOffset) : (slider.animatingTo + slider.cloneOffset);
+                }
+
+                if (slider.currentSlide === 0 && slider.animatingTo === slider.count - 1 && slider.vars.animationLoop && slider.direction !== "next") {
+                  offset = (reverse) ? slider.count + slider.cloneOffset : 0;
+                } else if (slider.currentSlide === slider.last && slider.animatingTo === 0 && slider.vars.animationLoop && slider.direction !== "prev") {
+                  offset = (reverse) ? 0 : slider.count + 1;
+                }
+
+                slider.newSlides.each(function(index) {
+                  var imgWidth = $(this).children('img').first().width();
+                  if(imgWidth === 0 || imgWidth === null) imgWidth = slider.computedW;
+                  if(index == current) slider.currentWidth = imgWidth;
+                  if(index < start) startWidth += imgWidth;
+                  if(index < offset) offsetWidth += imgWidth;
+                  if(index < slider.count) endWidth += imgWidth;
+                });
+
+                switch (special) {
+                  case "setCurrent": return offsetWidth;
+                  case "setTouch": return (reverse) ? pos : pos;
+                  case "jumpEnd": return (reverse) ? startWidth : endWidth;
+                  case "jumpStart": return (reverse) ? endWidth : startWidth;
+                  default: return offsetWidth;
+                }
               } else {
                 switch (special) {
-                  case "setTotal": return (reverse) ? ((slider.count - 1) - slider.currentSlide + slider.cloneOffset) * pos : (slider.currentSlide + slider.cloneOffset) * pos;
+                  case "setCurrent": return (reverse) ? ((slider.count - 1) - slider.currentSlide + slider.cloneOffset) * pos : (slider.currentSlide + slider.cloneOffset) * pos;
                   case "setTouch": return (reverse) ? pos : pos;
                   case "jumpEnd": return (reverse) ? pos : slider.count * pos;
                   case "jumpStart": return (reverse) ? slider.count * pos : pos;
@@ -843,7 +900,7 @@
                 }
               }
             }());
-
+            slider.currentOffset = posCalc;
             return (posCalc * -1) + "px";
           }());
 
@@ -889,6 +946,7 @@
         slider.newSlides = $(slider.vars.selector, slider);
 
         sliderOffset = (reverse) ? slider.count - 1 - slider.currentSlide + slider.cloneOffset : slider.currentSlide + slider.cloneOffset;
+
         // VERTICAL:
         if (vertical && !carousel) {
           slider.container.height((slider.count + slider.cloneCount) * 200 + "%").css("position", "absolute").width("100%");
@@ -903,10 +961,19 @@
           slider.setProps(sliderOffset * slider.computedW, "init");
           setTimeout(function(){
             slider.doMath();
-            slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
+            slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block", "visibility": (type === "init") ? "hidden" : "visible"});
+            // VARIABLE IMAGE WIDTH:
+            if (variableImageWidth) methods.variableImageWidth();
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) methods.smoothHeight();
           }, (type === "init") ? 100 : 0);
+          // Wait for images to render for variableImageWidth
+          if (type === "init")  {
+            setTimeout(function(){
+              methods.resize();
+              slider.newSlides.css({"visibility": "visible"});
+            }, 200);
+          }
         }
       } else { // FADE:
         slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%", "position": "relative"});
@@ -929,8 +996,6 @@
       // CANDIDATE: active slide
       if (!carousel) slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide");
 
-      //FlexSlider: init() Callback
-      slider.vars.init(slider);
     };
 
     slider.doMath = function() {
@@ -1020,6 +1085,7 @@
       //FlexSlider: added() Callback
       slider.vars.added(slider);
     };
+
     slider.removeSlide = function(obj) {
       var pos = (isNaN(obj)) ? slider.slides.index($(obj)) : obj;
 
@@ -1068,6 +1134,7 @@
     reverse: false,                 //{NEW} Boolean: Reverse the animation direction
     animationLoop: true,            //Boolean: Should the animation loop? If false, directionNav will received "disable" classes at either end
     smoothHeight: false,            //{NEW} Boolean: Allow height of the slider to animate smoothly in horizontal mode
+    variableImageWidth: false,      //{NEW} Boolean: Allow for variable width images in slides.
     startAt: 0,                     //Integer: The slide that the slider should start on. Array notation (0 = first slide)
     slideshow: true,                //Boolean: Animate slider automatically
     slideshowSpeed: 7000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
@@ -1080,7 +1147,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
+    pauseInvisible: true,           //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
@@ -1111,7 +1178,7 @@
     minItems: 1,                    //{NEW} Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
-    allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+    allowOneSlide: true,            //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
