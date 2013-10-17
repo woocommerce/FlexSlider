@@ -691,7 +691,7 @@
         // SLIDE:
         if (!fade) {
           var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.computedW,
-              margin, slideString, calcNext;
+              margin, slideString, calcNext, called = false;
 
           // INFINITE LOOP / REVERSE:
           if (carousel) {
@@ -712,10 +712,16 @@
               slider.animating = false;
               slider.currentSlide = slider.animatingTo;
             }
-            slider.container.unbind("webkitTransitionEnd transitionend");
-            slider.container.bind("webkitTransitionEnd transitionend", function() {
+            slider.container.one("webkitTransitionEnd transitionend", function() {
+              called = true;
               slider.wrapup(dimension);
             });
+            setTimeout(function(){
+              if (!called) {
+                slider.container.trigger('webkitTransitionEnd');
+                slider.container.trigger('transitionend');
+              }
+            }, slider.vars.animationSpeed+200);
           } else {
             slider.container.animate(slider.args, slider.vars.animationSpeed, slider.vars.easing, function(){
               slider.wrapup(dimension);
