@@ -212,7 +212,12 @@
           if (slider.pagingCount > 1) {
             for (var i = 0; i < slider.pagingCount; i++) {
               slide = slider.slides.eq(i);
-              item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"/>' : '<a>' + j + '</a>';
+              slideId = slide.attr('id') || slider.data('flexslider-id') + "-s" + j;
+              ctlId = slideId + '-ctl';
+              slide.attr('id', slideId).attr('aria-labelledby', ctlId);
+              item = (slider.vars.controlNav === "thumbnails")
+                   ? '<img src="../' + slide.attr( 'data-thumb' ) + '" id="' + ctlId + '" role="tab" aria-controls="' + slideId + '"/>'
+                   : '<a id="' + ctlId + '" role="tab" aria-controls="' + slideId + '">' + j + '</a>';
               if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
                 var captn = slide.attr( 'data-thumbcaption' );
                 if ( '' != captn && undefined != captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
@@ -278,7 +283,7 @@
           slider.controlNav = $('.' + namespace + 'control-nav li ' + selector, (slider.controlsContainer) ? slider.controlsContainer : slider);
         },
         active: function() {
-          slider.controlNav.removeClass(namespace + "active").eq(slider.animatingTo).addClass(namespace + "active");
+          slider.controlNav.removeClass(namespace + "active").attr('aria-selected','false').eq(slider.animatingTo).addClass(namespace + "active").attr('aria-selected','true');
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
@@ -839,6 +844,8 @@
     }
 
     slider.setup = function(type) {
+      slider.container.attr('role', 'tablist');
+      slider.slides.attr('role', 'tabpanel');
       // SLIDE:
       if (!fade) {
         var sliderOffset, arr;
@@ -1099,7 +1106,7 @@
     if (options === undefined) options = {};
 
     if (typeof options === "object") {
-      return this.each(function() {
+      return this.each(function(i, el) {
         var $this = $(this),
             selector = (options.selector) ? options.selector : ".slides > li",
             $slides = $this.find(selector);
@@ -1108,6 +1115,7 @@
           $slides.fadeIn(400);
           if (options.start) options.start($this);
         } else if ($this.data('flexslider') === undefined) {
+          $this.data('flexslider-id', $this.attr('id') || "flexslider-" + i);
           new $.flexslider(this, options);
         }
       });
