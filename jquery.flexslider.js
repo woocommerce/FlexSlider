@@ -216,8 +216,8 @@
               ctlId = slideId + '-ctl';
               slide.attr('id', slideId).attr('aria-labelledby', ctlId);
               item = (slider.vars.controlNav === "thumbnails")
-                   ? '<img src="../' + slide.attr( 'data-thumb' ) + '" id="' + ctlId + '" role="tab" aria-controls="' + slideId + '"/>'
-                   : '<a id="' + ctlId + '" role="tab" aria-controls="' + slideId + '">' + j + '</a>';
+                   ? '<img src="../' + slide.attr( 'data-thumb' ) + '" id="' + ctlId + '" role="tab" aria-controls="' + slideId + '" href="#"/>'
+                   : '<a id="' + ctlId + '" role="tab" aria-controls="' + slideId + '" href="#">' + j + '</a>';
               if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
                 var captn = slide.attr( 'data-thumbcaption' );
                 if ( '' != captn && undefined != captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
