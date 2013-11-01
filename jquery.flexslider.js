@@ -7,7 +7,7 @@
 (function ($) {
 
   //FlexSlider: Object Instance
-  $.flexslider = function(el, options) {
+  $.flexslider = function(el, options, instanceId) {
     var slider = $(el);
 
     // making variables public
@@ -29,12 +29,15 @@
         methods = {},
         focused = true;
 
+    var instanceId = ( typeof instanceId !== 'undefined' ) ? instanceId++ : 0
+
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
 
     // Private slider methods
     methods = {
       init: function() {
+        slider.id = instanceId;
         slider.animating = false;
         // Get current slide and make sure it is a number
         slider.currentSlide = parseInt( ( slider.vars.startAt ? slider.vars.startAt : 0) );
@@ -94,7 +97,7 @@
 
         // KEYBOARD:
         if (slider.vars.keyboard && ($(slider.containerSelector).length === 1 || slider.vars.multipleKeyboard)) {
-          $(document).bind('keyup', function(event) {
+          $(document).bind('keyup' + slider.vars.eventNamespace + "-" + slider.id, function(event) {
             var keycode = event.keyCode;
             if (!slider.animating && (keycode === 39 || keycode === 37)) {
               var target = (keycode === 39) ? slider.getTarget('next') :
@@ -105,7 +108,7 @@
         }
         // MOUSEWHEEL:
         if (slider.vars.mousewheel) {
-          slider.bind('mousewheel', function(event, delta, deltaX, deltaY) {
+          slider.bind('mousewheel' + slider.vars.eventNamespace, function(event, delta, deltaX, deltaY) {
             event.preventDefault();
             var target = (delta < 0) ? slider.getTarget('next') : slider.getTarget('prev');
             slider.flexAnimate(target, slider.vars.pauseOnAction);
@@ -141,7 +144,7 @@
         if (touch && slider.vars.touch) methods.touch();
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize orientationchange focus", methods.resize);
+        if (!fade || (fade && slider.vars.smoothHeight)) $(window).bind("resize" + slider.vars.eventNamespace + "-" + slider.id + " orientationchange" + slider.vars.eventNamespace + "-" + slider.id + " focus" + slider.vars.eventNamespace + "-" + slider.id, methods.resize);
 
         slider.find("img").attr("draggable", "false");
 
@@ -157,7 +160,7 @@
           slider.currentItem = slider.currentSlide;
           slider.slides.removeClass(namespace + "active-slide").eq(slider.currentItem).addClass(namespace + "active-slide");
           if(!msGesture){
-              slider.slides.click(function(e){
+              slider.slides.on("click" + slider.vars.eventNamespace, function(e){
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
@@ -442,6 +445,9 @@
                   }
                   slider.setProps(offset + dx, "setTouch");
                 }
+              }else{
+                //gesture is not related to slider direction, ignore it
+                el.removeEventListener('touchmove', onTouchMove, false);
               }
             }
 
@@ -712,8 +718,8 @@
               slider.animating = false;
               slider.currentSlide = slider.animatingTo;
             }
-            slider.container.unbind("webkitTransitionEnd transitionend");
-            slider.container.bind("webkitTransitionEnd transitionend", function() {
+            slider.container.unbind("webkitTransitionEnd" + slider.vars.eventNamespace + " transitionend" + slider.vars.eventNamespace);
++            slider.container.bind("webkitTransitionEnd" + slider.vars.eventNamespace + " transitionend" + slider.vars.eventNamespace, function() {
               slider.wrapup(dimension);
             });
           } else {
@@ -1019,6 +1025,25 @@
       slider.vars.removed(slider);
     }
 
+    slider.destroy = function() {
+      var classNamespace = '.' + slider.vars.namespace; // Namespaced class selector
+      if (slider.vars.controlNav) slider.controlNav.closest(classNamespace + 'control-nav').remove(); // Remove control elements if present
+      if (slider.vars.directionNav) slider.directionNav.closest(classNamespace + 'direction-nav').remove(); // Remove direction-nav elements if present
+      if (slider.vars.pausePlay) slider.pausePlay.closest(classNamespace + 'pauseplay').remove(); // Remove pauseplay elements if present
+      slider.find('.clone').remove(); // Remove any flexslider clones
+      slider.unbind(slider.vars.eventNamespace); // Remove events on slider
+      if ( slider.vars.animation != "fade" ) slider.container.unwrap(); // Remove the .flex-viewport div
+      slider.container.removeAttr('style') // Remove generated CSS (could collide with 3rd parties)
+      slider.container.unbind(slider.vars.eventNamespace); // Remove events on slider
+      slider.slides.removeAttr('style'); // Remove generated CSS (could collide with 3rd parties)
+      slider.slides.filter(classNamespace + 'active-slide').removeClass(slider.vars.namespace + 'active-slide'); // Remove slide active class
+      slider.slides.unbind(slider.vars.eventNamespace); // Remove events on slides
+      $(document).unbind(slider.vars.eventNamespace + "-" + slider.id); // Remove events from document for this instance only
+      $(window).unbind(slider.vars.eventNamespace + "-" + slider.id); // Remove events from window for this instance only 
+      slider.stop(); // Stop the interval
+      slider.removeData('flexslider'); // Remove data
+    }
+
     //FlexSlider: Initialize
     methods.init();
   }
@@ -1033,6 +1058,7 @@
   //FlexSlider: Default Settings
   $.flexslider.defaults = {
     namespace: "flex-",             //{NEW} String: Prefix string attached to the class of every element generated by the plugin
+    eventNamespace: '.flexslider',   //{NEW} String: Event namespace string attached to all element events generated by the plugin. The period at the start of the string is required.
     selector: ".slides > li",       //{NEW} Selector: Must match a simple pattern. '{container} > {slide}' -- Ignore pattern at your own peril
     animation: "fade",              //String: Select your animation type, "fade" or "slide"
     easing: "swing",                //{NEW} String: Determines the easing method used in jQuery transitions. jQuery easing plugin is supported!
@@ -1093,6 +1119,7 @@
     removed: function(){}           //{NEW} Callback: function(slider) - Fires after a slide is removed
   }
 
+  var instanceId = 0;
 
   //FlexSlider: Plugin Function
   $.fn.flexslider = function(options) {
@@ -1108,7 +1135,7 @@
           $slides.fadeIn(400);
           if (options.start) options.start($this);
         } else if ($this.data('flexslider') === undefined) {
-          new $.flexslider(this, options);
+          new $.flexslider(this, options, instanceId++);
         }
       });
     } else {
@@ -1121,6 +1148,7 @@
         case "next": $slider.flexAnimate($slider.getTarget("next"), true); break;
         case "prev":
         case "previous": $slider.flexAnimate($slider.getTarget("prev"), true); break;
+        case "destroy": $slider.destroy(); break;
         default: if (typeof options === "number") $slider.flexAnimate(options, true);
       }
     }
