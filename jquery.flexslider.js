@@ -561,7 +561,7 @@
             // SMOOTH HEIGHT:
             methods.smoothHeight();
           } else if (carousel) { //CAROUSEL:
-            slider.slides.width(slider.computedW);
+            slider.slides.width(slider.itemW);
             slider.update(slider.pagingCount);
             slider.setProps();
           }
@@ -572,7 +572,7 @@
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) methods.smoothHeight();
             slider.newSlides.width(slider.computedW);
-            slider.setProps(slider.computedW, "setTotal");
+            slider.setProps(slider.itemT, "setTotal");
           }
         }
       },
@@ -642,7 +642,7 @@
           slider.atEnd = target === 0 || target === slider.count - 1;
           master.flexAnimate(target, true, false, true, fromNav);
           slider.direction = (slider.currentItem < target) ? "next" : "prev";
-          master.direction = slider.direction;
+          master.direction = (slider.currentItem > target) ? "next" : "prev";;
 
           if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
             slider.currentItem = target;
@@ -690,7 +690,7 @@
 
         // SLIDE:
         if (!fade) {
-          var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.computedW,
+          var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.itemT,
               margin, slideString, calcNext;
 
           // INFINITE LOOP / REVERSE:
@@ -877,7 +877,7 @@
           }, (type === "init") ? 100 : 0);
         } else {
           slider.container.width((slider.count + slider.cloneCount) * 200 + "%");
-          slider.setProps(sliderOffset * slider.computedW, "init");
+          slider.setProps(sliderOffset * slider.itemT, "init");
           setTimeout(function(){
             slider.doMath();
             slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
@@ -930,6 +930,7 @@
         slider.limit = (slider.pagingCount === 1) ? 0 :
                        (slider.vars.itemWidth > slider.w) ? (slider.itemW * (slider.count - 1)) + (slideMargin * (slider.count - 1)) : ((slider.itemW + slideMargin) * slider.count) - slider.w - slideMargin;
       } else {
+        slider.itemT = slider.w + slideMargin;
         slider.itemW = slider.w;
         slider.pagingCount = slider.count;
         slider.last = slider.count - 1;
