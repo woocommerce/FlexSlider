@@ -127,6 +127,11 @@
               if (!slider.manualPause && !slider.manualPlay && !slider.stopped) slider.play();
             });
           }
+          // pause animation on slider focus
+          slider[0].tabIndex = 0;
+          slider.on('focus', function () {
+            if (!slider.manualPlay && !slider.manualPause) slider.pause();  
+          });
           // initialize animation
           //If we're visible, or we don't use PageVisibility API
           if(!slider.vars.pauseInvisible || !methods.pauseInvisible.isHidden()) {
@@ -212,7 +217,7 @@
           if (slider.pagingCount > 1) {
             for (var i = 0; i < slider.pagingCount; i++) {
               slide = slider.slides.eq(i);
-              item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"/>' : '<a>' + j + '</a>';
+              item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"/>' : '<a href="#">' + j + '</a>';
               if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
                 var captn = slide.attr( 'data-thumbcaption' );
                 if ( '' != captn && undefined != captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
@@ -657,6 +662,8 @@
 
         slider.animating = true;
         slider.animatingTo = target;
+        // add animating class during animation
+        slider.addClass('flexslider-animating');
 
         // SLIDESHOW:
         if (pause) slider.pause();
@@ -752,6 +759,8 @@
       slider.currentSlide = slider.animatingTo;
       // API: after() animation Callback
       slider.vars.after(slider);
+      // remove animating class
+      slider.removeClass('flexslider-animating');
     }
 
     // SLIDESHOW:
@@ -901,6 +910,7 @@
       // !CAROUSEL:
       // CANDIDATE: active slide
       if (!carousel) slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide");
+
     }
 
 
