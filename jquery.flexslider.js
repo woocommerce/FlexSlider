@@ -119,7 +119,6 @@
         if (slider.vars.slideshow && slider.vars.pauseInvisible) methods.pauseInvisible.init();
 
         // SLIDSESHOW
-        console.log(slider.vars.slideshow)
         if (slider.vars.slideshow) {
           if (slider.vars.pauseOnHover) {
             slider.hover(function() {
