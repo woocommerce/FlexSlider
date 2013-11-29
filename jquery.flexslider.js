@@ -328,7 +328,7 @@
           if (slider.pagingCount === 1) {
             slider.directionNav.addClass(disabledClass).attr('tabindex', '-1');
           } else if (!slider.vars.animationLoop) {
-            if (slider.animatingTo === 0 && slider.current !== slider.last) {
+            if (slider.animatingTo === 0) {
               slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "prev").addClass(disabledClass).attr('tabindex', '-1');
             } else if (slider.animatingTo === slider.last) {
               slider.directionNav.removeClass(disabledClass).filter('.' + namespace + "next").addClass(disabledClass).attr('tabindex', '-1');
@@ -635,6 +635,11 @@
       }
 
       if (asNav && slider.pagingCount === 1) slider.direction = (slider.currentItem < target) ? "next" : "prev";
+
+
+      if(!vars.animationLoop && target === 0 && slider.currentSlide === slider.last){
+        slider.atEnd = true;
+      }
 
       if (!slider.animating && (slider.canAdvance(target, fromNav) || override) && slider.is(":visible")) {
         if (asNav && withSync) {
