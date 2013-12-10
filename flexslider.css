@@ -19,7 +19,7 @@
 .slides,
 .flex-control-nav,
 .flex-direction-nav {margin: 0; padding: 0; list-style: none;}
-
+.flexslider-rtl {direction:rtl; text-align:right;}
 /* Icon Fonts
 *********************************/
 /* Font-face Icons */
@@ -58,21 +58,27 @@ html[xmlns] .slides {display: block;}
 .loading .flex-viewport { max-height: 300px; }
 .flexslider .slides { zoom: 1; }
 .carousel li { margin-right: 5px; }
-
+	.flexslider-rtl .carousel li { margin-right:0; margin-left: 5px; }
 /* Direction Nav */
 .flex-direction-nav {*height: 0;}
 .flex-direction-nav a  { display: block; width: 40px; height: 40px; margin: -20px 0 0; position: absolute; top: 50%; z-index: 10; overflow: hidden; opacity: 0; cursor: pointer; color: rgba(0,0,0,0.8); text-shadow: 1px 1px 0 rgba(255,255,255,0.3); -webkit-transition: all .3s ease; -moz-transition: all .3s ease; transition: all .3s ease; }
 .flex-direction-nav .flex-prev { left: -50px; }
+	.flexslider-rtl .flex-direction-nav .flex-prev { left:auto; right: -50px; }
 .flex-direction-nav .flex-next { right: -50px; text-align: right; }
+	.flexslider-rtl .flex-direction-nav .flex-next { right:auto; left: -50px; text-align:left; }
 .flexslider:hover .flex-prev { opacity: 0.7; left: 10px; }
+	.flexslider-rtl.flexslider:hover .flex-prev {left:auto; right: 10px; }
 .flexslider:hover .flex-next { opacity: 0.7; right: 10px; }
+	.flexslider-rtl.flexslider:hover .flex-next { right:auto; left: 10px; }
 .flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover { opacity: 1; }
 .flex-direction-nav .flex-disabled { opacity: 0!important; filter:alpha(opacity=0); cursor: default; }
 .flex-direction-nav a:before  { font-family: "flexslider-icon"; font-size: 40px; display: inline-block; content: '\f001'; }
 .flex-direction-nav a.flex-next:before  { content: '\f002'; }
-
+.flexslider-rtl .flex-direction-nav a.flex-next:before  { content: '\f001'; }
+.flexslider-rtl .flex-direction-nav a.flex-prev:before  { content: '\f002'; }
 /* Pause/Play */
 .flex-pauseplay a { display: block; width: 20px; height: 20px; position: absolute; bottom: 5px; left: 10px; opacity: 0.8; z-index: 10; overflow: hidden; cursor: pointer; color: #000; }
+	.flexslider-rtl .flex-pauseplay a {left:auto; right:10px;}
 .flex-pauseplay a:before  { font-family: "flexslider-icon"; font-size: 20px; display: inline-block; content: '\f004'; }
 .flex-pauseplay a:hover  { opacity: 1; }
 .flex-pauseplay a.flex-play:before { content: '\f003'; }
@@ -86,11 +92,14 @@ html[xmlns] .slides {display: block;}
 
 .flex-control-thumbs {margin: 5px 0 0; position: static; overflow: hidden;}
 .flex-control-thumbs li {width: 25%; float: left; margin: 0;}
+	.flexslider-rtl .flex-control-thumbs li {float:right;}
 .flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
 .flex-control-thumbs img:hover {opacity: 1;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
 
 @media screen and (max-width: 860px) {
   .flex-direction-nav .flex-prev { opacity: 1; left: 10px;}
+  	.flexslider-rtl .flex-direction-nav .flex-prev{left:auto; right:10px;}
   .flex-direction-nav .flex-next { opacity: 1; right: 10px;}
+    .flexslider-rtl .flex-direction-nav .flex-next{right:auto; left:10px;}
 }
