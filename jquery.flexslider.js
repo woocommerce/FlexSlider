@@ -49,7 +49,7 @@
         slider.syncExists = $(slider.vars.sync).length > 0;
         // SLIDE:
         if (slider.vars.animation === "slide") slider.vars.animation = "swing";
-        slider.prop = (vertical) ? "top" : "marginLeft";
+        slider.prop = (vertical) ? "top" : (slider.vars.rtl?"marginRight":"marginLeft");
         slider.args = {};
         // SLIDESHOW:
         slider.manualPause = false;
@@ -65,7 +65,7 @@
             if ( obj.style[ props[i] ] !== undefined ) {
               slider.pfx = props[i].replace('Perspective','').toLowerCase();
               slider.prop = "-" + slider.pfx + "-transform";
-              return true;
+			  return true;
             }
           }
           return false;
@@ -85,7 +85,11 @@
 
         // INIT
         slider.setup("init");
-
+		
+		
+		//RTL
+		if (slider.vars.rtl) slider.addClass('flexslider-rtl');
+		
         // CONTROLNAV:
         if (slider.vars.controlNav) methods.controlNav.setup();
 
@@ -161,7 +165,11 @@
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
-                var posFromLeft = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
+				var posFromLeft
+				if(slider.vars.rtl)
+					posFromLeft = $slide.offset().right + $(slider).scrollLeft(); // Find position of slide relative to left of slider container
+				else
+                	posFromLeft= $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
                 if( posFromLeft <= 0 && $slide.hasClass( namespace + 'active-slide' ) ) {
                   slider.flexAnimate(slider.getTarget("prev"), true);
                 } else if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass(namespace + "active-slide")) {
@@ -824,18 +832,18 @@
                 }
               }
             }());
-
-            return (posCalc * -1) + "px";
+			
+			return (posCalc * -1) + "px";
           }());
 
       if (slider.transitions) {
-        target = (vertical) ? "translate3d(0," + target + ",0)" : "translate3d(" + target + ",0,0)";
+        target = (vertical) ? "translate3d(0," + target + ",0)" : "translate3d(" + (-1*parseInt(target)+'px') + ",0,0)";
         dur = (dur !== undefined) ? (dur/1000) + "s" : "0s";
         slider.container.css("-" + slider.pfx + "-transition-duration", dur);
       }
 
       slider.args[slider.prop] = target;
-      if (slider.transitions || dur === undefined) slider.container.css(slider.args);
+	  if (slider.transitions || dur === undefined) slider.container.css(slider.args);
     }
 
     slider.setup = function(type) {
@@ -880,12 +888,18 @@
           slider.setProps(sliderOffset * slider.computedW, "init");
           setTimeout(function(){
             slider.doMath();
+			if(slider.vars.rtl)
+			slider.newSlides.css({"width": slider.computedW, "float": "right", "display": "block"});
+			else
             slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) methods.smoothHeight();
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE:
+	  	if(slider.vars.rtl)
+		slider.slides.css({"width": "100%", "float": "right", "marginLeft": "-100%", "position": "relative"});
+		else
         slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%", "position": "relative"});
         if (type === "init") {
           if (!touch) {
@@ -1091,6 +1105,8 @@
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){}           //{NEW} Callback: function(slider) - Fires after a slide is removed
+	
+	,rtl: false //ADD RTL SUPPORT
   }
 
 

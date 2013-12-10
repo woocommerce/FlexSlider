@@ -70,7 +70,8 @@
             // Can also be used with $(document).ready()
             $(window).load(function() {
               $('.flexslider').flexslider({
-                animation: "slide"
+                animation: "slide",
+                rtl: true
               });
             });
           </pre>
@@ -118,6 +119,7 @@
         start: function(slider){
           $('body').removeClass('loading');
         }
+		,rtl:true
       });
     });
   </script>
