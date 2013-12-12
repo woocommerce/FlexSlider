@@ -157,7 +157,7 @@
           slider.currentItem = slider.currentSlide;
           slider.slides.removeClass(namespace + "active-slide").eq(slider.currentItem).addClass(namespace + "active-slide");
           if(!msGesture){
-              slider.slides.click(function(e){
+              slider.slides.on('click tap', function(e){
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
