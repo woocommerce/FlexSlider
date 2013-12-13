@@ -910,6 +910,9 @@
       // !CAROUSEL:
       // CANDIDATE: active slide
       if (!carousel) slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide");
+
+      //FlexSlider: init() Callback
+      slider.vars.init(slider);
     };
 
     slider.doMath = function() {
@@ -1097,7 +1100,8 @@
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
-    removed: function(){}           //{NEW} Callback: function(slider) - Fires after a slide is removed
+    removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
+    init: function() {}             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
   };
 
   //FlexSlider: Plugin Function
