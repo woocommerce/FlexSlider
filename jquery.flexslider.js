@@ -592,6 +592,13 @@
           case "pause": $obj.pause(); break;
         }
       },
+      uniqueID: function($clone) {
+        $clone.find( '[id]' ).each(function() {
+          var $this = $(this);
+          $this.attr( 'id', $this.attr( 'id' ) + '_clone' );
+        });
+        return $clone;
+      },
       pauseInvisible: {
         visProp: null,
         init: function() {
@@ -862,6 +869,8 @@
           // clear out old clones
           if (type !== "init") slider.container.find('.clone').remove();
           slider.container.append(slider.slides.first().clone().addClass('clone').attr('aria-hidden', 'true')).prepend(slider.slides.last().clone().addClass('clone').attr('aria-hidden', 'true'));
+		      methods.uniqueID( slider.slides.first().clone().addClass('clone') ).appendTo( slider.container );
+		      methods.uniqueID( slider.slides.last().clone().addClass('clone') ).prependTo( slider.container );
         }
         slider.newSlides = $(slider.vars.selector, slider);
 
