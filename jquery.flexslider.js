@@ -157,7 +157,7 @@
           slider.currentItem = slider.currentSlide;
           slider.slides.removeClass(namespace + "active-slide").eq(slider.currentItem).addClass(namespace + "active-slide");
           if(!msGesture){
-              slider.slides.click(function(e){
+              slider.slides.on(eventType, function(e){
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
@@ -599,7 +599,7 @@
 
           if ('hidden' in document) return 'hidden';
           for (var i = 0; i < prefixes.length; i++) {
-            if ((prefixes[i] + 'Hidden') in document) 
+            if ((prefixes[i] + 'Hidden') in document)
             methods.pauseInvisible.visProp = prefixes[i] + 'Hidden';
           }
           if (methods.pauseInvisible.visProp) {
@@ -614,7 +614,7 @@
                 else (slider.vars.initDelay > 0) ? setTimeout(slider.play, slider.vars.initDelay) : slider.play(); //Didn't init before: simply init or wait for it
               }
             });
-          }       
+          }
         },
         isHidden: function() {
           return document[methods.pauseInvisible.visProp] || false;
