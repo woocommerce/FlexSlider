@@ -1,11 +1,11 @@
-# FlexSlider 2.3.0-bleeding
+# FlexSlider 2.2.2
 http://www.woothemes.com/flexslider/ - Copyright (c) 2013 WooThemes
 
 ## Updates
 
-** Version 2.3.0-bleeding **
+** Version 2.2.2 **
 
-** This version is not yet production ready. Please use version 2.2.0, until further notice. **
+** Fixes minified JavaScript file to remove merge conflicts. **
 
 ** Version 2.2.0 **
 
