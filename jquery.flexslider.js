@@ -390,15 +390,16 @@
           cwidth,
           dx,
           startT,
+          onTouchStart,
+          onTouchMove,
+          onTouchEnd,
           scrolling = false,
           localX = 0,
           localY = 0,
           accDx = 0;
 
         if(!msGesture){
-            el.addEventListener('touchstart', onTouchStart, false);
-
-            function onTouchStart(e) {
+            onTouchStart = function(e) {
               if (slider.animating) {
                 e.preventDefault();
               } else if ( ( window.navigator.msPointerEnabled ) || e.touches.length === 1 ) {
@@ -423,9 +424,9 @@
                 el.addEventListener('touchmove', onTouchMove, false);
                 el.addEventListener('touchend', onTouchEnd, false);
               }
-            }
+            };
 
-            function onTouchMove(e) {
+            onTouchMove = function(e) {
               // Local vars for X and Y points.
 
               localX = e.touches[0].pageX;
@@ -445,9 +446,9 @@
                   slider.setProps(offset + dx, "setTouch");
                 }
               }
-            }
+            };
 
-            function onTouchEnd(e) {
+            onTouchEnd = function(e) {
               // finish the touch by undoing the touch session
               el.removeEventListener('touchmove', onTouchMove, false);
 
@@ -467,7 +468,9 @@
               startY = null;
               dx = null;
               offset = null;
-            }
+            };
+
+            el.addEventListener('touchstart', onTouchStart, false);
         }else{
             el.style.msTouchAction = "none";
             el._gesture = new MSGesture();
