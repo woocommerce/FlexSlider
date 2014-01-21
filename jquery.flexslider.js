@@ -77,7 +77,10 @@
 
         // RANDOMIZE:
         if (slider.vars.randomize) {
+          // Detach slides so they are fully retained in document fragments, including events etc.
+          slider.slides.detach();
           slider.slides.sort(function() { return (Math.round(Math.random())-0.5); });
+          // In most cases this will remove the slides from the container, and the dom. 
           slider.container.empty().append(slider.slides);
         }
 
