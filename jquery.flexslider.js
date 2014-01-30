@@ -719,10 +719,21 @@
               slider.animating = false;
               slider.currentSlide = slider.animatingTo;
             }
+            // Webkit doesn't reliably fire the transition end event in some
+            // circumstances, so add a timer fallback but make sure only one
+            // actually takes effect.
+            var wrapupFunc = (function() {
+              var executed = false;
+              return function() {
+                if (!executed) {
+                  slider.wrapup(dimension);
+                }
+                executed = true;
+              }
+            })();
             slider.container.unbind("webkitTransitionEnd transitionend");
-            slider.container.bind("webkitTransitionEnd transitionend", function() {
-              slider.wrapup(dimension);
-            });
+            slider.container.bind("webkitTransitionEnd transitionend", wrapupFunc);
+            setTimeout(wrapupFunc, slider.vars.animationSpeed + 200);
           } else {
             slider.container.animate(slider.args, slider.vars.animationSpeed, slider.vars.easing, function(){
               slider.wrapup(dimension);
