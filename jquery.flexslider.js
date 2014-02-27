@@ -420,7 +420,6 @@
 
                 el.addEventListener('touchmove', onTouchMove, false);
                 el.addEventListener('touchend', onTouchEnd, false);
-
               }
             }
 
