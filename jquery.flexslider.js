@@ -420,6 +420,7 @@
 
                 el.addEventListener('touchmove', onTouchMove, false);
                 el.addEventListener('touchend', onTouchEnd, false);
+
               }
             }
 
@@ -459,6 +460,7 @@
                   if (!fade) slider.flexAnimate(slider.currentSlide, slider.vars.pauseOnAction, true);
                 }
               }
+              if (!slider.manualPause && !slider.stopped) slider.play();
               el.removeEventListener('touchend', onTouchEnd, false);
 
               startX = null;
