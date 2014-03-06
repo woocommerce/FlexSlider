@@ -720,8 +720,10 @@
               slider.currentSlide = slider.animatingTo;
             }
             slider.container.unbind("webkitTransitionEnd transitionend");
-            slider.container.bind("webkitTransitionEnd transitionend", function() {
-              slider.wrapup(dimension);
+            slider.container.bind("webkitTransitionEnd transitionend", function(event) {
+              if (event.target === slider.container[0]) {
+                slider.wrapup(dimension);
+              }
             });
           } else {
             slider.container.animate(slider.args, slider.vars.animationSpeed, slider.vars.easing, function(){
