@@ -957,7 +957,11 @@
       // update currentSlide and slider.animatingTo if necessary
       if (!carousel) {
         if (pos < slider.currentSlide) {
-          slider.currentSlide += 1;
+          if (action === "remove") {
+            slider.currentSlide -= 1;
+          } else if (action === "add"){
+            slider.currentSlide += 1;
+          }
         } else if (pos <= slider.currentSlide && pos !== 0) {
           slider.currentSlide -= 1;
         }
