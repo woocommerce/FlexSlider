@@ -959,12 +959,17 @@
         if (pos < slider.currentSlide) {
           if (action === "remove") {
             slider.currentSlide -= 1;
-          } else if (action === "add"){
+          } else if (action === "add") {
             slider.currentSlide += 1;
           }
-        } else if (pos <= slider.currentSlide && pos !== 0) {
-          slider.currentSlide -= 1;
+        } else if (pos === slider.currentSlide) {
+          if (action === "remove" && slider.currentSlide !== 0) {
+            slider.currentSlide -= 1;
+          } else if (action === "add") {
+            slider.currentSlide += 1;
+          }
         }
+
         slider.animatingTo = slider.currentSlide;
       }
 
@@ -999,6 +1004,9 @@
       }
 
       // update currentSlide, animatingTo, controlNav, and directionNav
+      if (pos === undefined) {
+        pos = slider.last;
+      }
       slider.update(pos, "add");
 
       // update slider.slides
