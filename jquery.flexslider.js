@@ -990,19 +990,11 @@
 
     };
 
-    slider.addSlide = function(obj, pos, update) {
-      // update param is by default true
-      // can set to false iff another slide is being removed at the same time as this one is added,
-      // in such a way that container width and currentSlide will stay the same
-      // this can give some performance improvements or prevent glitching
-      if (typeof update === 'undefined') update = true;
-
+    slider.addSlide = function(obj, pos) {
       var $obj = $(obj);
 
-      if (update) {
-        slider.count += 1;
-        slider.last = slider.count - 1;
-      }
+      slider.count += 1;
+      slider.last = slider.count - 1;
 
       // append new slide
       if (vertical && reverse) {
@@ -1015,10 +1007,7 @@
       if (pos === undefined) {
         pos = slider.last;
       }
-
-      if (update) {
-        slider.update(pos, "add");
-      }
+      slider.update(pos, "add");
 
       // update slider.slides
       slider.slides = $(slider.vars.selector + ':not(.clone)', slider);
@@ -1028,20 +1017,12 @@
       //FlexSlider: added() Callback
       slider.vars.added(slider);
     };
-    slider.removeSlide = function(obj, update) {
-      // update param is by default true
-      // can set to false iff another slide is being added at the same time as this removal,
-      // in such a way that container width and currentSlide will stay the same
-      // this can give some performance improvements or prevent glitching
-      if (typeof update === 'undefined') update = true;
-
+    slider.removeSlide = function(obj) {
       var pos = (isNaN(obj)) ? slider.slides.index($(obj)) : obj;
 
       // update count
-      if (update) {
-        slider.count -= 1;
-        slider.last = slider.count - 1;
-      }
+      slider.count -= 1;
+      slider.last = slider.count - 1;
 
       // remove slide
       if (isNaN(obj)) {
@@ -1051,10 +1032,8 @@
       }
 
       // update currentSlide, animatingTo, controlNav, and directionNav
-      if (update) {
-        slider.doMath();
-        slider.update(pos, "remove");
-      }
+      slider.doMath();
+      slider.update(pos, "remove");
 
       // update slider.slides
       slider.slides = $(slider.vars.selector + ':not(.clone)', slider);
