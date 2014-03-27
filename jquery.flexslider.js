@@ -223,11 +223,11 @@
 								var captn = slide.attr( 'data-thumbcaption' );
 								if ( '' != captn && undefined != captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
 							}
-							// Sports195 App = To help with imaging ratio, we use images as background-images in the majority of places.
-							// For instance, Sports195 WLS Homepage uses a Slider and Carousel. Carousel uses images as background-images.
+							// SPORTS195 App = To help with imaging ratio, we use images as background-images in the majority of places.
+							// For instance, SPORTS195 WLS Homepage uses a Slider and Carousel. Carousel uses images as background-images.
 							// Slider has no need for background images. So I created this if statement to check if type (defined on line 207)
 							// is 'control-paging', defining controls on a Slider so we DO NOT WANT those li elements to have a background-image.
-							// This will element the issue of UNDEFINED that we were getting on the Sports195 WLS Homepage.
+							// This will element the issue of UNDEFINED that we were getting on the SPORTS195 WLS Homepage.
 							if ( type === 'control-thumbs' ) {
 								slider.controlNavScaffold.append( '<li ' + bg + '>' + item + '</li>' );
 							} else {
@@ -295,7 +295,7 @@
 				},
 				active: function () {
 					slider.controlNav.removeClass( namespace + "active" ).eq( slider.animatingTo ).addClass( namespace + "active" );
-					// Added for Sport195 to help with styling
+					// Added for SPORTS195 to help with styling
 					slider.controlNav.parent().removeClass( namespace + "active" ).eq( slider.animatingTo ).addClass( namespace + "active" );
 				},
 				update: function ( action, pos ) {
