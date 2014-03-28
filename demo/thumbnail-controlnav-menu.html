@@ -28,7 +28,7 @@
         <ul>
           <li><a href="index.html">Basic Slider</a></li>
           <li><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
-          <li class="active"><a href="thumbnail-controlnav-menu.html">Slider w/thumbnail munu-bar</a></li>
+          <li class="active"><a href="thumbnail-controlnav-menu.html">Slider w/thumbnail menu-bar</a></li>
           <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
           <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li>
@@ -43,16 +43,16 @@
       <section class="slider">
         <div class="flexslider">
           <ul class="slides">
-            <li data-thumb="images/kitchen_adventurer_cheesecake_brownie.jpg">
+            <li data-thumb="images/kitchen_adventurer_cheesecake_brownie.jpg" data-thumbcaption="cheese 1">
   	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
   	    		</li>
-  	    		<li data-thumb="images/kitchen_adventurer_lemon.jpg">
+  	    		<li data-thumb="images/kitchen_adventurer_lemon.jpg" data-thumbcaption="cheese 2">
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
   	    		</li>
-  	    		<li data-thumb="images/kitchen_adventurer_donut.jpg">
+  	    		<li data-thumb="images/kitchen_adventurer_donut.jpg" data-thumbcaption="cheese 3">
   	    	    <img src="images/kitchen_adventurer_donut.jpg" />
   	    		</li>
-  	    		<li data-thumb="images/kitchen_adventurer_caramel.jpg">
+  	    		<li data-thumb="images/kitchen_adventurer_caramel.jpg" data-thumbcaption="cheese 4">
   	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
   	    		</li>
           </ul>
@@ -122,6 +122,7 @@
         controlNav: "thumbnails",
         //controlsContainer: ".flexslider-container",
         //manualControls: true,
+        thumbCaptions: true,
         menuBar: true,
         start: function(slider){
           $('body').removeClass('loading');

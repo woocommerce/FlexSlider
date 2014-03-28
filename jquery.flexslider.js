@@ -299,8 +299,6 @@
         setup: function() {
           methods.menuBar.createMenu();
           slider.append(slider.menuBar);
-          // reset flexslider div margin
-          // slider.css('margin', '0');
         },
         createMenu: function() {
           slider.menuBar  = $('<div class="flex-menu-bar"></div>');
@@ -313,12 +311,24 @@
           var thumbnails = slider.find('.flex-control-thumbs');
 
           thumbnails.addClass('flex-thums-tab hide-tab');
+
+          // thumbnails tab show event
           slider.menuBar.find('.flex-galleria-thumblink').click(function() {
-            methods.menuBar.toggleThumbnailsTab(thumbnails);
+            thumbnails.toggleClass('hide-tab');
           });
-        },
-        toggleThumbnailsTab: function(thumbnails) {
-          thumbnails.toggleClass('hide-tab');
+
+          // thumbnail click
+          slider.vars.after = function() {
+            var current = slider.currentSlide;
+            var text = slider.slides[current].getAttribute('data-thumbcaption')
+
+            slider.menuBar.find('.flex-galleria-text').text(text);
+          };
+
+          // fullscreen event
+          slider.menuBar.find('.flex-galleria-fullscreen').click(function() {
+            slider.toggleClass('fullscreen');
+          });
         }
       },
       directionNav: {
