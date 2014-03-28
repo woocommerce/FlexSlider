@@ -89,6 +89,9 @@
         // CONTROLNAV:
         if (slider.vars.controlNav) methods.controlNav.setup();
 
+        // MENUBAR:
+        if (slider.vars.menuBar) methods.menuBar.setup();
+
         // DIRECTIONNAV:
         if (slider.vars.directionNav) methods.directionNav.setup();
 
@@ -290,6 +293,32 @@
           }
           methods.controlNav.set();
           (slider.pagingCount > 1 && slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
+        }
+      },
+      menuBar: {
+        setup: function() {
+          methods.menuBar.createMenu();
+          slider.append(slider.menuBar);
+          // reset flexslider div margin
+          // slider.css('margin', '0');
+        },
+        createMenu: function() {
+          slider.menuBar  = $('<div class="flex-menu-bar"></div>');
+          slider.menuBar.append('<div class="flex-galleria-thumblink"></div>');
+          slider.menuBar.append('<div class="flex-galleria-text">Testo prova</div>');
+          slider.menuBar.append('<div class="flex-galleria-fullscreen"></div>');
+          methods.menuBar.setupMenu();
+        },
+        setupMenu: function() {
+          var thumbnails = slider.find('.flex-control-thumbs');
+
+          thumbnails.addClass('flex-thums-tab hide-tab');
+          slider.menuBar.find('.flex-galleria-thumblink').click(function() {
+            methods.menuBar.toggleThumbnailsTab(thumbnails);
+          });
+        },
+        toggleThumbnailsTab: function(thumbnails) {
+          thumbnails.toggleClass('hide-tab');
         }
       },
       directionNav: {
@@ -1096,6 +1125,9 @@
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
     allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+
+    // Menu bar options
+    menuBar: false,                 //{NEW} Boolean: Whether or not to show a menu bar to stop and play, and to navigate thumbnails
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide

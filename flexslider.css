@@ -90,7 +90,18 @@ html[xmlns] .slides {display: block;}
 .flex-control-thumbs img:hover {opacity: 1;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
 
+/* Menu bar */
+.flex-menu-bar {height: 30px; background-color: #000; position: relative; z-index: 2;}
+.flex-menu-bar .flex-galleria-thumblink {width: 30px; height: 30px; float: left; bottom: 1px; background: url(images/thumbs.png) no-repeat 50% 50%; cursor: pointer;}
+.flex-menu-bar .flex-galleria-text {height: 30px; color: white; float: left; line-height: 30px; margin-left: 30px;}
+.flex-menu-bar .flex-galleria-fullscreen {width: 30px; height: 30px; float: right; background: url(images/fullscreen.png) no-repeat; background-position: 8px 7px;}
+.flex-control-thumbs.flex-thums-tab {position: absolute; height: 100%; bottom: 0px; background: rgba(225,225,225,0.8); z-index: 2;}
+.flex-control-thumbs.flex-thums-tab.hide-tab {display: none;}
+.flex-control-thumbs.flex-thums-tab li {width: 100px; margin: 15px 0 0 15px; border: white solid 5px;}
+.flex-control-thumbs.flex-thums-tab li img {opacity: 1; padding 10px;}
+
 @media screen and (max-width: 860px) {
   .flex-direction-nav .flex-prev { opacity: 1; left: 10px;}
   .flex-direction-nav .flex-next { opacity: 1; right: 10px;}
 }
+

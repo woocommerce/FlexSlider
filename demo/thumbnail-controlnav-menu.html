@@ -57,6 +57,8 @@
   	    		</li>
           </ul>
         </div>
+        <div class="flexslider-container">
+        </div>
       </section>
       <aside>
         <div class="cf">
@@ -118,7 +120,9 @@
       $('.flexslider').flexslider({
         animation: "fade",
         controlNav: "thumbnails",
-        thumbCaptions: true,
+        //controlsContainer: ".flexslider-container",
+        //manualControls: true,
+        menuBar: true,
         start: function(slider){
           $('body').removeClass('loading');
         }
