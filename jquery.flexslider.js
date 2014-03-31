@@ -250,6 +250,8 @@
             }
             methods.setToClearWatchedEvent();
 
+            if (slider.vars.thumbCaptions && slider.vars.controlNav == "thumbnails")
+              methods.menuBar.closeThumbnailsTab();
           });
         },
         setupManual: function() {
@@ -282,6 +284,9 @@
         },
         active: function() {
           slider.controlNav.removeClass(namespace + "active").eq(slider.animatingTo).addClass(namespace + "active");
+
+          if (slider.menuBar)
+            slider.menuBar.trigger('slide-update', [slider.animatingTo]);
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
@@ -298,37 +303,54 @@
       menuBar: {
         setup: function() {
           methods.menuBar.createMenu();
+          methods.menuBar.setupMenu();
           slider.append(slider.menuBar);
         },
         createMenu: function() {
-          slider.menuBar  = $('<div class="flex-menu-bar"></div>');
-          slider.menuBar.append('<div class="flex-galleria-thumblink"></div>');
-          slider.menuBar.append('<div class="flex-galleria-text">Testo prova</div>');
-          slider.menuBar.append('<div class="flex-galleria-fullscreen"></div>');
-          methods.menuBar.setupMenu();
+          slider.menuBar  = $('<div class="'+ namespace + 'menu-bar"></div>');
+          if(slider.vars.controlNav == "thumbnails") {
+            slider.menuBar.append('<div class="'+ namespace + 'menubar-thumblink"></div>');
+            if (slider.vars.thumbCaptions)
+              slider.menuBar.append('<div class="'+ namespace + 'menubar-text">Testo prova</div>');
+          }
+          slider.menuBar.append('<div class="'+ namespace + 'menubar-fullscreen"></div>');
         },
         setupMenu: function() {
-          var thumbnails = slider.find('.flex-control-thumbs');
-
-          thumbnails.addClass('flex-thums-tab hide-tab');
-
-          // thumbnails tab show event
-          slider.menuBar.find('.flex-galleria-thumblink').click(function() {
-            thumbnails.toggleClass('hide-tab');
-          });
-
-          // thumbnail click
-          slider.vars.after = function() {
-            var current = slider.currentSlide;
-            var text = slider.slides[current].getAttribute('data-thumbcaption')
-
-            slider.menuBar.find('.flex-galleria-text').text(text);
-          };
+          methods.menuBar.thumbnailsManager();
 
           // fullscreen event
-          slider.menuBar.find('.flex-galleria-fullscreen').click(function() {
+          slider.menuBar.find('.' + namespace + 'menubar-fullscreen').click(function() {
+            //TO BE DONE
             slider.toggleClass('fullscreen');
           });
+        },
+        thumbnailsManager: function() {
+          if(slider.vars.controlNav == "thumbnails") {
+            var thumbnails = slider.find('.' + namespace + 'control-thumbs');
+
+            thumbnails.addClass(namespace + 'thums-tab hide-tab');
+
+            // thumbnails tab show event
+            slider.menuBar.find('.' + namespace + 'menubar-thumblink').click(function() {
+              thumbnails.toggleClass('hide-tab');
+            });
+
+            // thumbnail caption update
+            if (slider.vars.thumbCaptions) {
+              // first iteration
+              var text = slider.slides[0].getAttribute('data-thumbcaption');
+              slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+              // each slide change
+              slider.menuBar.bind('slide-update', function(e, index) {
+                var text = slider.slides[index].getAttribute('data-thumbcaption')
+                slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+              });
+            }
+          }
+        },
+        closeThumbnailsTab: function() {
+          var thumbnails = slider.find('.' + namespace + 'control-thumbs');
+          thumbnails.addClass('hide-tab');
         }
       },
       directionNav: {
