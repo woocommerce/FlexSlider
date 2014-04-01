@@ -342,8 +342,10 @@
               slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
               // each slide change
               slider.menuBar.bind('slide-update', function(e, index) {
-                var text = slider.slides[index].getAttribute('data-thumbcaption')
-                slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+                if (index != -1) {
+                  var text = slider.slides[index].getAttribute('data-thumbcaption')
+                  slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+                }
               });
             }
           }
