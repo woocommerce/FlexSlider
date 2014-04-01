@@ -328,11 +328,11 @@
           if(slider.vars.controlNav == "thumbnails") {
             var thumbnails = slider.find('.' + namespace + 'control-thumbs');
 
-            thumbnails.addClass(namespace + 'thums-tab hide-tab');
+            thumbnails.addClass(namespace + 'thums-tab');
 
             // thumbnails tab show event
             slider.menuBar.find('.' + namespace + 'menubar-thumblink').click(function() {
-              thumbnails.toggleClass('hide-tab');
+              slider.toggleClass(namespace + 'open-tab');
             });
 
             // thumbnail caption update
@@ -349,8 +349,8 @@
           }
         },
         closeThumbnailsTab: function() {
-          var thumbnails = slider.find('.' + namespace + 'control-thumbs');
-          thumbnails.addClass('hide-tab');
+          //var thumbnails = slider.find('.' + namespace + 'control-thumbs');
+          slider.removeClass(namespace + 'open-tab');
         }
       },
       directionNav: {
