@@ -926,7 +926,7 @@
 
       slider.w = (slider.viewport===undefined) ? slider.width() : slider.viewport.width();
       slider.h = slide.height();
-      slider.boxPadding = slide.outerWidth() - slide.width();
+      slider.boxPadding = slide.outerWidth(false) - slide.width();
 
       // CAROUSEL:
       if (carousel) {
