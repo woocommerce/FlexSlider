@@ -55,6 +55,12 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 
 ## Properties
 
+### menuBar: *{new}*
+`menuBar` create a simple menu bar to control the slider.
+It has a button to open thumbnails tab selection, the slide title (if **data-thumbcaption** is present) and a button for fullscreen function. This compact control bar let the user to control the slider and to navigate through slides in a simple and elegant way.
+
+*Note: it requires 'controlNav: "thumbnails"' and 'thumbCaptions: true'.*
+
 ### namespace: *{new}*
 `namespace` controls the prefixes attached to elements created by the plugin. In previous releases, only certain elements were tagged with a prefix class, which was causing class generalization issues for some users. FlexSlider now prefixes all generated elements with the appropriate namespace.
 

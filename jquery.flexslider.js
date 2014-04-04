@@ -311,7 +311,7 @@
           if(slider.vars.controlNav == "thumbnails") {
             slider.menuBar.append('<div class="'+ namespace + 'menubar-thumblink"></div>');
             if (slider.vars.thumbCaptions)
-              slider.menuBar.append('<div class="'+ namespace + 'menubar-text">Testo prova</div>');
+              slider.menuBar.append('<div class="'+ namespace + 'menubar-text"></div>');
           }
           slider.menuBar.append('<div class="'+ namespace + 'menubar-fullscreen"></div>');
         },
@@ -339,12 +339,14 @@
             if (slider.vars.thumbCaptions) {
               // first iteration
               var text = slider.slides[0].getAttribute('data-thumbcaption');
-              slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+              if (text)
+                slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
               // each slide change
               slider.menuBar.bind('slide-update', function(e, index) {
                 if (index != -1) {
                   var text = slider.slides[index].getAttribute('data-thumbcaption')
-                  slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+                  if (text)
+                    slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
                 }
               });
             }
@@ -1161,7 +1163,7 @@
     allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
 
     // Menu bar options
-    menuBar: false,                 //{NEW} Boolean: Whether or not to show a menu bar to stop and play, and to navigate thumbnails
+    menuBar: false,                 //{NEW} Boolean: Whether or not to show a menu bar to stop and play, and to navigate thumbnails. It requires controlNav: "thumbnails" and thumbCaptions: true.
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide

@@ -62,8 +62,8 @@ html[xmlns] .slides {display: block;}
 /* Direction Nav */
 .flex-direction-nav {*height: 0;}
 .flex-direction-nav a  { text-decoration:none; display: block; width: 40px; height: 40px; margin: -20px 0 0; position: absolute; top: 50%; z-index: 10; overflow: hidden; opacity: 0; cursor: pointer; color: rgba(0,0,0,0.8); text-shadow: 1px 1px 0 rgba(255,255,255,0.3); -webkit-transition: all .3s ease; -moz-transition: all .3s ease; transition: all .3s ease; }
-.flex-direction-nav .flex-prev { left: -50px; line-height: initial; }
-.flex-direction-nav .flex-next { right: -50px; text-align: right; line-height: initial; }
+.flex-direction-nav .flex-prev { left: -50px; line-height: 40px; }
+.flex-direction-nav .flex-next { right: -50px; text-align: right; line-height: 40px; }
 .flexslider:hover .flex-prev { opacity: 0.7; left: 10px; }
 .flexslider:hover .flex-next { opacity: 0.7; right: 10px; }
 .flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover { opacity: 1; }
@@ -99,6 +99,7 @@ html[xmlns] .slides {display: block;}
 .flex-open-tab .flex-direction-nav > li {display: none;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab {display: block; position: absolute; height: 100%; bottom: 0px; background: rgba(225,225,225,0.8); overflow: auto; z-index: 2;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab li {width: 100px; margin: 15px 0 0 15px; border: white solid 5px; overflow: hidden;}
+.flex-open-tab .flex-control-thumbs.flex-thums-tab > li:last-child {margin-bottom: 40px;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab li img {opacity: 1; padding 10px;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab li .flex-caption {text-overflow: ellipsis; white-space: nowrap;}
 

@@ -43,18 +43,18 @@
       <section class="slider">
         <div class="flexslider">
           <ul class="slides">
-            <li data-thumb="images/kitchen_adventurer_cheesecake_brownie.jpg" data-thumbcaption="cheese 1">
-  	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
-  	    		</li>
-  	    		<li data-thumb="images/kitchen_adventurer_lemon.jpg" data-thumbcaption="cheese 2">
-  	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
-  	    		</li>
-  	    		<li data-thumb="images/kitchen_adventurer_donut.jpg" data-thumbcaption="cheese 3">
-  	    	    <img src="images/kitchen_adventurer_donut.jpg" />
-  	    		</li>
-  	    		<li data-thumb="images/kitchen_adventurer_caramel.jpg" data-thumbcaption="cheese 4">
-  	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
-  	    		</li>
+            <li data-thumb="images/kitchen_adventurer_cheesecake_brownie.jpg" data-thumbcaption="Cheesecake brownie">
+              <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+            </li>
+            <li data-thumb="images/kitchen_adventurer_lemon.jpg" data-thumbcaption="Lemon">
+              <img src="images/kitchen_adventurer_lemon.jpg" />
+            </li>
+            <li data-thumb="images/kitchen_adventurer_donut.jpg" data-thumbcaption="Donut">
+              <img src="images/kitchen_adventurer_donut.jpg" />
+            </li>
+            <li data-thumb="images/kitchen_adventurer_caramel.jpg" data-thumbcaption="Caramel">
+              <img src="images/kitchen_adventurer_caramel.jpg" />
+            </li>
           </ul>
         </div>
         <div class="flexslider-container">
@@ -62,7 +62,7 @@
       </section>
       <aside>
         <div class="cf">
-          <h3>Thumbnail ControlNav Pattern</h3>
+          <h3>Thumbnail ControlNav Menu' bar Pattern</h3>
           <ul class="toggle cf">
             <li class="js"><a href="#view-js">JS</a></li>
             <li class="html"><a href="#view-html">HTML</a></li>
@@ -73,8 +73,10 @@
             // Can also be used with $(document).ready()
             $(window).load(function() {
               $('.flexslider').flexslider({
-                animation: "slide",
-                controlNav: "thumbnails"
+                animation: "fade",
+                controlNav: "thumbnails",
+                thumbCaptions: true,
+                menuBar: true,
               });
             });
           </pre>
@@ -84,16 +86,16 @@
             &lt;!-- Place somewhere in the &lt;body&gt; of your page -->
             &lt;div class="flexslider">
               &lt;ul class="slides">
-                &lt;li data-thumb="slide1-thumb.jpg">
+                &lt;li data-thumb="slide1-thumb.jpg" data-thumbcaption="Slide 1">
                   &lt;img src="slide1.jpg" />
                 &lt;/li>
-                &lt;li data-thumb="slide2-thumb.jpg">
+                &lt;li data-thumb="slide2-thumb.jpg" data-thumbcaption="Slide 2">
                   &lt;img src="slide2.jpg" />
                 &lt;/li>
-                &lt;li data-thumb="slide3-thumb.jpg">
+                &lt;li data-thumb="slide3-thumb.jpg" data-thumbcaption="Slide 3">
                   &lt;img src="slide3.jpg" />
                 &lt;/li>
-                &lt;li data-thumb="slide4-thumb.jpg">
+                &lt;li data-thumb="slide4-thumb.jpg" data-thumbcaption="Slide 4">
                   &lt;img src="slide4.jpg" />
                 &lt;/li>
               &lt;/ul>
@@ -120,8 +122,6 @@
       $('.flexslider').flexslider({
         animation: "fade",
         controlNav: "thumbnails",
-        //controlsContainer: ".flexslider-container",
-        //manualControls: true,
         thumbCaptions: true,
         menuBar: true,
         start: function(slider){
