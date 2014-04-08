@@ -46,6 +46,7 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 
 - [Basic Slider](http://flexslider.woothemes.com/)
 - [Slider w/thumbnail controlNav pattern](http://flexslider.woothemes.com/thumbnail-controlnav.html)
+- [Slider w/thumbnail menu-bar](http://flexslider.woothemes.com/thumbnail-controlnav-menu.html)
 - [Slider w/thumbnail slider](http://flexslider.woothemes.com/thumbnail-slider.html)
 - [Basic Carousel](http://flexslider.woothemes.com/basic-carousel.html)
 - [Carousel with min and max ranges](http://flexslider.woothemes.com/carousel-min-max.html)

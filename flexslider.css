@@ -95,6 +95,8 @@ html[xmlns] .slides {display: block;}
 .flex-menu-bar .flex-menubar-thumblink {width: 30px; height: 30px; float: left; bottom: 1px; background: url(images/thumbs.png) no-repeat 50% 50%; cursor: pointer;}
 .flex-menu-bar .flex-menubar-text {height: 30px; color: white; float: left; line-height: 30px; margin-left: 30px;}
 .flex-menu-bar .flex-menubar-fullscreen {width: 30px; height: 30px; float: right; background: url(images/fullscreen.png) no-repeat; background-position: 8px 7px; cursor: pointer;}
+.flexslider.fullscreen .flex-menu-bar .flex-menubar-fullscreen {background-position: 8px -93px;}
+.flexslider.fullscreen {margin: 0; border: none;}
 .flex-control-thumbs.flex-thums-tab {display: none;}
 .flex-open-tab .flex-direction-nav > li {display: none;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab {display: block; position: absolute; height: 100%; bottom: 0px; background: rgba(225,225,225,0.8); overflow: auto; z-index: 2;}

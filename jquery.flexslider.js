@@ -317,12 +317,7 @@
         },
         setupMenu: function() {
           methods.menuBar.thumbnailsManager();
-
-          // fullscreen event
-          slider.menuBar.find('.' + namespace + 'menubar-fullscreen').click(function() {
-            //TO BE DONE
-            slider.toggleClass('fullscreen');
-          });
+          methods.menuBar.fullscreenManager();
         },
         thumbnailsManager: function() {
           if(slider.vars.controlNav == "thumbnails") {
@@ -350,6 +345,86 @@
                 }
               });
             }
+          }
+        },
+        fullscreenManager: function() {
+          var fullscreenMaxHeight = screen.height - 30;
+
+          // initialize state fullscreen state
+          slider.menuBar.fullscreen = false;
+
+          // create max fullscreen height class
+          $("<style type='text/css'> .screenHeight{height: " + fullscreenMaxHeight + "px;} </style>").appendTo("head");
+
+          // fullscreen event
+          slider.menuBar.find('.' + namespace + 'menubar-fullscreen').click(function() {
+            methods.menuBar.toggleFullscreen();
+          });
+
+          // attach a callback to the exit fullscreen event
+          var events = 'fullscreenchange mozfullscreenchange webkitfullscreenchange';
+          $(document).on(events, function(e) {
+            if (!methods.menuBar.isFullscreen()) // if no more fullscreen
+              methods.menuBar.setFullscreenState(false);
+          });
+        },
+        isFullscreen: function() {
+          var doc = (slider[0].ownerDocument)? slider[0].ownerDocument : slider[0];
+          var state = !!doc["fullscreenElement"]
+            || !!doc["msFullscreenElement"]
+            || !!doc["webkitIsFullScreen"]
+            || !!doc["mozFullScreen"];
+
+          return state;
+        },
+        toggleFullscreen: function() {
+          var el, func, doc, dom, setHeight;
+
+          // get the element to fullscreen
+          el = slider[0];
+
+          // Get the element or the document
+          if (el.ownerDocument) { doc = el.ownerDocument; }
+          else { doc = el; el = doc.documentElement; }
+
+          // request or cancel fullscreen
+          if (slider.menuBar.fullscreen) { // is fullscreen
+
+            // Exit fullscreen
+            func = (/** @type {?Function} */ doc["exitFullscreen"])
+                || (/** @type {?Function} */ doc["webkitExitFullscreen"])
+                || (/** @type {?Function} */ doc["webkitCancelFullScreen"])
+                || (/** @type {?Function} */ doc["msExitFullscreen"])
+                || (/** @type {?Function} */ doc["mozCancelFullScreen"]);
+
+            state = false;
+            dom = doc;
+          } else {  // is not fullscreen
+
+            // Enter fullscreen
+            func = (/** @type {?Function} */ el["requestFullscreen"])
+                || (/** @type {?Function} */ el["webkitRequestFullscreen"])
+                || (/** @type {?Function} */ el["webkitRequestFullScreen"])
+                || (/** @type {?Function} */ el["msRequestFullscreen"])
+                || (/** @type {?Function} */ el["mozRequestFullScreen"]);
+
+            state = true;
+            dom = el;
+          }
+
+          // set css style
+          methods.menuBar.setFullscreenState(state);
+
+          if (func) func.call(dom);
+        },
+        setFullscreenState: function(state) {
+          slider.menuBar.fullscreen = state;
+          if (state) {
+            slider.addClass('fullscreen');
+            slider.find('ul.slides > li img').addClass('screenHeight');
+          } else {
+            slider.removeClass('fullscreen');
+            slider.find('ul.slides > li img').removeClass('screenHeight');
           }
         },
         closeThumbnailsTab: function() {
