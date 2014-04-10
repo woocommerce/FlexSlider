@@ -101,7 +101,7 @@ html[xmlns] .slides {display: block;}
 .flexslider.fullscreen .flex-direction-nav a {color: rgba(255,255,255,0.8);}
 .flexslider.customFullscreen {height: 100%; position: fixed; top: 0; left: 0; z-index: 1;}
 .flexslider.customFullscreen .slides > li img {width: 100%; height: 100%;}
-.flexslider.customFullscreen .flex-thums-tab {background: none;}
+.flexslider.customFullscreen.flex-open-tab .flex-control-thumbs.flex-thums-tab {background: none;}
 @media only screen and (orientation : portrait) {
 	.flexslider.customFullscreen .slides,
 	.flexslider.customFullscreen .flex-menu-bar,
