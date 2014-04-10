@@ -347,14 +347,14 @@
             }
           }
         },
+        closeThumbnailsTab: function() {
+          //var thumbnails = slider.find('.' + namespace + 'control-thumbs');
+          slider.removeClass(namespace + 'open-tab');
+        },
         fullscreenManager: function() {
-          var fullscreenMaxHeight = screen.height - 30;
-
           // initialize state fullscreen state
           slider.menuBar.fullscreen = false;
-
-          // create max fullscreen height class
-          $("<style type='text/css'> .screenHeight{height: " + fullscreenMaxHeight + "px;} </style>").appendTo("head");
+          slider.menuBar.customFullscreen = false;
 
           // fullscreen event
           slider.menuBar.find('.' + namespace + 'menubar-fullscreen').click(function() {
@@ -373,7 +373,8 @@
           var state = !!doc["fullscreenElement"]
             || !!doc["msFullscreenElement"]
             || !!doc["webkitIsFullScreen"]
-            || !!doc["mozFullScreen"];
+            || !!doc["mozFullScreen"]
+            || slider.menuBar.customFullscreen;
 
           return state;
         },
@@ -395,7 +396,8 @@
                 || (/** @type {?Function} */ doc["webkitExitFullscreen"])
                 || (/** @type {?Function} */ doc["webkitCancelFullScreen"])
                 || (/** @type {?Function} */ doc["msExitFullscreen"])
-                || (/** @type {?Function} */ doc["mozCancelFullScreen"]);
+                || (/** @type {?Function} */ doc["mozCancelFullScreen"])
+                || exitCustomFullscreen;
 
             state = false;
             dom = doc;
@@ -406,18 +408,45 @@
                 || (/** @type {?Function} */ el["webkitRequestFullscreen"])
                 || (/** @type {?Function} */ el["webkitRequestFullScreen"])
                 || (/** @type {?Function} */ el["msRequestFullscreen"])
-                || (/** @type {?Function} */ el["mozRequestFullScreen"]);
+                || (/** @type {?Function} */ el["mozRequestFullScreen"])
+                || enterCustomFullscreen;
 
             state = true;
             dom = el;
           }
 
+          if (func) func.call(dom);
+
           // set css style
           methods.menuBar.setFullscreenState(state);
 
-          if (func) func.call(dom);
+          function enterCustomFullscreen() {
+            slider.menuBar.customFullscreen = true;
+            slider.addClass('customFullscreen');
+          }
+
+          function exitCustomFullscreen() {
+            slider.menuBar.customFullscreen = false;
+            slider.removeClass('customFullscreen');
+          }
         },
         setFullscreenState: function(state) {
+          if (this.fullscreenMaxHeight == null && !slider.menuBar.customFullscreen) {
+            var menuBarHeight = 30;
+            if(window.innerHeight > window.innerWidth){ // portrait
+              var browserToolbar = screen.height - window.innerHeight;
+              this.fullscreenMaxHeight = Math.min(window.innerWidth, window.innerHeight) - browserToolbar;
+            } else {  // landscape
+              this.fullscreenMaxHeight = Math.min(screen.width, screen.height);
+            }
+
+            this.fullscreenMaxHeight -= menuBarHeight;
+            this.fullscreenMaxHeight += "px";
+
+            // create max fullscreen height class
+            $("<style type='text/css'> .screenHeight{height: " + this.fullscreenMaxHeight + ";} </style>").appendTo("head");
+          }
+
           slider.menuBar.fullscreen = state;
           if (state) {
             slider.addClass('fullscreen');
@@ -426,10 +455,6 @@
             slider.removeClass('fullscreen');
             slider.find('ul.slides > li img').removeClass('screenHeight');
           }
-        },
-        closeThumbnailsTab: function() {
-          //var thumbnails = slider.find('.' + namespace + 'control-thumbs');
-          slider.removeClass(namespace + 'open-tab');
         }
       },
       directionNav: {

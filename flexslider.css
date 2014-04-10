@@ -96,10 +96,18 @@ html[xmlns] .slides {display: block;}
 .flex-menu-bar .flex-menubar-text {height: 30px; color: white; float: left; line-height: 30px; margin-left: 30px;}
 .flex-menu-bar .flex-menubar-fullscreen {width: 30px; height: 30px; float: right; background: url(images/fullscreen.png) no-repeat; background-position: 8px 7px; cursor: pointer;}
 .flexslider.fullscreen .flex-menu-bar .flex-menubar-fullscreen {background-position: 8px -93px;}
-.flexslider.fullscreen {margin: 0; border: none; background: rgba(0, 0, 0, 0.8);}
-.flexslider.fullscreen .slides > li img {margin: 0 auto; width: auto;}
+.flexslider.fullscreen {margin: 0; border: none; background: rgba(0, 0, 0, 1);}
+.flexslider.fullscreen .slides > li img {margin: 0 auto; width: auto; max-width: 100%;}
 .flexslider.fullscreen .flex-direction-nav a {color: rgba(255,255,255,0.8);}
-.flex-control-thumbs.flex-thums-tab {display: none;}
+.flexslider.customFullscreen {height: 100%; position: fixed; top: 0; left: 0; z-index: 1;}
+.flexslider.customFullscreen .slides > li img {width: 100%; height: 100%;}
+.flexslider.customFullscreen .flex-thums-tab {background: none;}
+@media only screen and (orientation : portrait) {
+	.flexslider.customFullscreen .slides,
+	.flexslider.customFullscreen .flex-menu-bar,
+	.flexslider.customFullscreen .flex-thums-tab {position: relative; top: 25%;}
+}
+.flex-control-thumbs.flex-thums-tab {display: none; margin: 0;}
 .flex-open-tab .flex-direction-nav > li {display: none;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab {display: block; position: absolute; height: 100%; bottom: 0px; background: rgba(225,225,225,0.8); overflow: auto; z-index: 2;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab li {width: 100px; margin: 15px 0 0 15px; border: white solid 5px; overflow: hidden;}
