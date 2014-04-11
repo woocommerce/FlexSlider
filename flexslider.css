@@ -91,7 +91,7 @@ html[xmlns] .slides {display: block;}
 .flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
 
 /* Menu bar */
-.flex-menu-bar {height: 30px; background-color: #000; position: relative; z-index: 2;}
+.flex-menu-bar {height: 30px; background-color: #000; position: relative;  z-index: 3; }
 .flex-menu-bar .flex-menubar-thumblink {width: 30px; height: 30px; float: left; bottom: 1px; background: url(images/thumbs.png) no-repeat 50% 50%; cursor: pointer;}
 .flex-menu-bar .flex-menubar-text {height: 30px; color: white; float: left; line-height: 30px; margin-left: 30px;}
 .flex-menu-bar .flex-menubar-fullscreen {width: 30px; height: 30px; float: right; background: url(images/fullscreen.png) no-repeat; background-position: 8px 7px; cursor: pointer;}
@@ -99,13 +99,12 @@ html[xmlns] .slides {display: block;}
 .flexslider.fullscreen {margin: 0; border: none; background: rgba(0, 0, 0, 1);}
 .flexslider.fullscreen .slides > li img {margin: 0 auto; width: auto; max-width: 100%;}
 .flexslider.fullscreen .flex-direction-nav a {color: rgba(255,255,255,0.8);}
-.flexslider.customFullscreen {height: 100%; position: fixed; top: 0; left: 0; z-index: 1;}
-.flexslider.customFullscreen .slides > li img {width: 100%; height: 100%;}
+.flexslider.customFullscreen {height: 100%; position: fixed; top: 0; left: 0; z-index: 9999;}
 .flexslider.customFullscreen.flex-open-tab .flex-control-thumbs.flex-thums-tab {background: none;}
 @media only screen and (orientation : portrait) {
 	.flexslider.customFullscreen .slides,
 	.flexslider.customFullscreen .flex-menu-bar,
-	.flexslider.customFullscreen .flex-thums-tab {position: relative; top: 25%;}
+	.flexslider.customFullscreen .flex-thums-tab {position: relative;}
 }
 .flex-control-thumbs.flex-thums-tab {display: none; margin: 0;}
 .flex-open-tab .flex-direction-nav > li {display: none;}

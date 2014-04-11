@@ -431,20 +431,41 @@
           }
         },
         setFullscreenState: function(state) {
-          if (this.fullscreenMaxHeight == null && !slider.menuBar.customFullscreen) {
+          if (this.fullscreenMaxHeight == null) {
             var menuBarHeight = 30;
-            if(window.innerHeight > window.innerWidth){ // portrait
-              var browserToolbar = screen.height - window.innerHeight;
+            var browserToolbar = screen.height - window.innerHeight;
+            browserToolbar = (browserToolbar == 0)? screen.width - window.innerWidth : browserToolbar;
+            var portraitHeight;
+            if(window.innerHeight > window.innerWidth) { // portrait
               this.fullscreenMaxHeight = Math.min(window.innerWidth, window.innerHeight) - browserToolbar;
+              portraitHeight = window.innerHeight;
             } else {  // landscape
-              this.fullscreenMaxHeight = Math.min(screen.width, screen.height);
+              if (!slider.menuBar.customFullscreen) // native fullscreen
+                this.fullscreenMaxHeight = Math.min(screen.width, screen.height);
+              else
+                this.fullscreenMaxHeight = Math.min(window.innerWidth, window.innerHeight);
+              browserToolbar = screen.width - window.innerHeight;
+              portraitHeight = window.innerWidth - browserToolbar;
             }
 
             this.fullscreenMaxHeight -= menuBarHeight;
-            this.fullscreenMaxHeight += "px";
 
-            // create max fullscreen height class
-            $("<style type='text/css'> .screenHeight{height: " + this.fullscreenMaxHeight + ";} </style>").appendTo("head");
+            // create max fullscreen style classes
+            var style = "<style type='text/css'>";
+            style += ".screenHeight{height: " + this.fullscreenMaxHeight + "px;}";
+
+            // centrate fullscreen in portrait view
+            if (slider.menuBar.customFullscreen){ // no native fullscreen
+              var topPortrait = Math.floor((portraitHeight - this.fullscreenMaxHeight)/2);
+              style += "@media only screen and (orientation : portrait) {";
+              style += ".customFullscreen .topPortrait{top: " + topPortrait + "px;}";
+              style += "}";
+              slider.find('.slides, .flex-menu-bar, .flex-thums-tab').addClass('topPortrait');
+            }
+
+             style += "</style>";
+
+             $(style).appendTo("head");
           }
 
           slider.menuBar.fullscreen = state;
