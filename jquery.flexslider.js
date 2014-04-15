@@ -459,8 +459,10 @@
               var topPortrait = Math.floor((portraitHeight - this.fullscreenMaxHeight)/2);
               style += "@media only screen and (orientation : portrait) {";
               style += ".customFullscreen .topPortrait{top: " + topPortrait + "px;}";
+              style += ".thumbstabHeight{max-height: " + this.fullscreenMaxHeight + "px;}";
               style += "}";
-              slider.find('.slides, .flex-menu-bar, .flex-thums-tab').addClass('topPortrait');
+              slider.find('.slides, .' + namespace + 'menu-bar').addClass('topPortrait');
+              slider.find('.' + namespace + 'thums-tab').addClass('topPortrait thumbstabHeight');
             }
 
              style += "</style>";

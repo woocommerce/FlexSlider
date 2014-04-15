@@ -100,17 +100,17 @@ html[xmlns] .slides {display: block;}
 .flexslider.fullscreen .slides > li img {margin: 0 auto; width: auto; max-width: 100%;}
 .flexslider.fullscreen .flex-direction-nav a {color: rgba(255,255,255,0.8);}
 .flexslider.customFullscreen {height: 100%; position: fixed; top: 0; left: 0; z-index: 9999;}
-.flexslider.customFullscreen.flex-open-tab .flex-control-thumbs.flex-thums-tab {background: none;}
+/*.flexslider.customFullscreen.flex-open-tab .flex-control-thumbs.flex-thums-tab {background: none;}*/
 @media only screen and (orientation : portrait) {
 	.flexslider.customFullscreen .slides,
 	.flexslider.customFullscreen .flex-menu-bar,
 	.flexslider.customFullscreen .flex-thums-tab {position: relative;}
 }
-.flex-control-thumbs.flex-thums-tab {display: none; margin: 0;}
+.flex-thums-tab {display: none; margin: 0; top:0px;}
 .flex-open-tab .flex-direction-nav > li {display: none;}
-.flex-open-tab .flex-control-thumbs.flex-thums-tab {display: block; position: absolute; height: 100%; bottom: 0px; background: rgba(225,225,225,0.8); overflow: auto; z-index: 2;}
+.flex-open-tab .flex-control-thumbs.flex-thums-tab {display: block; position: absolute; height: 100%; background: rgba(225,225,225,0.8); overflow: auto; z-index: 2;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab li {width: 100px; margin: 15px 0 0 15px; border: white solid 5px; overflow: hidden;}
-.flex-open-tab .flex-control-thumbs.flex-thums-tab > li:last-child {margin-bottom: 40px;}
+.flex-open-tab .flex-control-thumbs.flex-thums-tab > li:last-child {margin-bottom: 30px;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab li img {opacity: 1; padding 10px;}
 .flex-open-tab .flex-control-thumbs.flex-thums-tab li .flex-caption {text-overflow: ellipsis; white-space: nowrap;}
 
