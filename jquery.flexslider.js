@@ -206,8 +206,6 @@
 				setupPaging: function () {
 					var type = ( slider.vars.controlNav === "thumbnails" ) ? 'control-thumbs' : 'control-paging',
 						j = 1,
-						// contribution: Rudy (s195)
-						bg,
 						item,
 						slide;
 
@@ -217,8 +215,6 @@
 						for ( var i = 0; i < slider.pagingCount; i++ ) {
 							slide = slider.slides.eq( i );
 							item = ( slider.vars.controlNav === "thumbnails" ) ? '<img src="' + slide.attr( 'data-thumb' ) + '"/>' : '<a>' + j + '</a>';
-							// contribution: Rudy (s195)
-							bg = 'style=" background-image:url( ' + slide.attr( 'data-thumb' ) + ' );"';
 							if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
 								var captn = slide.attr( 'data-thumbcaption' );
 								if ( '' != captn && undefined != captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
@@ -228,12 +224,10 @@
 							// Slider has no need for background images. So I created this if statement to check if type (defined on line 207)
 							// is 'control-paging', defining controls on a Slider so we DO NOT WANT those li elements to have a background-image.
 							// This will element the issue of UNDEFINED that we were getting on the SPORTS195 WLS Homepage.
+							slider.controlNavScaffold.append( '<li>' + item + '</li>' );
 							if ( type === 'control-thumbs' ) {
-								slider.controlNavScaffold.append( '<li ' + bg + '>' + item + '</li>' );
-							} else {
-								slider.controlNavScaffold.append( '<li>' + item + '</li>' );
+								slider.controlNavScaffold.find( 'li' ).css( "background-image", "url('" + slider.attr( 'data-thumb' ) + "')" );
 							}
-
 							j++;
 						}
 					}
