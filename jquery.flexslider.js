@@ -816,9 +816,9 @@
     slider.getTarget = function(dir) {
       slider.direction = dir;
       if (dir === "next") {
-        return (slider.currentSlide === slider.last) ? 0 : slider.currentSlide + 1;
+        return (slider.currentSlide === slider.last) ? ((slider.vars.loop)?0:slider.last) : slider.currentSlide + 1;
       } else {
-        return (slider.currentSlide === 0) ? slider.last : slider.currentSlide - 1;
+        return (slider.currentSlide === 0) ? ((slider.vars.loop)?slider.last:0) : slider.currentSlide - 1;
       }
     };
 
@@ -1071,6 +1071,7 @@
     initDelay: 0,                   //{NEW} Integer: Set an initialization delay, in milliseconds
     randomize: false,               //Boolean: Randomize slide order
     thumbCaptions: false,           //Boolean: Whether or not to put captions on thumbnails when using the "thumbnails" controlNav.
+    loop: true,                     //Boolean: Loop slider
 
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
