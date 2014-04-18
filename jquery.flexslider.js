@@ -158,7 +158,7 @@
           slider.currentItem = slider.currentSlide;
           slider.slides.removeClass(namespace + "active-slide").eq(slider.currentItem).addClass(namespace + "active-slide");
           if(!msGesture){
-              slider.slides.on(eventType, function(e){
+              slider.on(eventType, slider.vars.selector, function(e){
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
@@ -968,7 +968,8 @@
       // update currentSlide and slider.animatingTo if necessary
       if (!carousel) {
         if (pos < slider.currentSlide) {
-          slider.currentSlide += 1;
+          if (action === "remove") slider.currentSlide -= 1;
+          else slider.currentSlide += 1;
         } else if (pos <= slider.currentSlide && pos !== 0) {
           slider.currentSlide -= 1;
         }
