@@ -672,7 +672,7 @@
         // API: before() animation Callback
         // if before() return false, prevent the animation
         var canAnimate = slider.vars.before(slider);
-        if (!canAnimate) {
+        if (canAnimate === false) {
             slider.animating = false;
             slider.animatingTo = slider.currentSlide;
             return false;
