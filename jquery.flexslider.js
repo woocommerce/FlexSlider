@@ -672,7 +672,11 @@
         // API: before() animation Callback
         // if before() return false, prevent the animation
         var canAnimate = slider.vars.before(slider);
-        if (!canAnimate) { return; }
+        if (!canAnimate) {
+            slider.animating = false;
+            slider.animatingTo = slider.currentSlide;
+            return false;
+        }
 
         // SYNC:
         if (slider.syncExists && !fromNav) methods.sync("animate");
