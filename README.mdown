@@ -1,6 +1,16 @@
 # FlexSlider 2.2.2
 http://www.woothemes.com/flexslider/ - Copyright (c) 2013 WooThemes
 
+## Releases
+
+The `master` branch of this repository is always the latest development version of FlexSlider. Please view the [Releases](https://github.com/woothemes/FlexSlider/releases) section for a list of official FlexSlider builds.
+
+### Contributing
+
+We encourage contributions to FlexSlider and will review all pull requests submitted.
+
+Before contributing, please see our [Contributing Guide](https://github.com/woothemes/FlexSlider/blob/master/CONTRIBUTING.md).
+
 ## Updates
 
 ** Version 2.2.2 **
