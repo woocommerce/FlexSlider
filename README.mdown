@@ -11,6 +11,10 @@ We encourage contributions to FlexSlider and will review all pull requests submi
 
 Before contributing, please see our [Contributing Guide](https://github.com/woothemes/FlexSlider/blob/master/CONTRIBUTING.md).
 
+### Roadmap
+
+To keep up to date with how FlexSlider's development roadmap looks, please see our [development roadmap](https://github.com/woothemes/FlexSlider/wiki/Roadmap).
+
 ## Updates
 
 ** Version 2.2.2 **
