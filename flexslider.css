@@ -94,3 +94,11 @@ html[xmlns] .slides {display: block;}
   .flex-direction-nav .flex-prev { opacity: 1; left: 10px;}
   .flex-direction-nav .flex-next { opacity: 1; right: 10px;}
 }
+
+
+/*#1130*/
+.flex-control-alt{margin: 0;position: static;overflow: hidden;display: inline-flex; background: #42a2ce;}
+.flex-control-alt li{height: 80px;padding: 0px; margin: 0px;}
+.flex-control-alt li a{background: none; padding: 20px;display: list-item; text-indent: 0;cursor: pointer;color: white;font-size: 14px;font-weight: 100;width: auto;text-align: left;}
+.flex-control-alt li a:hover{background: #eee;height: 100px;text-decoration: none; color: black;}
+.flex-control-alt li a.flex-active{background: #fff;height: 100px; color: black;}

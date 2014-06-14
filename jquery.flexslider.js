@@ -203,7 +203,7 @@
           }
         },
         setupPaging: function() {
-          var type = (slider.vars.controlNav === "thumbnails") ? 'control-thumbs' : 'control-paging',
+          var type = (slider.vars.controlNav === "thumbnails") ? 'control-thumbs' : (slider.vars.controlNav === "alt") ? 'control-alt' : 'control-paging',
               j = 1,
               item,
               slide;
