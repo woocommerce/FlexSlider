@@ -3,7 +3,6 @@
 <head>
 	<meta content="charset=utf-8">
 	<title>FlexSlider 2</title>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 
   <!-- Demo CSS -->
 	<link rel="stylesheet" href="css/demo.css" type="text/css" media="screen" />
@@ -78,7 +77,7 @@
             $(window).load(function() {
               $('.flexslider').flexslider({
                 animation: "fade",
-                controlNav: "thumbnails",
+                controlNav: "thumbnails", // required
                 thumbCaptions: true,
                 menuBar: true,
               });
