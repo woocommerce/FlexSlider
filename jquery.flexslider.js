@@ -466,6 +466,7 @@
               startY = null;
               dx = null;
               offset = null;
+              slider.animating = false;
             }
         }else{
             el.style.msTouchAction = "none";
