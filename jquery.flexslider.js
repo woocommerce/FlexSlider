@@ -90,6 +90,9 @@
         // CONTROLNAV:
         if (slider.vars.controlNav) methods.controlNav.setup();
 
+        // MENUBAR:
+        if (slider.vars.menuBar) methods.menuBar.setup();
+
         // DIRECTIONNAV:
         if (slider.vars.directionNav) methods.directionNav.setup();
 
@@ -248,6 +251,8 @@
             }
             methods.setToClearWatchedEvent();
 
+            if (slider.vars.thumbCaptions && slider.vars.controlNav == "thumbnails")
+              methods.menuBar.closeThumbnailsTab();
           });
         },
         setupManual: function() {
@@ -280,6 +285,9 @@
         },
         active: function() {
           slider.controlNav.removeClass(namespace + "active").eq(slider.animatingTo).addClass(namespace + "active");
+
+          if (slider.menuBar)
+            slider.menuBar.trigger('slide-update', [slider.animatingTo]);
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
@@ -291,6 +299,186 @@
           }
           methods.controlNav.set();
           (slider.pagingCount > 1 && slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
+        }
+      },
+      menuBar: {
+        setup: function() {
+          methods.menuBar.createMenu();
+          methods.menuBar.setupMenu();
+          slider.append(slider.menuBar);
+        },
+        createMenu: function() {
+          slider.menuBar  = $('<div class="'+ namespace + 'menu-bar"></div>');
+          if(slider.vars.controlNav == "thumbnails") {
+            slider.menuBar.append('<div class="'+ namespace + 'menubar-thumblink"></div>');
+            if (slider.vars.thumbCaptions)
+              slider.menuBar.append('<div class="'+ namespace + 'menubar-text"></div>');
+          }
+          slider.menuBar.append('<div class="'+ namespace + 'menubar-fullscreen"></div>');
+        },
+        setupMenu: function() {
+          methods.menuBar.thumbnailsManager();
+          methods.menuBar.fullscreenManager();
+        },
+        thumbnailsManager: function() {
+          if(slider.vars.controlNav == "thumbnails") {
+            var thumbnails = slider.find('.' + namespace + 'control-thumbs');
+
+            thumbnails.addClass(namespace + 'thums-tab');
+
+            // thumbnails tab show event
+            slider.menuBar.find('.' + namespace + 'menubar-thumblink').click(function() {
+              slider.toggleClass(namespace + 'open-tab');
+            });
+
+            // thumbnail caption update
+            if (slider.vars.thumbCaptions) {
+              // first iteration
+              var text = slider.slides[0].getAttribute('data-thumbcaption');
+              if (text)
+                slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+              // each slide change
+              slider.menuBar.bind('slide-update', function(e, index) {
+                if (index != -1) {
+                  var text = slider.slides[index].getAttribute('data-thumbcaption')
+                  if (text)
+                    slider.menuBar.find('.' + namespace + 'menubar-text').text(text);
+                }
+              });
+            }
+          }
+        },
+        closeThumbnailsTab: function() {
+          //var thumbnails = slider.find('.' + namespace + 'control-thumbs');
+          slider.removeClass(namespace + 'open-tab');
+        },
+        fullscreenManager: function() {
+          // initialize state fullscreen state
+          slider.menuBar.fullscreen = false;
+          slider.menuBar.customFullscreen = false;
+
+          // fullscreen event
+          slider.menuBar.find('.' + namespace + 'menubar-fullscreen').click(function() {
+            methods.menuBar.toggleFullscreen();
+          });
+
+          // attach a callback to the exit fullscreen event
+          var events = 'fullscreenchange mozfullscreenchange webkitfullscreenchange';
+          $(document).on(events, function(e) {
+            if (!methods.menuBar.isFullscreen()) // if no more fullscreen
+              methods.menuBar.setFullscreenState(false);
+          });
+        },
+        isFullscreen: function() {
+          var doc = (slider[0].ownerDocument)? slider[0].ownerDocument : slider[0];
+          var state = !!doc["fullscreenElement"]
+            || !!doc["msFullscreenElement"]
+            || !!doc["webkitIsFullScreen"]
+            || !!doc["mozFullScreen"]
+            || slider.menuBar.customFullscreen;
+
+          return state;
+        },
+        toggleFullscreen: function() {
+          var el, func, doc, dom, setHeight;
+
+          // get the element to fullscreen
+          el = slider[0];
+
+          // Get the element or the document
+          if (el.ownerDocument) { doc = el.ownerDocument; }
+          else { doc = el; el = doc.documentElement; }
+
+          // request or cancel fullscreen
+          if (slider.menuBar.fullscreen) { // is fullscreen
+
+            // Exit fullscreen
+            func = (/** @type {?Function} */ doc["exitFullscreen"])
+                || (/** @type {?Function} */ doc["webkitExitFullscreen"])
+                || (/** @type {?Function} */ doc["webkitCancelFullScreen"])
+                || (/** @type {?Function} */ doc["msExitFullscreen"])
+                || (/** @type {?Function} */ doc["mozCancelFullScreen"])
+                || exitCustomFullscreen;
+
+            state = false;
+            dom = doc;
+          } else {  // is not fullscreen
+
+            // Enter fullscreen
+            func = (/** @type {?Function} */ el["requestFullscreen"])
+                || (/** @type {?Function} */ el["webkitRequestFullscreen"])
+                || (/** @type {?Function} */ el["webkitRequestFullScreen"])
+                || (/** @type {?Function} */ el["msRequestFullscreen"])
+                || (/** @type {?Function} */ el["mozRequestFullScreen"])
+                || enterCustomFullscreen;
+
+            state = true;
+            dom = el;
+          }
+
+          if (func) func.call(dom);
+
+          // set css style
+          methods.menuBar.setFullscreenState(state);
+
+          function enterCustomFullscreen() {
+            slider.menuBar.customFullscreen = true;
+            slider.addClass('customFullscreen');
+          }
+
+          function exitCustomFullscreen() {
+            slider.menuBar.customFullscreen = false;
+            slider.removeClass('customFullscreen');
+          }
+        },
+        setFullscreenState: function(state) {
+          if (this.fullscreenMaxHeight == null) {
+            var menuBarHeight = 30;
+            var browserToolbar = screen.height - window.innerHeight;
+            browserToolbar = (browserToolbar == 0)? screen.width - window.innerWidth : browserToolbar;
+            var portraitHeight;
+            if(window.innerHeight > window.innerWidth) { // portrait
+              this.fullscreenMaxHeight = Math.min(window.innerWidth, window.innerHeight) - browserToolbar;
+              portraitHeight = window.innerHeight;
+            } else {  // landscape
+              if (!slider.menuBar.customFullscreen) // native fullscreen
+                this.fullscreenMaxHeight = Math.min(screen.width, screen.height);
+              else
+                this.fullscreenMaxHeight = Math.min(window.innerWidth, window.innerHeight);
+              browserToolbar = screen.width - window.innerHeight;
+              portraitHeight = window.innerWidth - browserToolbar;
+            }
+
+            this.fullscreenMaxHeight -= menuBarHeight;
+
+            // create max fullscreen style classes
+            var style = "<style type='text/css'>";
+            style += ".screenHeight{height: " + this.fullscreenMaxHeight + "px;}";
+
+            // centrate fullscreen in portrait view
+            if (slider.menuBar.customFullscreen){ // no native fullscreen
+              var topPortrait = Math.floor((portraitHeight - this.fullscreenMaxHeight)/2);
+              style += "@media only screen and (orientation : portrait) {";
+              style += ".customFullscreen .topPortrait{top: " + topPortrait + "px;}";
+              style += ".thumbstabHeight{max-height: " + this.fullscreenMaxHeight + "px;}";
+              style += "}";
+              slider.find('.slides, .' + namespace + 'menu-bar').addClass('topPortrait');
+              slider.find('.' + namespace + 'thums-tab').addClass('topPortrait thumbstabHeight');
+            }
+
+             style += "</style>";
+
+             $(style).appendTo("head");
+          }
+
+          slider.menuBar.fullscreen = state;
+          if (state) {
+            slider.addClass('fullscreen');
+            slider.find('ul.slides > li img').addClass('screenHeight');
+          } else {
+            slider.removeClass('fullscreen');
+            slider.find('ul.slides > li img').removeClass('screenHeight');
+          }
         }
       },
       directionNav: {
@@ -1112,6 +1300,9 @@
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
     allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+
+    // Menu bar options
+    menuBar: false,                 //{NEW} Boolean: Whether or not to show a menu bar to stop and play, and to navigate thumbnails. It requires controlNav: "thumbnails" and thumbCaptions: true.
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
