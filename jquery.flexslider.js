@@ -665,7 +665,7 @@
         }
 
         slider.animating = true;
-        slider.animatingTo = target;
+        slider.animatingTo = Math.min(target, slider.pagingCount - 1);
 
         // SLIDESHOW:
         if (pause) slider.pause();
@@ -976,8 +976,8 @@
         } else if (pos <= slider.currentSlide && pos !== 0) {
           slider.currentSlide -= 1;
         }
-        slider.animatingTo = slider.currentSlide;
       }
+      slider.animatingTo = Math.min(slider.currentSlide, slider.pagingCount - 1);
 
       // update controlNav
       if (slider.vars.controlNav && !slider.manualControls) {
@@ -1080,7 +1080,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
+    pauseInvisible: true,           //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
