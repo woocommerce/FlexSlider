@@ -697,10 +697,11 @@
           if (!slider.vars.animationLoop) slider.pause();
         }
 
+        var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.computedW;
+
         // SLIDE:
         if (!fade) {
-          var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.computedW,
-              margin, slideString, calcNext;
+          var margin, slideString, calcNext;
 
           // INFINITE LOOP / REVERSE:
           if (carousel) {
