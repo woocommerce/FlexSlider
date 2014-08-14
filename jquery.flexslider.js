@@ -779,7 +779,7 @@
     };
     // SLIDESHOW:
     slider.pause = function() {
-      clearInterval(slider.animatedSlides);
+      slider.vars.clearIntervalHandler(slider.animatedSlides);
       slider.animatedSlides = null;
       slider.playing = false;
       // PAUSEPLAY:
@@ -789,8 +789,8 @@
     };
     // SLIDESHOW:
     slider.play = function() {
-      if (slider.playing) clearInterval(slider.animatedSlides);
-      slider.animatedSlides = slider.animatedSlides || setInterval(slider.animateSlides, slider.vars.slideshowSpeed);
+      if (slider.playing) slider.vars.clearIntervalHandler(slider.animatedSlides);
+      slider.animatedSlides = slider.animatedSlides || slider.vars.intervalHandler(slider.animateSlides.bind(this), slider.vars.slideshowSpeed);
       slider.started = slider.playing = true;
       // PAUSEPLAY:
       if (slider.vars.pausePlay) methods.pausePlay.update("pause");
@@ -1120,7 +1120,9 @@
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
-    init: function() {}             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
+    init: function() {},             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
+    intervalHandler: setInterval.bind(window)            //function to use to sleep until next slide change, can be used e.g. for a progress bar, has to return a id that can be used to remove the interval
+    clearIntervalHandler: clearInterval.bind(window)     //function to remove the interval using an id returned from the invervalHandler
   };
 
   //FlexSlider: Plugin Function
