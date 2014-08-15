@@ -1121,7 +1121,7 @@
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
     init: function() {},             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
-    intervalHandler: setInterval.bind(window)            //function to use to sleep until next slide change, can be used e.g. for a progress bar, has to return a id that can be used to remove the interval
+    intervalHandler: setInterval.bind(window),            //function to use to sleep until next slide change, can be used e.g. for a progress bar, has to return a id that can be used to remove the interval
     clearIntervalHandler: clearInterval.bind(window)     //function to remove the interval using an id returned from the invervalHandler
   };
 
