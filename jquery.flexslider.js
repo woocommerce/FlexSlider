@@ -395,7 +395,6 @@
           accDx = 0;
 
         if(!msGesture){
-            el.addEventListener('touchstart', onTouchStart, false);
 
             function onTouchStart(e) {
               if (slider.animating) {
@@ -423,6 +422,8 @@
                 el.addEventListener('touchend', onTouchEnd, false);
               }
             }
+            
+            el.addEventListener('touchstart', onTouchStart, false);
 
             function onTouchMove(e) {
               // Local vars for X and Y points.
