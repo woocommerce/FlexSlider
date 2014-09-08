@@ -1,4 +1,4 @@
-[![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
+[![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.svg)](https://gitter.im/woothemes/FlexSlider)
 
 # FlexSlider 2.3.0-bleeding
 http://www.woothemes.com/flexslider/ - Copyright (c) 2014 WooThemes
