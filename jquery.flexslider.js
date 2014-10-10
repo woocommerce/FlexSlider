@@ -697,6 +697,8 @@
           if (!slider.vars.animationLoop) slider.pause();
         }
 
+        slider.currentSlide = slider.animatingTo;
+
         // SLIDE:
         if (!fade) {
           var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.computedW,
@@ -719,9 +721,8 @@
           if (slider.transitions) {
             if (!slider.vars.animationLoop || !slider.atEnd) {
               slider.animating = false;
-              slider.currentSlide = slider.animatingTo;
             }
-            
+
             // Unbind previous transitionEnd events and re-bind new transitionEnd event
             slider.container.unbind("webkitTransitionEnd transitionend");
             slider.container.bind("webkitTransitionEnd transitionend", function() {
@@ -768,7 +769,6 @@
         }
       }
       slider.animating = false;
-      slider.currentSlide = slider.animatingTo;
       // API: after() animation Callback
       slider.vars.after(slider);
     };
