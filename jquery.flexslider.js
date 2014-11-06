@@ -343,7 +343,7 @@
       },
       pausePlay: {
         setup: function() {
-          var pausePlayScaffold = $('<div class="' + namespace + 'pauseplay"><a></a></div>');
+          var pausePlayScaffold = $('<div class="' + namespace + 'pauseplay"><a href="#">Pause/Pay</a></div>');
 
           // CONTROLSCONTAINER:
           if (slider.controlsContainer) {
