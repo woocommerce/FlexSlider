@@ -890,7 +890,7 @@
 
         sliderOffset = (reverse) ? slider.count - 1 - slider.currentSlide + slider.cloneOffset : slider.currentSlide + slider.cloneOffset;
         // VERTICAL:
-        if (vertical && !carousel) {
+        if (vertical) {
           slider.container.height((slider.count + slider.cloneCount) * 200 + "%").css("position", "absolute").width("100%");
           setTimeout(function(){
             slider.newSlides.css({"display": "block"});
@@ -940,7 +940,7 @@
           maxItems = slider.vars.maxItems;
 
       slider.w = (slider.viewport===undefined) ? slider.width() : slider.viewport.width();
-      slider.h = slide.height();
+      slider.h = (vertical) ? slider.height() : slide.height();
       slider.boxPadding = slide.outerWidth() - slide.width();
 
       // CAROUSEL:
@@ -948,11 +948,16 @@
         slider.itemT = slider.vars.itemWidth + slideMargin;
         slider.minW = (minItems) ? minItems * slider.itemT : slider.w;
         slider.maxW = (maxItems) ? (maxItems * slider.itemT) - slideMargin : slider.w;
-        slider.itemW = (slider.minW > slider.w) ? (slider.w - (slideMargin * (minItems - 1)))/minItems :
-                       (slider.maxW < slider.w) ? (slider.w - (slideMargin * (maxItems - 1)))/maxItems :
-                       (slider.vars.itemWidth > slider.w) ? slider.w : slider.vars.itemWidth;
 
-        slider.visible = Math.floor(slider.w/(slider.itemW));
+        if (vertical) {
+            slider.itemW = slider.w;
+        } else {
+            slider.itemW = (slider.minW > slider.w) ? (slider.w - (slideMargin * (minItems - 1)))/minItems :
+                           (slider.maxW < slider.w) ? (slider.w - (slideMargin * (maxItems - 1)))/maxItems :
+                           (slider.vars.itemWidth > slider.w) ? slider.w : slider.vars.itemWidth;
+        }
+
+        slider.visible = (vertical) ? Math.floor(slider.h/(slider.itemW)) : Math.floor(slider.w/(slider.itemW));
         slider.move = (slider.vars.move > 0 && slider.vars.move < slider.visible ) ? slider.vars.move : slider.visible;
         slider.pagingCount = Math.ceil(((slider.count - slider.visible)/slider.move) + 1);
         slider.last =  slider.pagingCount - 1;
