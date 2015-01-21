@@ -556,7 +556,7 @@
       },
       resize: function() {
         if (!slider.animating && slider.is(':visible')) {
-          if (!carousel) slider.doMath();
+          slider.doMath();
 
           if (fade) {
             // SMOOTH HEIGHT:
