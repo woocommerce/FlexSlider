@@ -11,56 +11,6 @@
  */
 
 
-// ====================================================================================================================
-// LESS SNIPPETS
-// ====================================================================================================================*/
-
-
-//
-// Transition
-//
-
-.transition( @duration: 1s, @easing: ease ) {
-
-  -webkit-transition: all @duration @easing;
-     -moz-transition: all @duration @easing;
-      -ms-transition: all @duration @easing;
-       -o-transition: all @duration @easing;
-          transition: all @duration @easing;
-
-}
-
-
-//
-// Border-radius
-//
-
-.border-radius( @radius: 5px ){
-
-  -webkit-border-radius: @arguments;
-     -moz-border-radius: @arguments;
-          border-radius: @arguments;
-
-}
-
-
-//
-// Box-shadow
-//
-
-.box-shadow( @x-axis: 0, @y-axis: 1px, @blur: 2px, @color: rgba( 0, 0, 0, 0.1 ), @inset: '' ) {
-  
-  -webkit-box-shadow: @inset @x-axis @y-axis @blur @color;
-     -moz-box-shadow: @inset @x-axis @y-axis @blur @color;
-       -o-box-shadow: @inset @x-axis @y-axis @blur @color;
-          box-shadow: @inset @x-axis @y-axis @blur @color;
-
-}
-
-
-
-
-
 /* ====================================================================================================================
  * FONT-FACE
  * ====================================================================================================================*/
@@ -69,11 +19,11 @@
 @font-face {
 
   font-family: 'flexslider-icon';
-  src:url('fonts/flexslider-icon.eot');
-  src:url('fonts/flexslider-icon.eot?#iefix') format('embedded-opentype'),
-    url('fonts/flexslider-icon.woff') format('woff'),
-    url('fonts/flexslider-icon.ttf') format('truetype'),
-    url('fonts/flexslider-icon.svg#flexslider-icon') format('svg');
+  src:url('@{flex-font-path}/flexslider-icon.eot');
+  src:url('@{flex-font-path}/flexslider-icon.eot?#iefix') format('embedded-opentype'),
+    url('@{flex-font-path}/flexslider-icon.woff') format('woff'),
+    url('@{flex-font-path}/flexslider-icon.ttf') format('truetype'),
+    url('@{flex-font-path}/flexslider-icon.svg#flexslider-icon') format('svg');
   font-weight: normal;
   font-style: normal;
 
