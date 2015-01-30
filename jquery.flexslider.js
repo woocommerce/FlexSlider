@@ -606,7 +606,7 @@
         init: function() {
           var prefixes = ['webkit','moz','ms','o'];
 
-          if ('hidden' in document) return 'hidden';
+          if ('hidden' in document) methods.pauseInvisible.visProp = 'hidden';
           for (var i = 0; i < prefixes.length; i++) {
             if ((prefixes[i] + 'Hidden') in document)
             methods.pauseInvisible.visProp = prefixes[i] + 'Hidden';
