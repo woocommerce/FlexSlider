@@ -5,3 +5,6 @@ FLEXSLIDER CHANGELOG
 
 2014.05.7 - Version 2.2.2
  * Added flexslider.less
+
+2015.02.11 - Version 2.3.0
+ * Fix for pauseInvisible attribute for Chrome and the Page Visibility API

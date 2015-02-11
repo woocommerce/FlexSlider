@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v2.2.2
+ * jQuery FlexSlider v2.3.0
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
@@ -604,29 +604,52 @@
       pauseInvisible: {
         visProp: null,
         init: function() {
-          var prefixes = ['webkit','moz','ms','o'];
-
-          if ('hidden' in document) return 'hidden';
-          for (var i = 0; i < prefixes.length; i++) {
-            if ((prefixes[i] + 'Hidden') in document)
-            methods.pauseInvisible.visProp = prefixes[i] + 'Hidden';
-          }
-          if (methods.pauseInvisible.visProp) {
-            var evtname = methods.pauseInvisible.visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
+          var visProp = methods.pauseInvisible.getHiddenProp();
+          if (visProp) {
+            var evtname = visProp.replace(/[H|h]idden/,'') + 'visibilitychange';
             document.addEventListener(evtname, function() {
               if (methods.pauseInvisible.isHidden()) {
-                if(slider.startTimeout) clearTimeout(slider.startTimeout); //If clock is ticking, stop timer and prevent from starting while invisible
-                else slider.pause(); //Or just pause
+                if(slider.startTimeout) {
+                  clearTimeout(slider.startTimeout); //If clock is ticking, stop timer and prevent from starting while invisible
+                } else { 
+                  slider.pause(); //Or just pause
+                }
               }
               else {
-                if(slider.started) slider.play(); //Initiated before, just play
-                else (slider.vars.initDelay > 0) ? setTimeout(slider.play, slider.vars.initDelay) : slider.play(); //Didn't init before: simply init or wait for it
+                if(slider.started) {
+                  slider.play(); //Initiated before, just play
+                } else { 
+                  if (slider.vars.initDelay > 0) { 
+                    setTimeout(slider.play, slider.vars.initDelay);
+                  } else {
+                    slider.play(); //Didn't init before: simply init or wait for it
+                  } 
+                }
               }
             });
           }
         },
         isHidden: function() {
-          return document[methods.pauseInvisible.visProp] || false;
+          var prop = methods.pauseInvisible.getHiddenProp();
+          if (!prop) {
+            return false;
+          }
+          return document[prop];
+        },
+        getHiddenProp: function() {
+          var prefixes = ['webkit','moz','ms','o'];
+          // if 'hidden' is natively supported just return it
+          if ('hidden' in document) {
+            return 'hidden';
+          }
+          // otherwise loop over all the known prefixes until we find one
+          for ( var i = 0; i < prefixes.length; i++ ) {
+              if ((prefixes[i] + 'Hidden') in document) {
+                return prefixes[i] + 'Hidden';
+              }
+          }
+          // otherwise it's not supported
+          return null;
         }
       },
       setToClearWatchedEvent: function() {
