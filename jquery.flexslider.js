@@ -15,7 +15,7 @@
 
     var namespace = slider.vars.namespace,
         msGesture = window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
-        touch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
+        touch = slider.vars.touch && (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch),
         // depricating this idea, as devices are being released with both of these events
         //eventType = (touch) ? "touchend" : "click",
         eventType = "click touchend MSPointerUp keyup",
@@ -216,7 +216,7 @@
               item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"/>' : '<a>' + j + '</a>';
               if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
                 var captn = slide.attr( 'data-thumbcaption' );
-                if ( '' != captn && undefined != captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
+                if ( captn ) item += '<span class="' + namespace + 'caption">' + captn + '</span>';
               }
               slider.controlNavScaffold.append('<li>' + item + '</li>');
               j++;
@@ -720,10 +720,11 @@
           if (!slider.vars.animationLoop) slider.pause();
         }
 
+        var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.computedW;
+
         // SLIDE:
         if (!fade) {
-          var dimension = (vertical) ? slider.slides.filter(':first').height() : slider.computedW,
-              margin, slideString, calcNext;
+          var margin, slideString, calcNext;
 
           // INFINITE LOOP / REVERSE:
           if (carousel) {
@@ -744,7 +745,7 @@
               slider.animating = false;
               slider.currentSlide = slider.animatingTo;
             }
-            
+
             // Unbind previous transitionEnd events and re-bind new transitionEnd event
             slider.container.unbind("webkitTransitionEnd transitionend");
             slider.container.bind("webkitTransitionEnd transitionend", function() {
@@ -1103,7 +1104,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
+    pauseInvisible: true,           //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
@@ -1134,16 +1135,16 @@
     minItems: 1,                    //{NEW} Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
-    allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+    allowOneSlide: true,            //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
 
     // Callback API
-    start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
-    before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
-    after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
-    end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
-    added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
-    removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
-    init: function() {}             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
+    start: $.noop,                  //Callback: function(slider) - Fires when the slider loads the first slide
+    before: $.noop,                 //Callback: function(slider) - Fires asynchronously with each slider animation
+    after: $.noop,                  //Callback: function(slider) - Fires after each slider animation completes
+    end: $.noop,                    //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
+    added: $.noop,                  //{NEW} Callback: function(slider) - Fires after a slide is added
+    removed: $.noop,                //{NEW} Callback: function(slider) - Fires after a slide is removed
+    init: $.noop                    //{NEW} Callback: function(slider) - Fires after the slider is initially setup
   };
 
   //FlexSlider: Plugin Function
