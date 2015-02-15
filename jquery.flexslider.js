@@ -295,15 +295,15 @@
       },
       directionNav: {
         setup: function() {
-          var directionNavScaffold = $('<ul class="' + namespace + 'direction-nav"><li><a class="' + namespace + 'prev" href="#">' + slider.vars.prevText + '</a></li><li><a class="' + namespace + 'next" href="#">' + slider.vars.nextText + '</a></li></ul>');
+          var directionNavScaffold = $('<div class="' + namespace + 'direction-nav"><button class="' + namespace + 'prev" type="button" value="'+slider.vars.prevText+'">' + slider.vars.prevText + '</button><button class="' + namespace + 'next" type="button" value="'+slider.vars.nextText+'">' + slider.vars.nextText + '</button></div>');
 
           // CONTROLSCONTAINER:
           if (slider.controlsContainer) {
             $(slider.controlsContainer).append(directionNavScaffold);
-            slider.directionNav = $('.' + namespace + 'direction-nav li a', slider.controlsContainer);
+            slider.directionNav = $('.' + namespace + 'direction-nav button', slider.controlsContainer);
           } else {
             slider.append(directionNavScaffold);
-            slider.directionNav = $('.' + namespace + 'direction-nav li a', slider);
+            slider.directionNav = $('.' + namespace + 'direction-nav button', slider);
           }
 
           methods.directionNav.update();
