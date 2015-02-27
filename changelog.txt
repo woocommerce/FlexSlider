@@ -10,4 +10,4 @@ FLEXSLIDER CHANGELOG
  * Fix for pauseInvisible attribute for Chrome and the Page Visibility API
 
  2015.02.27 - Version 2.4.0
- * Update for improved standards. Adds classes to li nav elements.
+ * Update for improved standards. Adds classes to li nav elements. Reset for li elements in stylesheet.
