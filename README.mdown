@@ -21,7 +21,7 @@ To keep up to date with how FlexSlider's development roadmap looks, please see o
 
 ** Version 2.4.0 **
 
-** Update for improved standards. **
+** Update for improved standards. Adds classes to li nav elements. **
 
 ** Version 2.3.0 **
 
