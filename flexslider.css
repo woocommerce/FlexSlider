@@ -1,12 +1,12 @@
 /*
- * jQuery FlexSlider v2.3.0
+ * jQuery FlexSlider v2.4.0
  * http://www.woothemes.com/flexslider/
  *
  * Copyright 2012 WooThemes
- * Free to use under the GPLv2 license.
+ * Free to use under the GPLv2 and later license.
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Contributing author: Ville Ristimäki (@villeristi)
+ * Contributing author: Tyler Smith (@mbmufffin)
  * 
  */
 /* ====================================================================================================================
@@ -29,6 +29,7 @@
   outline: none;
 }
 .slides,
+.slides > li,
 .flex-control-nav,
 .flex-direction-nav {
   margin: 0;
@@ -75,8 +76,8 @@ html[xmlns] .flexslider .slides {
  * ====================================================================================================================*/
 .flexslider {
   margin: 0 0 60px;
-  background: #fff;
-  border: 4px solid #fff;
+  background: #ffffff;
+  border: 4px solid #ffffff;
   position: relative;
   zoom: 1;
   -webkit-border-radius: 4px;
@@ -89,6 +90,9 @@ html[xmlns] .flexslider .slides {
 }
 .flexslider .slides {
   zoom: 1;
+}
+.flexslider .slides img {
+  height: auto;
 }
 .flex-viewport {
   max-height: 2000px;
@@ -132,6 +136,8 @@ html[xmlns] .flexslider .slides {
   font-size: 40px;
   display: inline-block;
   content: '\f001';
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
 }
 .flex-direction-nav a.flex-next:before {
   content: '\f002';
@@ -236,6 +242,7 @@ html[xmlns] .flexslider .slides {
 }
 .flex-control-thumbs img {
   width: 100%;
+  height: auto;
   display: block;
   opacity: .7;
   cursor: pointer;

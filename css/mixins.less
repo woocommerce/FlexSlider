@@ -1,0 +1,40 @@
+//
+// Transition
+//
+
+.transition( @duration: @default-duration, @easing: @default-easing ) {
+
+  -webkit-transition: all @duration @easing;
+     -moz-transition: all @duration @easing;
+      -ms-transition: all @duration @easing;
+       -o-transition: all @duration @easing;
+          transition: all @duration @easing;
+
+}
+
+
+//
+// Border-radius
+//
+
+.border-radius( @radius: @default-border-radius ){
+
+  -webkit-border-radius: @arguments;
+     -moz-border-radius: @arguments;
+          border-radius: @arguments;
+
+}
+
+
+//
+// Box-shadow
+//
+
+.box-shadow( @x-axis: @default-box-shadow-x-axis, @y-axis: @default-box-shadow-y-axis, @blur: @default-box-shadow-blur, @color: @default-box-shadow-color, @inset: @default-box-shadow-inset ) {
+  
+  -webkit-box-shadow: @inset @x-axis @y-axis @blur @color;
+     -moz-box-shadow: @inset @x-axis @y-axis @blur @color;
+       -o-box-shadow: @inset @x-axis @y-axis @blur @color;
+          box-shadow: @inset @x-axis @y-axis @blur @color;
+
+}
