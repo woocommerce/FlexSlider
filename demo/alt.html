@@ -26,8 +26,8 @@
       <h3 class="nav-header">Other Examples</h3>
       <nav>
         <ul>
-          <li class="active"><a href="demo">Basic Slider</a></li>
-          <li><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
+          <li><a href="index.html">Basic Slider</a></li>
+          <li class="active"><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
           <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <!--#1130 -->
           <li><a href="alt.html">Alt image</a></li>
@@ -45,23 +45,23 @@
         <div class="flexslider">
           <ul class="slides">
             <li>
-  	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+  	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg"  alt="Title slide"/>
   	    		</li>
   	    		<li>
-  	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
+  	    	    <img src="images/kitchen_adventurer_lemon.jpg"  alt="Title slide"/>
   	    		</li>
   	    		<li>
-  	    	    <img src="images/kitchen_adventurer_donut.jpg" />
+  	    	    <img src="images/kitchen_adventurer_donut.jpg"  alt="Title slide"/>
   	    		</li>
   	    		<li>
-  	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
+  	    	    <img src="images/kitchen_adventurer_caramel.jpg" alt="Title slide"/>
   	    		</li>
           </ul>
         </div>
       </section>
       <aside>
         <div class="cf">
-          <h3>Basic Slider</h3>
+          <h3>Thumbnail ControlNav Pattern</h3>
           <ul class="toggle cf">
             <li class="js"><a href="#view-js">JS</a></li>
             <li class="html"><a href="#view-html">HTML</a></li>
@@ -72,7 +72,8 @@
             // Can also be used with $(document).ready()
             $(window).load(function() {
               $('.flexslider').flexslider({
-                animation: "slide"
+                animation: "slide",
+                controlNav: "alt"
               });
             });
           </pre>
@@ -82,16 +83,16 @@
             &lt;!-- Place somewhere in the &lt;body&gt; of your page -->
             &lt;div class="flexslider">
               &lt;ul class="slides">
-                &lt;li>
+                &lt;li data-thumb="slide1-thumb.jpg">
                   &lt;img src="slide1.jpg" />
                 &lt;/li>
-                &lt;li>
+                &lt;li data-thumb="slide2-thumb.jpg">
                   &lt;img src="slide2.jpg" />
                 &lt;/li>
-                &lt;li>
+                &lt;li data-thumb="slide3-thumb.jpg">
                   &lt;img src="slide3.jpg" />
                 &lt;/li>
-                &lt;li>
+                &lt;li data-thumb="slide4-thumb.jpg">
                   &lt;img src="slide4.jpg" />
                 &lt;/li>
               &lt;/ul>
@@ -117,6 +118,8 @@
     $(window).load(function(){
       $('.flexslider').flexslider({
         animation: "slide",
+        //#1130
+        controlNav: "alt",
         start: function(slider){
           $('body').removeClass('loading');
         }
