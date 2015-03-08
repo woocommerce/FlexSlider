@@ -284,11 +284,13 @@
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
-            slider.controlNavScaffold.append($('<li><a>' + slider.count + '</a></li>'));
+            for ( i=slider.controlNav.length; i<pos; i++ ) {
+              slider.controlNavScaffold.append($('<li><a>' + (i+1) + '</a></li>'));
+            }
           } else if (slider.pagingCount === 1) {
             slider.controlNavScaffold.find('li').remove();
           } else {
-            slider.controlNav.eq(pos).closest('li').remove();
+            slider.controlNav.eq(pos+1).closest('li').remove();
           }
           methods.controlNav.set();
           (slider.pagingCount > 1 && slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
@@ -1006,7 +1008,7 @@
       // update controlNav
       if (slider.vars.controlNav && !slider.manualControls) {
         if ((action === "add" && !carousel) || slider.pagingCount > slider.controlNav.length) {
-          methods.controlNav.update("add");
+          methods.controlNav.update("add", slider.pagingCount);
         } else if ((action === "remove" && !carousel) || slider.pagingCount < slider.controlNav.length) {
           if (carousel && slider.currentSlide > slider.last) {
             slider.currentSlide -= 1;
