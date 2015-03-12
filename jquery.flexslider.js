@@ -975,6 +975,7 @@
         slider.itemW = (slider.minW > slider.w) ? (slider.w - (slideMargin * (minItems - 1)))/minItems :
                        (slider.maxW < slider.w) ? (slider.w - (slideMargin * (maxItems - 1)))/maxItems :
                        (slider.vars.itemWidth > slider.w) ? slider.w : slider.vars.itemWidth;
+        slider.itemW = Math.floor(slider.itemW);
 
         slider.visible = Math.floor(slider.w/(slider.itemW));
         slider.move = (slider.vars.move > 0 && slider.vars.move < slider.visible ) ? slider.vars.move : slider.visible;
@@ -984,6 +985,7 @@
                        (slider.vars.itemWidth > slider.w) ? (slider.itemW * (slider.count - 1)) + (slideMargin * (slider.count - 1)) : ((slider.itemW + slideMargin) * slider.count) - slider.w - slideMargin;
       } else {
         slider.itemW = slider.w;
+        slider.itemW = Math.floor(slider.itemW);
         slider.pagingCount = slider.count;
         slider.last = slider.count - 1;
       }
