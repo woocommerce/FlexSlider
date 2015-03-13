@@ -244,24 +244,24 @@
     height: 11px;
     display: block;
     background: #666;
-    background: rgba(0,0,0,0.5);
+    background: rgba( #000, 0.5 );
     cursor: pointer;
     text-indent: -9999px;
 
-    @include box-shadow( 0, 0, 3px, rgba(0,0,0,0.3), inset );
+    @include box-shadow( 0, 0, 3px, rgba( #000, 0.3), inset );
     @include border-radius( 20px );
 
     &:hover {
 
       background: #333;
-      background: rgba(0,0,0,0.7);
+      background: rgba( #000, 0.7 );
 
     }
 
     &.flex-active {
 
       background: #000;
-      background: rgba( 0, 0, 0, 0.9 );
+      background: rgba( #000, 0.9 );
       cursor: default;
 
     }
