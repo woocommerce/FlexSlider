@@ -396,7 +396,6 @@
           accDx = 0;
 
         if(!msGesture){
-            el.addEventListener('touchstart', onTouchStart, false);
 
             function onTouchStart(e) {
               if (slider.animating) {
@@ -468,6 +467,7 @@
               dx = null;
               offset = null;
             }
+            el.addEventListener('touchstart', onTouchStart, false);
         }else{
             el.style.msTouchAction = "none";
             el._gesture = new MSGesture();
