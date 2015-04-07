@@ -770,11 +770,11 @@
             //slider.slides.eq(target).fadeIn(slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
 
             if (slider.vars.fadeOutDuringTransition == false) {
-				slider.slides.eq(slider.currentSlide).css({"zIndex": 1});
-			} else {
-				slider.slides.eq(slider.currentSlide).css({"zIndex": 1}).animate({"opacity": 0}, slider.vars.animationSpeed, slider.vars.easing);
-			}
-			slider.slides.eq(target).css({"zIndex": 2}).animate({"opacity": 1}, slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
+              slider.slides.eq(slider.currentSlide).css({"zIndex": 1});
+            } else {
+              slider.slides.eq(slider.currentSlide).css({"zIndex": 1}).animate({"opacity": 0}, slider.vars.animationSpeed, slider.vars.easing);
+            }
+            slider.slides.eq(target).css({"zIndex": 2}).animate({"opacity": 1}, slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
 
           } else {
             slider.slides.eq(slider.currentSlide).css({ "opacity": 0, "zIndex": 1 });
@@ -788,9 +788,9 @@
     };
     slider.wrapup = function(dimension) {
       // SLIDE:
-	  if (slider.vars.fadeOutDuringTransition == false) {
-		slider.slides.eq(slider.currentSlide).css({"opacity": 0});
-	  }
+      if (slider.vars.fadeOutDuringTransition == false) {
+        slider.slides.eq(slider.currentSlide).css({"opacity": 0});
+      }
       if (!fade && !carousel) {
         if (slider.currentSlide === 0 && slider.animatingTo === slider.last && slider.vars.animationLoop) {
           slider.setProps(dimension, "jumpEnd");
