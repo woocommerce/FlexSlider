@@ -685,7 +685,7 @@
           // one greater than the target slide number of the master slider; and
           // make sure the result isn't negative. This is the target slide of
           // the nav slider.
-          target = Math.max(0, (target + 1) - slider.visible + slider.move * slider.currentSlide);
+          target = Math.max(0, Math.floor((target - slider.visible) / slider.move) + 1);
         }
 
         slider.animating = true;
