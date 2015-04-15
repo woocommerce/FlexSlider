@@ -680,11 +680,10 @@
           slider.currentItem = target;
           slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
 
-          // Subtract the sum of the visible number of slides and (the product
-          // of the current slide number and the slides per move); subtract from
-          // one greater than the target slide number of the master slider; and
-          // make sure the result isn't negative. This is the target slide of
-          // the nav slider.
+          // Calculate the "real" target slide index to animate to
+          //
+          // For sliders with differing 'move' and 'visible' values, this
+          // requires some math.
           target = Math.max(0, Math.floor((target - slider.visible) / slider.move) + 1);
         }
 
