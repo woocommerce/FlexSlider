@@ -677,15 +677,15 @@
           slider.direction = (slider.currentItem < target) ? "next" : "prev";
           master.direction = slider.direction;
 
-          if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
-            slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
-            target = Math.floor(target/slider.visible);
-          } else {
-            slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
-            return false;
-          }
+          slider.currentItem = target;
+          slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+
+          // Subtract the sum of the visible number of slides and (the product
+          // of the current slide number and the slides per move); subtract from
+          // one greater than the target slide number of the master slider; and
+          // make sure the result isn't negative. This is the target slide of
+          // the nav slider.
+          target = Math.max(0, (target + 1) - slider.visible + slider.move * slider.currentSlide);
         }
 
         slider.animating = true;
