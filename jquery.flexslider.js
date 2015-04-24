@@ -618,7 +618,9 @@
               }
               else {
                 if(slider.started) {
-                  slider.play(); //Initiated before, just play
+                  if (!slider.stopped) {
+                    slider.play(); //Initiated before, just play
+                  }
                 } else { 
                   if (slider.vars.initDelay > 0) { 
                     setTimeout(slider.play, slider.vars.initDelay);
