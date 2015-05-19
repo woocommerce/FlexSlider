@@ -190,7 +190,7 @@ html[xmlns] .flexslider .slides {
 .flex-pauseplay a:hover {
   opacity: 1;
 }
-.flex-pauseplay a .flex-play:before {
+.flex-pauseplay a.flex-play:before {
   content: '\f003';
 }
 .flex-control-nav {
