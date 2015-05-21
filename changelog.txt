@@ -11,3 +11,6 @@ FLEXSLIDER CHANGELOG
 
  2015.02.27 - Version 2.4.0
  * Update for improved standards. Adds classes to li nav elements. Reset for li elements in stylesheet.
+
+ 2015.05.19 - Version 2.5.0
+ * 

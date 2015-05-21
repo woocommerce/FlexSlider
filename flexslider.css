@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v2.4.0
+ * jQuery FlexSlider v2.5.0
  * http://www.woothemes.com/flexslider/
  *
  * Copyright 2012 WooThemes
@@ -190,7 +190,7 @@ html[xmlns] .flexslider .slides {
 .flex-pauseplay a:hover {
   opacity: 1;
 }
-.flex-pauseplay a .flex-play:before {
+.flex-pauseplay a.flex-play:before {
   content: '\f003';
 }
 .flex-control-nav {
