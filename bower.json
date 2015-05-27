@@ -13,7 +13,9 @@
   "keywords": [
     "flexslider",
     "jquery",
-    "slider"
+    "slider",
+    "woothemes",
+    "automattic"
   ],
   "license": "GPLv2 and later",
   "ignore": [
@@ -24,6 +26,6 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "1.7.0"
+    "jquery": "1.11.3"
   }
 }

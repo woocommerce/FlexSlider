@@ -1,0 +1,89 @@
+{
+  "name": "jquery",
+  "title": "jQuery",
+  "description": "JavaScript library for DOM operations",
+  "version": "1.11.3",
+  "main": "dist/jquery.js",
+  "homepage": "http://jquery.com",
+  "author": {
+    "name": "jQuery Foundation and other contributors",
+    "url": "https://github.com/jquery/jquery/blob/1.11.3/AUTHORS.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jquery/jquery.git"
+  },
+  "keywords": [
+    "jquery",
+    "javascript",
+    "browser",
+    "library"
+  ],
+  "bugs": {
+    "url": "http://bugs.jquery.com"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/jquery/jquery/blob/1.11.3/MIT-LICENSE.txt"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "commitplease": "2.0.0",
+    "grunt": "0.4.2",
+    "grunt-bowercopy": "0.7.1",
+    "grunt-cli": "0.1.13",
+    "grunt-compare-size": "0.4.0",
+    "grunt-contrib-jshint": "0.8.0",
+    "grunt-contrib-uglify": "0.3.2",
+    "grunt-contrib-watch": "0.5.3",
+    "grunt-git-authors": "1.2.0",
+    "grunt-jscs-checker": "0.4.1",
+    "grunt-jsonlint": "1.0.4",
+    "gzip-js": "0.3.2",
+    "load-grunt-tasks": "0.3.0",
+    "requirejs": "2.1.10",
+    "testswarm": "1.1.0"
+  },
+  "scripts": {
+    "build": "npm install && grunt",
+    "start": "grunt watch",
+    "test": "grunt"
+  },
+  "gitHead": "1472290917f17af05e98007136096784f9051fab",
+  "_id": "jquery@1.11.3",
+  "_shasum": "dd8b74278b27102d29df63eae28308a8cfa1b583",
+  "_from": "jquery@>=1.7.0 <2.0.0",
+  "_npmVersion": "2.7.4",
+  "_nodeVersion": "0.12.2",
+  "_npmUser": {
+    "name": "timmywil",
+    "email": "timmywillisn@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "dmethvin",
+      "email": "dave.methvin@gmail.com"
+    },
+    {
+      "name": "scott.gonzalez",
+      "email": "scott.gonzalez@gmail.com"
+    },
+    {
+      "name": "m_gol",
+      "email": "m.goleb@gmail.com"
+    },
+    {
+      "name": "timmywil",
+      "email": "timmywillisn@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "dd8b74278b27102d29df63eae28308a8cfa1b583",
+    "tarball": "http://registry.npmjs.org/jquery/-/jquery-1.11.3.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/jquery/-/jquery-1.11.3.tgz",
+  "readme": "ERROR: No README data found!"
+}

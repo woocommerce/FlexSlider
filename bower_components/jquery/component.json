@@ -1,8 +1,0 @@
-{
-  "name"        : "jquery",
-  "version"     : "1.7.0",
-  "main"        : "./jquery.js",
-  "dependencies": {
-  }
-}
-
