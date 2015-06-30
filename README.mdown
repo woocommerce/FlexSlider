@@ -1,5 +1,7 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
+RTL support added by Layal at rtl-this.com. Post: http://rtl-this.com/tutorial/jquery-plugin-flexslider-now-rtl-support
+
 # FlexSlider 2.5.0
 http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
 
