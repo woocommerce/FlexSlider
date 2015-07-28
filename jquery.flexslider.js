@@ -173,14 +173,16 @@
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
+				var posFromX
                 if(slider.vars.rtl){
-					var posFromX = $slide.offset().right - $(slider).scrollRight(); // Find position of slide relative to right of slider container	
+					posFromX = -1*($slide.offset().right - $(slider).scrollLeft()); // Find position of slide relative to right of slider container	
+					console.log(posFromX);
 				}
 				else
 				{
-					var posFromX = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
+					posFromX = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
 				}
-                if( posFromLeft <= 0 && $slide.hasClass( namespace + 'active-slide' ) ) {
+                if( posFromX <= 0 && $slide.hasClass( namespace + 'active-slide' ) ) {
                   slider.flexAnimate(slider.getTarget("prev"), true);
                 } else if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass(namespace + "active-slide")) {
                   slider.direction = (slider.currentItem < target) ? "next" : "prev";
