@@ -807,8 +807,11 @@
     };
 
     // SLIDESHOW:
-    slider.animateSlides = function() {
-      if (!slider.animating && focused ) { slider.flexAnimate(slider.getTarget("next")); }
+    slider.animateSlides = function() {      
+      if (!slider.animating && focused ) {
+          slider.flexAnimate(slider.getTarget("next"));
+          slider.animating=true
+      }
     };
     // SLIDESHOW:
     slider.pause = function() {
