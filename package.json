@@ -1,0 +1,29 @@
+{
+  "name": "flexslider",
+  "version": "2.5.0",
+  "description": "An awesome, fully responsive jQuery slider toolkit.",
+  "main": "jquery.flexslider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woothemes/FlexSlider.git"
+  },
+  "keywords": [
+    "flexslider",
+    "jquery",
+    "slider",
+    "woothemes",
+    "automattic"
+  ],
+  "author": "WooThemes <jeff@woothemes.com>",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/woothemes/FlexSlider/issues"
+  },
+  "homepage": "https://github.com/woothemes/FlexSlider#readme",
+  "dependencies": {
+    "jquery": "^1.11.3"
+  }
+}

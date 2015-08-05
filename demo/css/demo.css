@@ -45,6 +45,20 @@ em {font-style: italic;}
 /* GEO - Regular */
  @font-face {font-family: 'Geogrotesque-Regular';src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot');src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-regular/woff/11014B_0.woff') format('woff'),url('../fonts/webfonts/geo-regular/ttf/11014B_0.ttf') format('truetype'),url('../fonts/webfonts/geo-regular/svg/11014B_0.svg#wf') format('svg');}
 
+/* Icon Fonts
+*********************************/
+/* Font-face Icons */
+@font-face {
+	font-family: 'flexslider-icon';
+	src:url('../fonts/webfonts/flexslider-icon.eot');
+	src:url('../fonts/webfonts/flexslider-icon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/webfonts/flexslider-icon.woff') format('woff'),
+		url('../fonts/webfonts/flexslider-icon.ttf') format('truetype'),
+		url('../fonts/webfonts/flexslider-icon.svg#flexslider-icon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /* General
 ***********************/
 body {
