@@ -361,7 +361,7 @@
             slider.pausePlay = $('.' + namespace + 'pauseplay a', slider);
           }
 
-          methods.pausePlay.update((slider.vars.slideshow) ? namespace + 'pause' : namespace + 'play');
+          methods.pausePlay.update((slider.vars.slideshow) ?  'pause' : 'play');
 
           slider.pausePlay.bind(eventType, function(event) {
             event.preventDefault();
