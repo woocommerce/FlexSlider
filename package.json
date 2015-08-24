@@ -24,6 +24,6 @@
   },
   "homepage": "https://github.com/woothemes/FlexSlider#readme",
   "dependencies": {
-    "jquery": "^1.11.3"
+    "jquery": ">=1.11.3"
   }
 }
