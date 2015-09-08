@@ -6,6 +6,8 @@
 ;
 (function ($) {
 
+  var focused = true;
+
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
     var slider = $(el);
@@ -26,8 +28,7 @@
         carousel = (slider.vars.itemWidth > 0),
         fade = slider.vars.animation === "fade",
         asNav = slider.vars.asNavFor !== "",
-        methods = {},
-        focused = true;
+        methods = {};
 
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
