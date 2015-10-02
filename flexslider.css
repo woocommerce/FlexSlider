@@ -167,6 +167,7 @@ html[xmlns] .flexslider .slides {
   opacity: 0!important;
   filter: alpha(opacity=0);
   cursor: default;
+  z-index: -1;
 }
 .flex-pauseplay a {
   display: block;
