@@ -6,6 +6,8 @@
 ;
 (function ($) {
 
+  var focused = true;
+
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
     var slider = $(el);
@@ -26,8 +28,7 @@
         carousel = (slider.vars.itemWidth > 0),
         fade = slider.vars.animation === "fade",
         asNav = slider.vars.asNavFor !== "",
-        methods = {},
-        focused = true;
+        methods = {};
 
     // Store a reference to the slider object
     $.data(el, "flexslider", slider);
@@ -621,19 +622,19 @@
               if (methods.pauseInvisible.isHidden()) {
                 if(slider.startTimeout) {
                   clearTimeout(slider.startTimeout); //If clock is ticking, stop timer and prevent from starting while invisible
-                } else { 
+                } else {
                   slider.pause(); //Or just pause
                 }
               }
               else {
                 if(slider.started) {
                   slider.play(); //Initiated before, just play
-                } else { 
-                  if (slider.vars.initDelay > 0) { 
+                } else {
+                  if (slider.vars.initDelay > 0) {
                     setTimeout(slider.play, slider.vars.initDelay);
                   } else {
                     slider.play(); //Didn't init before: simply init or wait for it
-                  } 
+                  }
                 }
               }
             });
@@ -754,7 +755,7 @@
               slider.animating = false;
               slider.currentSlide = slider.animatingTo;
             }
-            
+
             // Unbind previous transitionEnd events and re-bind new transitionEnd event
             slider.container.unbind("webkitTransitionEnd transitionend");
             slider.container.bind("webkitTransitionEnd transitionend", function() {
