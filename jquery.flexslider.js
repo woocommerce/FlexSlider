@@ -738,7 +738,6 @@
 
           // INFINITE LOOP / REVERSE:
           if (carousel) {
-            //margin = (slider.vars.itemWidth > slider.w) ? slider.vars.itemMargin * 2 : slider.vars.itemMargin;
             margin = slider.vars.itemMargin;
             calcNext = ((slider.itemW + margin) * slider.move) * slider.animatingTo;
             slideString = (calcNext > slider.limit && slider.visible !== 1) ? slider.limit : calcNext;
@@ -937,7 +936,7 @@
           slider.setProps(sliderOffset * slider.computedW, "init");
           setTimeout(function(){
             slider.doMath();
-            slider.newSlides.css({"width": slider.computedW, "float": "left", "display": "block"});
+            slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) { methods.smoothHeight(); }
           }, (type === "init") ? 100 : 0);
@@ -980,6 +979,7 @@
       // CAROUSEL:
       if (carousel) {
         slider.itemT = slider.vars.itemWidth + slideMargin;
+        slider.itemM = slideMargin;
         slider.minW = (minItems) ? minItems * slider.itemT : slider.w;
         slider.maxW = (maxItems) ? (maxItems * slider.itemT) - slideMargin : slider.w;
         slider.itemW = (slider.minW > slider.w) ? (slider.w - (slideMargin * (minItems - 1)))/minItems :
@@ -994,10 +994,12 @@
                        (slider.vars.itemWidth > slider.w) ? (slider.itemW * (slider.count - 1)) + (slideMargin * (slider.count - 1)) : ((slider.itemW + slideMargin) * slider.count) - slider.w - slideMargin;
       } else {
         slider.itemW = slider.w;
+        slider.itemM = slideMargin;
         slider.pagingCount = slider.count;
         slider.last = slider.count - 1;
       }
       slider.computedW = slider.itemW - slider.boxPadding;
+      slider.computedM = slider.itemM;
     };
 
     slider.update = function(pos, action) {
