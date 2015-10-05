@@ -7,7 +7,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * Contributing author: Tyler Smith (@mbmufffin)
- * 
+ *
  */
 /* ====================================================================================================================
  * FONT-FACE
@@ -23,9 +23,7 @@
  * RESETS
  * ====================================================================================================================*/
 .flex-container a:hover,
-.flex-slider a:hover,
-.flex-container a:focus,
-.flex-slider a:focus {
+.flex-slider a:hover {
   outline: none;
 }
 .slides,
