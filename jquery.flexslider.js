@@ -306,10 +306,18 @@
             slider.directionNav = slider.customDirectionNav;
           // CONTROLSCONTAINER:
           } else if (slider.controlsContainer) {
-            $(slider.controlsContainer).append(directionNavScaffold);
+           if (slider.vars.directionNavAfterSlides) {
+              $(slider.controlsContainer).find('.flex-viewport').after(directionNavScaffold);
+            } else {
+              $(slider.controlsContainer).append(directionNavScaffold);
+            }
             slider.directionNav = $('.' + namespace + 'direction-nav li a', slider.controlsContainer);
           } else {
-            slider.append(directionNavScaffold);
+            if (slider.vars.directionNavAfterSlides) {
+              slider.find('.flex-viewport').after(directionNavScaffold);
+            } else {
+              slider.append(directionNavScaffold);
+            }
             slider.directionNav = $('.' + namespace + 'direction-nav li a', slider);
           }
 
@@ -1121,6 +1129,7 @@
     // Primary Controls
     controlNav: true,               //Boolean: Create navigation for paging control of each slide? Note: Leave true for manualControls usage
     directionNav: true,             //Boolean: Create navigation for previous/next navigation? (true/false)
+    directionNavAfterSlides: false, //Boolean: Position of navigation in DOM, false for old behaviour, if true navigation is after slides AND before thumb-naviagtion
     prevText: "Previous",           //String: Set the text for the "previous" directionNav item
     nextText: "Next",               //String: Set the text for the "next" directionNav item
 
