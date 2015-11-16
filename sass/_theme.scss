@@ -20,6 +20,7 @@
 
   img {
     height: auto;
+    -moz-user-select: none;
   }
   }
 }
@@ -162,6 +163,7 @@
     opacity: 0!important;
     filter: alpha(opacity=0);
     cursor: default;
+    z-index: -1;
 
   }
 }
@@ -200,7 +202,7 @@
 
   }
 
-  .flex-play:before {
+  &.flex-play:before {
 
     content: $flex-pauseplay-icon-play;
 
@@ -290,6 +292,7 @@
     display: block;
     opacity: .7;
     cursor: pointer;
+    -moz-user-select: none;
 
     @include transition();
 
