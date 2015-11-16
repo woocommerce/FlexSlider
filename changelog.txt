@@ -19,7 +19,7 @@ FLEXSLIDER CHANGELOG
  * Adds customDirectionNav param for custom navigation controls
 
  2015.11.16 - Version 2.6.0
- * Adds composter json file keywords
+ * Adds composer json file keywords
  * Scope fix for focused keyword
  * Fixes bower demo folder exclusion
  * z-index fix for disabled nav arrow

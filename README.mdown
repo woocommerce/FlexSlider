@@ -21,7 +21,7 @@ To keep up to date with how FlexSlider's development roadmap looks, please see o
 
 ** Version 2.6.0 **
 
-** Adds composter json file, scope fix for focused keyword, fixes bower demo folder exclusion, z-index fix for disabled nav arrow, play/pause accessibility fix, itemMargin fix for slider items, fixes accessibility for in focus elements and pagination controls, firefox fix for text selection on slider carousel, adds data-thumb-alt image alt attribute **
+** Adds composer json file, scope fix for focused keyword, fixes bower demo folder exclusion, z-index fix for disabled nav arrow, play/pause accessibility fix, itemMargin fix for slider items, fixes accessibility for in focus elements and pagination controls, firefox fix for text selection on slider carousel, adds data-thumb-alt image alt attribute **
 
 ** Version 2.5.0 **
 
