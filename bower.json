@@ -1,6 +1,6 @@
 {
   "name": "flexslider",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "homepage": "https://github.com/woothemes/FlexSlider",
   "authors": [
     "WooThemes <jeff@woothemes.com>"
@@ -23,7 +23,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "demo"
   ],
   "dependencies": {
     "jquery": ">=1.11.3"
