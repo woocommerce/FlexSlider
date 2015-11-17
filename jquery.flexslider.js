@@ -318,6 +318,7 @@
           methods.directionNav.update();
 
           slider.directionNav.bind(eventType, function(event) {
+            event.stopPropagation();
             event.preventDefault();
             var target;
 
