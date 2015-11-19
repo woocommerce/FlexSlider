@@ -6,8 +6,8 @@
 ## Cong Min 做出一下修改 Some Changes
 * 1、new API callback: next()、prev()
 * 2、add before()、next()、prev() [API callback] new parameter : taget
----
 
+----
 
 http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
 
