@@ -3,11 +3,10 @@
 # FlexSlider 2.6.0
 
 
-## Cong Min 做出一下修改：
-* 1、delete - 删除了overflow:hidden样式 (防止轮播半透明摘要后无法显示下一张图片)
-* 2、add - 增加了.append(methods.uniqueID(slider.slides.first().next().clone().addClass('clone')).attr('aria-hidden', 'true')) (防止轮播回到第一张图片后的下一张图片显示一小段时间的空白)
-* 3、new - 新增API callback: next()、prev()
-* 4、add - before()、next()、prev() API callback 参数新增钩子", target" 使之能获取到播放第几张target
+## Cong Min 做出一下修改 Some Changes
+* 1、new API callback: next()、prev()
+* 2、add before()、next()、prev() [API callback] new parameter : taget
+---
 
 
 http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes

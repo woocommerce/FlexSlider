@@ -2,14 +2,9 @@
  * jQuery FlexSlider v2.6.0
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
- *
- * change - 一些修改 - Cong Min
- * 1、delete - 删除了overflow:hidden样式 (防止轮播半透明摘要后无法显示下一张图片)
- * 2、add - 增加了.append(methods.uniqueID(slider.slides.first().next().clone().addClass('clone')).attr('aria-hidden', 'true')) (防止轮播回到第一张图片后的下一张图片显示一小段时间的空白)
- * 3、new - 新增API callback: next()、prev()
- * 4、add - before()、next()、prev() API callback 参数新增钩子", target" 使之能获取到播放第几张target
  */
-;(function ($) {
+;
+(function ($) {
 
   var focused = true;
 
@@ -711,15 +706,13 @@
         if (pause) { slider.pause(); }
 
         // API: before() animation Callback
-        // ***add*** Cong Min : , target ******
         slider.vars.before(slider, target);
 
-        // ***NEW*** Cong Min API: next()/prev() animation Callback ******
-        // ***add*** Cong Min : , target ******
-        if (slider.direction == 'next') {
-            slider.vars.next(slider, target);
-        } else if (slider.direction == 'prev') {
-            slider.vars.prev(slider, target);
+        // API: next() and prev()
+        if (slider.direction == "next") {
+          slider.vars.next(slider, target);
+        } else if (slider.direction == "prev") {
+          slider.vars.prev(slider, target);
         }
 
         // SYNC:
@@ -914,8 +907,7 @@
         var sliderOffset, arr;
 
         if (type === "init") {
-          // ***delete*** Cong Min - delete overflow ******
-          slider.viewport = $('<div class="' + namespace + 'viewport"></div>').css({"position": "relative"}).appendTo(slider).append(slider.container);
+          slider.viewport = $('<div class="' + namespace + 'viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo(slider).append(slider.container);
           // INFINITE LOOP:
           slider.cloneCount = 0;
           slider.cloneOffset = 0;
@@ -933,8 +925,6 @@
           // clear out old clones
           if (type !== "init") { slider.container.find('.clone').remove(); }
           slider.container.append(methods.uniqueID(slider.slides.first().clone().addClass('clone')).attr('aria-hidden', 'true'))
-                           // ***add*** Cong Min ******
-                          .append(methods.uniqueID(slider.slides.first().next().clone().addClass('clone')).attr('aria-hidden', 'true'))
                           .prepend(methods.uniqueID(slider.slides.last().clone().addClass('clone')).attr('aria-hidden', 'true'));
         }
         slider.newSlides = $(slider.vars.selector, slider);
@@ -1134,7 +1124,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
+    pauseInvisible: true,       //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
@@ -1170,11 +1160,11 @@
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
-    before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
+    before: function(){},           //Callback: function(slider, target) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
+    next: function(){},             //Callback: function(slider, target)
+    prev: function(){},             //Callback: function(slider, target)
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
-    next: function() {},    // ***NEW*** Cong Min - API ******
-    prev: function() {},    // ***NEW*** Cong Min - API ******
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
     init: function() {}             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
