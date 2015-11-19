@@ -3,7 +3,7 @@
 # FlexSlider 2.6.0
 
 
-## Cong Min 做出一下修改 Some Changes
+## Cong Min 以下修改 Some Changes
 * 1、new API callback: next()、prev()
 * 2、add before()、next()、prev() [API callback] new parameter : taget
 
