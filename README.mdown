@@ -1,6 +1,15 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
 # FlexSlider 2.6.0
+
+
+## Cong Min 以下修改 Some Changes
+* 1、new API callback: next()、prev()
+* 2、add before()、next()、prev() [API callback] new parameter : taget
+* 3、修改demo中googleCDN的jquery地址为本地
+
+----
+
 http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
 
 ## Releases

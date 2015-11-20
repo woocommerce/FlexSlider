@@ -706,7 +706,14 @@
         if (pause) { slider.pause(); }
 
         // API: before() animation Callback
-        slider.vars.before(slider);
+        slider.vars.before(slider, target);
+
+        // API: next() and prev()
+        if (slider.direction == "next") {
+          slider.vars.next(slider, target);
+        } else if (slider.direction == "prev") {
+          slider.vars.prev(slider, target);
+        }
 
         // SYNC:
         if (slider.syncExists && !fromNav) { methods.sync("animate"); }
@@ -1117,7 +1124,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
+    pauseInvisible: true,       //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
@@ -1153,8 +1160,10 @@
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
-    before: function(){},           //Callback: function(slider) - Fires asynchronously with each slider animation
+    before: function(){},           //Callback: function(slider, target) - Fires asynchronously with each slider animation
     after: function(){},            //Callback: function(slider) - Fires after each slider animation completes
+    next: function(){},             //Callback: function(slider, target)
+    prev: function(){},             //Callback: function(slider, target)
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
