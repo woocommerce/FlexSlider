@@ -3,7 +3,7 @@
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
-;
+;alert('ok');
 (function ($) {
 
   var focused = true;
