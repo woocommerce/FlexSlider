@@ -3,13 +3,13 @@
  * ====================================================================================================================*/
 
 
-.flexslider { 
+.flexslider {
 
-  margin: @flexslider-margin; 
-  background: @flexslider-bg; 
-  border: @flexslider-border; 
+  margin: @flexslider-margin;
+  background: @flexslider-bg;
+  border: @flexslider-border;
   position: relative;
-  zoom: 1; 
+  zoom: 1;
 
   .border-radius( @flexslider-border-radius );
   .box-shadow( @flexslider-box-shadow-x-axis, @flexslider-box-shadow-y-axis, @flexslider-box-shadow-blur, @flexslider-box-shadow-color, @flexslider-box-shadow-inset);
@@ -20,13 +20,14 @@
 
   img {
     height: auto;
+    -moz-user-select: none;
   }
   }
 }
 
-.flex-viewport { 
+.flex-viewport {
 
-  max-height: @flex-viewport-max-height; 
+  max-height: @flex-viewport-max-height;
 
   .transition();
 
@@ -37,9 +38,9 @@
   }
 }
 
-.carousel li { 
+.carousel li {
 
-  margin-right: 5px; 
+  margin-right: 5px;
 
 }
 
@@ -52,41 +53,41 @@
 
   *height: 0;
 
-  
+
   //
   // Global styles
   //
 
-  a  { 
+  a  {
 
-    text-decoration: none; 
-    display: block; 
-    width: 40px; 
-    height: 40px; 
-    margin: -20px 0 0; 
-    position: absolute; 
-    top: 50%; 
-    z-index: 10; 
-    overflow: hidden; 
-    opacity: 0; 
-    cursor: pointer; 
-    color: @flex-direction-nav-color; 
+    text-decoration: none;
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0;
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    overflow: hidden;
+    opacity: 0;
+    cursor: pointer;
+    color: @flex-direction-nav-color;
     text-shadow: @flex-direction-nav-text-shadow;
 
     .transition( 0.3s, ease-in-out );
 
-    &:before  { 
+    &:before  {
 
-      font-family: "@{font-name}"; 
-      font-size: 40px; 
-      display: inline-block; 
+      font-family: "@{font-name}";
+      font-size: 40px;
+      display: inline-block;
       content: @flex-direction-nav-icon-prev;
       color: @flex-direction-nav-icon-color;
       text-shadow: @flex-direction-nav-icon-text-shadow;
 
     }
 
-    &.flex-next:before { 
+    &.flex-next:before {
 
       content: @flex-direction-nav-icon-next;
 
@@ -99,7 +100,7 @@
   // Prev
   //
 
-  .flex-prev { 
+  .flex-prev {
 
     left: -50px;
 
@@ -110,9 +111,9 @@
   // Next
   //
 
-  .flex-next { 
-    
-    right: -50px; 
+  .flex-next {
+
+    right: -50px;
     text-align: right;
 
   }
@@ -123,29 +124,29 @@
   //
 
   .flexslider:hover &{
-    
-    .flex-prev { 
 
-      opacity: 0.7; 
+    .flex-prev {
+
+      opacity: 0.7;
       left: 10px;
 
       &:hover{
-        
+
         opacity: 1;
 
       }
 
     }
-    
-    .flex-next { 
 
-      opacity: 0.7; 
+    .flex-next {
+
+      opacity: 0.7;
       right: 10px;
 
       &:hover{
-        
+
         opacity: 1;
-        
+
       }
 
     }
@@ -157,11 +158,12 @@
   // Disabled
   //
 
-  .flex-disabled { 
+  .flex-disabled {
 
-    opacity: 0!important; 
-    filter: alpha(opacity=0); 
+    opacity: 0!important;
+    filter: alpha(opacity=0);
     cursor: default;
+    z-index: -1;
 
   }
 }
@@ -173,23 +175,23 @@
 
 .flex-pauseplay a {
 
-  display: block; 
-  width: 20px; 
-  height: 20px; 
-  position: absolute; 
-  bottom: 5px; 
-  left: 10px; 
-  opacity: 0.8; 
-  z-index: 10; 
-  overflow: hidden; 
-  cursor: pointer; 
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+  opacity: 0.8;
+  z-index: 10;
+  overflow: hidden;
+  cursor: pointer;
   color: #000;
 
-  &:before { 
+  &:before {
 
-    font-family: "@{font-name}"; 
-    font-size: 20px; 
-    display: inline-block; 
+    font-family: "@{font-name}";
+    font-size: 20px;
+    display: inline-block;
     content: @flex-pauseplay-icon-pause;
 
   }
@@ -200,7 +202,7 @@
 
   }
 
-  &.flex-play:before { 
+  &.flex-play:before {
 
     content: @flex-pauseplay-icon-play;
 
@@ -215,16 +217,16 @@
 
 .flex-control-nav {
 
-  width: 100%; 
-  position: absolute; 
-  bottom: -40px; 
+  width: 100%;
+  position: absolute;
+  bottom: -40px;
   text-align: center;
 
   li {
-    
-    margin: 0 6px; 
-    display: inline-block; 
-    zoom: 1; 
+
+    margin: 0 6px;
+    display: inline-block;
+    zoom: 1;
     *display: inline;
 
   }
@@ -240,25 +242,25 @@
 
   a {
 
-    width: 11px; 
-    height: 11px; 
-    display: block; 
-    background: #666; 
-    background: rgba(0,0,0,0.5); 
-    cursor: pointer; 
+    width: 11px;
+    height: 11px;
+    display: block;
+    background: #666;
+    background: rgba(0,0,0,0.5);
+    cursor: pointer;
     text-indent: -9999px;
 
     .box-shadow( 0, 0, 3px, rgba(0,0,0,0.3), inset );
     .border-radius( 20px );
 
-    &:hover { 
+    &:hover {
 
-      background: #333; 
+      background: #333;
       background: rgba(0,0,0,0.7);
 
     }
 
-    &.flex-active { 
+    &.flex-active {
 
       background: #000;
       background: rgba( 0, 0, 0, 0.9 );
@@ -271,25 +273,26 @@
 
 .flex-control-thumbs {
 
-  margin: @flex-control-thumbs; 
-  position: static; 
+  margin: @flex-control-thumbs;
+  position: static;
   overflow: hidden;
 
   li {
 
-    width: 25%; 
-    float: left; 
+    width: 25%;
+    float: left;
     margin: 0;
 
   }
 
   img {
-  
+
     width: 100%;
-  height: auto;
-    display: block; 
-    opacity: .7; 
+    height: auto;
+    display: block;
+    opacity: .7;
     cursor: pointer;
+    -moz-user-select: none;
 
     .transition();
 
@@ -299,7 +302,7 @@
 
   .flex-active {
 
-    opacity: 1; 
+    opacity: 1;
     cursor: default;
 
   }

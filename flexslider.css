@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v2.5.0
+ * jQuery FlexSlider v2.6.0
  * http://www.woothemes.com/flexslider/
  *
  * Copyright 2012 WooThemes
@@ -7,7 +7,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * Contributing author: Tyler Smith (@mbmufffin)
- * 
+ *
  */
 /* ====================================================================================================================
  * FONT-FACE
@@ -23,9 +23,7 @@
  * RESETS
  * ====================================================================================================================*/
 .flex-container a:hover,
-.flex-slider a:hover,
-.flex-container a:focus,
-.flex-slider a:focus {
+.flex-slider a:hover {
   outline: none;
 }
 .slides,
@@ -93,6 +91,7 @@ html[xmlns] .flexslider .slides {
 }
 .flexslider .slides img {
   height: auto;
+  -moz-user-select: none;
 }
 .flex-viewport {
   max-height: 2000px;
@@ -167,6 +166,7 @@ html[xmlns] .flexslider .slides {
   opacity: 0!important;
   filter: alpha(opacity=0);
   cursor: default;
+  z-index: -1;
 }
 .flex-pauseplay a {
   display: block;
@@ -246,6 +246,7 @@ html[xmlns] .flexslider .slides {
   display: block;
   opacity: .7;
   cursor: pointer;
+  -moz-user-select: none;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -ms-transition: all 1s ease;

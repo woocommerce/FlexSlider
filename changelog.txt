@@ -17,3 +17,14 @@ FLEXSLIDER CHANGELOG
  * Firefox touchstart event fix.
  * Compatibility change for jQuery to 1.7.0+
  * Adds customDirectionNav param for custom navigation controls
+
+ 2015.11.16 - Version 2.6.0
+ * Adds composer json file keywords
+ * Scope fix for focused keyword
+ * Fixes bower demo folder exclusion
+ * z-index fix for disabled nav arrow
+ * play/pause accessibility fix
+ * itemMargin fix for slider items margins
+ * Fixes accessibility for in focus elements and pagination controls
+ * Firefox fix for text selection on slider carousel
+ * Adds data-thumb-alt image alt attribute
