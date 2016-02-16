@@ -13,10 +13,13 @@
     var slider = $(el);
 	
     // making variables public
-	if(!typeof options.rtl=='undefined'&&$('html').attr('dir')=='rtl')
-		options.rtl=true;
-    slider.vars = $.extend({}, $.flexslider.defaults, options);
 
+    //if rtl value was not passed and html is in rtl..enable it by default.
+  	if(typeof options.rtl=='undefined' && $('html').attr('dir')=='rtl'){
+  		options.rtl=true;
+    }
+    slider.vars = $.extend({}, $.flexslider.defaults, options);
+    
     var namespace = slider.vars.namespace,
         msGesture = window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
         touch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
@@ -173,15 +176,14 @@
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
-				var posFromX
+        				var posFromX;
                 if(slider.vars.rtl){
-					posFromX = -1*($slide.offset().right - $(slider).scrollLeft()); // Find position of slide relative to right of slider container	
-					console.log(posFromX);
-				}
-				else
-				{
-					posFromX = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
-				}
+        					posFromX = -1*($slide.offset().right - $(slider).scrollLeft()); // Find position of slide relative to right of slider container	
+        				}
+        				else
+        				{
+        					posFromX = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
+        				}
                 if( posFromX <= 0 && $slide.hasClass( namespace + 'active-slide' ) ) {
                   slider.flexAnimate(slider.getTarget("prev"), true);
                 } else if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass(namespace + "active-slide")) {
@@ -962,7 +964,12 @@
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE:
-        slider.slides.css({"width": "100%", "float": (slider.vars.rtl?"right":"left"), "marginRight": "-100%", "position": "relative"});
+        if(slider.vars.rtl){
+          slider.slides.css({"width": "100%", "float": 'right', "marginLeft": "-100%", "position": "relative"});
+        }
+        else{
+          slider.slides.css({"width": "100%", "float": 'left', "marginRight": "-100%", "position": "relative"});
+        }
         if (type === "init") {
           if (!touch) {
             //slider.slides.eq(slider.currentSlide).fadeIn(slider.vars.animationSpeed, slider.vars.easing);
