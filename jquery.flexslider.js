@@ -322,6 +322,9 @@
             var target;
 
             if (watchedEvent === "" || watchedEvent === event.type) {
+              var disabledClass = namespace + 'disabled';
+              if ($(this).hasClass(disabledClass)) return;
+              
               target = ($(this).hasClass(namespace + 'next')) ? slider.getTarget('next') : slider.getTarget('prev');
               slider.flexAnimate(target, slider.vars.pauseOnAction);
             }
