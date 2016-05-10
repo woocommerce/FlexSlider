@@ -1171,7 +1171,7 @@
             selector = (options.selector) ? options.selector : ".slides > li",
             $slides = $this.find(selector);
 
-      if ( ( $slides.length === 1 && options.allowOneSlide === true ) || $slides.length === 0 ) {
+      if ( ( $slides.length === 1 && options.allowOneSlide === false ) || $slides.length === 0 ) {
           $slides.fadeIn(400);
           if (options.start) { options.start($this); }
         } else if ($this.data('flexslider') === undefined) {
