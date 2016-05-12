@@ -1,6 +1,6 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
-# FlexSlider 2.6.0
+# FlexSlider 2.6.1
 http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
 
 ## Releases
@@ -18,6 +18,10 @@ Before contributing, please see our [Contributing Guide](https://github.com/woot
 To keep up to date with how FlexSlider's development roadmap looks, please see our [development roadmap](https://github.com/woothemes/FlexSlider/wiki/Roadmap).
 
 ## Updates
+
+** Version 2.6.1 **
+
+** SmoothHeight now uses innerHeight() instead of height() to account for padding in calculation . Defining var altText to prevent error. bower.json add fonts folder on main field. Changed true to false in order to make sure whether or not to allow a slider comprised of a single slide **
 
 ** Version 2.6.0 **
 
