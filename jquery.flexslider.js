@@ -779,7 +779,11 @@
             //slider.slides.eq(slider.currentSlide).fadeOut(slider.vars.animationSpeed, slider.vars.easing);
             //slider.slides.eq(target).fadeIn(slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
 
-            slider.slides.eq(slider.currentSlide).css({"zIndex": 1}).animate({"opacity": 0}, slider.vars.animationSpeed, slider.vars.easing);
+            if (slider.vars.fadeOutDuringTransition == false) {
+              slider.slides.eq(slider.currentSlide).css({"zIndex": 1});
+            } else {
+              slider.slides.eq(slider.currentSlide).css({"zIndex": 1}).animate({"opacity": 0}, slider.vars.animationSpeed, slider.vars.easing);
+            }
             slider.slides.eq(target).css({"zIndex": 2}).animate({"opacity": 1}, slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
 
           } else {
@@ -794,6 +798,9 @@
     };
     slider.wrapup = function(dimension) {
       // SLIDE:
+      if (slider.vars.fadeOutDuringTransition == false) {
+        slider.slides.eq(slider.currentSlide).css({"opacity": 0});
+      }
       if (!fade && !carousel) {
         if (slider.currentSlide === 0 && slider.animatingTo === slider.last && slider.vars.animationLoop) {
           slider.setProps(dimension, "jumpEnd");
@@ -1112,6 +1119,7 @@
     initDelay: 0,                   //{NEW} Integer: Set an initialization delay, in milliseconds
     randomize: false,               //Boolean: Randomize slide order
     fadeFirstSlide: true,           //Boolean: Fade in the first slide when animation type is "fade"
+    fadeOutDuringTransition: true,  //Boolean: Whether previous slide should fade out while next slide fades in
     thumbCaptions: false,           //Boolean: Whether or not to put captions on thumbnails when using the "thumbnails" controlNav.
 
     // Usability features
