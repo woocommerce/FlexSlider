@@ -28,3 +28,9 @@ FLEXSLIDER CHANGELOG
  * Fixes accessibility for in focus elements and pagination controls
  * Firefox fix for text selection on slider carousel
  * Adds data-thumb-alt image alt attribute
+
+2016.05.12 - Version 2.6.1
+* smoothHeight now uses innerHeight() instead of height() to account for padding in calculation.
+* Defining var altText to prevent error.
+* bower.json add fonts folder on main field.
+* Changed `true` to `false` in order to make sure whether or not to allow a slider comprised of a single slide.
