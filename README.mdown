@@ -21,19 +21,19 @@ To keep up to date with how FlexSlider's development roadmap looks, please see o
 
 ** Version 2.6.2 **
 
-** Minor update to fix issues with varying heights and overflow onto content below the slider. **
+** Minor update to fix issues with varying heights and overflow onto content below the slider. Fixes the visibility of the pagination and the navigation in the "fade" mode. **
 
 ** Version 2.6.1 **
 
-** SmoothHeight now uses innerHeight() instead of height() to account for padding in calculation . Defining var altText to prevent error. bower.json add fonts folder on main field. Changed true to false in order to make sure whether or not to allow a slider comprised of a single slide **
+** SmoothHeight now uses innerHeight() instead of height() to account for padding in calculation. Defining var altText to prevent error. bower.json add fonts folder on main field. Changed true to false in order to make sure whether or not to allow a slider comprised of a single slide. **
 
 ** Version 2.6.0 **
 
-** Adds composer json file, scope fix for focused keyword, fixes bower demo folder exclusion, z-index fix for disabled nav arrow, play/pause accessibility fix, itemMargin fix for slider items, fixes accessibility for in focus elements and pagination controls, firefox fix for text selection on slider carousel, adds data-thumb-alt image alt attribute **
+** Adds composer json file, scope fix for focused keyword, fixes bower demo folder exclusion, z-index fix for disabled nav arrow, play/pause accessibility fix, itemMargin fix for slider items, fixes accessibility for in focus elements and pagination controls, firefox fix for text selection on slider carousel, adds data-thumb-alt image alt attribute. **
 
 ** Version 2.5.0 **
 
-** Bumped compatibility support starting with jQuery 1.7+. pausePlay icon fix. Firefox touch event fix. Adds customDirectionNav param **
+** Bumped compatibility support starting with jQuery 1.7+. pausePlay icon fix. Firefox touch event fix. Adds customDirectionNav param. **
 
 ** Version 2.4.0 **
 
