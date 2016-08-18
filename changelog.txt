@@ -36,4 +36,5 @@ FLEXSLIDER CHANGELOG
 * Changed `true` to `false` in order to make sure whether or not to allow a slider comprised of a single slide.
 
 2016.08.18 - Version 2.6.2
-* fixes overflow issue with varying height images.
+* Fixes overflow issue with varying height images.
+* Fixes the visibility of the pagination and the navigation in the "fade" mode.
