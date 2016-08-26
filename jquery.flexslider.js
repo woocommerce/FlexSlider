@@ -691,11 +691,11 @@
 
           if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
             slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+            slider.slides.removeClass(namespace + "active-slide").attr("aria-hidden","true").eq(target).addClass(namespace + "active-slide").removeAttr("aria-hidden");
             target = Math.floor(target/slider.visible);
           } else {
             slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+            slider.slides.removeClass(namespace + "active-slide").attr("aria-hidden","true").eq(target).addClass(namespace + "active-slide").removeAttr("aria-hidden");
             return false;
           }
         }
@@ -717,7 +717,7 @@
 
         // !CAROUSEL:
         // CANDIDATE: slide active class (for add/remove slide)
-        if (!carousel) { slider.slides.removeClass(namespace + 'active-slide').eq(target).addClass(namespace + 'active-slide'); }
+        if (!carousel) { slider.slides.removeClass(namespace + 'active-slide').attr("aria-hidden","true").eq(target).addClass(namespace + 'active-slide').removeAttr("aria-hidden");; }
 
         // INFINITE LOOP:
         // CANDIDATE: atEnd
@@ -962,7 +962,7 @@
       }
       // !CAROUSEL:
       // CANDIDATE: active slide
-      if (!carousel) { slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide"); }
+      if (!carousel) { slider.slides.removeClass(namespace + "active-slide").attr('aria-hidden','true').eq(slider.currentSlide).addClass(namespace + "active-slide"); }
 
       //FlexSlider: init() Callback
       slider.vars.init(slider);
@@ -1151,6 +1151,9 @@
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
     allowOneSlide: true,            //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+
+    // Accesibility Options
+    ariaPolite: false,             //{NEW} Boolean: Add aria-polite attribute to the active slide.
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
