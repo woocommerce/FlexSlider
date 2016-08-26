@@ -355,7 +355,9 @@
       },
       pausePlay: {
         setup: function() {
-          var pausePlayScaffold = $('<div class="' + namespace + 'pauseplay"><a href="#"></a></div>');
+          controlRole = (slider.vars.useAriaAttributes === true) ? ' role="button" ': '';
+
+          var pausePlayScaffold = $('<div class="' + namespace + 'pauseplay"><a href="#" + ' + controlRole + '></a></div>');
 
           // CONTROLSCONTAINER:
           if (slider.controlsContainer) {
