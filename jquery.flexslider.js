@@ -98,7 +98,6 @@
 
         // KEYBOARD:
         if (slider.vars.keyboard && ($(slider.containerSelector).length === 1 || slider.vars.multipleKeyboard)) {
-          console.log('Keyboarding == true');
           $(document).bind('keyup', function(event) {
             var keycode = event.keyCode;
             if (!slider.animating && (keycode === 39 || keycode === 37)) {
@@ -691,11 +690,11 @@
 
           if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
             slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").attr("aria-hidden","true").eq(target).addClass(namespace + "active-slide").removeAttr("aria-hidden");
+            slider.slideAttributes(target);
             target = Math.floor(target/slider.visible);
           } else {
             slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").attr("aria-hidden","true").eq(target).addClass(namespace + "active-slide").removeAttr("aria-hidden");
+            slider.slideAttributes(target);
             return false;
           }
         }
@@ -717,7 +716,9 @@
 
         // !CAROUSEL:
         // CANDIDATE: slide active class (for add/remove slide)
-        if (!carousel) { slider.slides.removeClass(namespace + 'active-slide').attr("aria-hidden","true").eq(target).addClass(namespace + 'active-slide').removeAttr("aria-hidden");; }
+        if (!carousel) {
+          slider.slideAttributes(target);
+        }
 
         // INFINITE LOOP:
         // CANDIDATE: atEnd
@@ -821,6 +822,28 @@
       if (slider.vars.pausePlay) { methods.pausePlay.update("play"); }
       // SYNC:
       if (slider.syncExists) { methods.sync("pause"); }
+    };
+    // SLIDESHOW:
+    slider.slideAttributes = function(target) {
+      namespace = slider.vars.namespace;
+      // Add/Remove active-slide class and Add/Remove aria-attributes.
+      if (slider.vars.useAriaAttributes == true) {
+        slider.slides.removeClass(namespace + "active-slide").attr("aria-hidden","true")
+          .eq(target).addClass(namespace + "active-slide").removeAttr("aria-hidden");
+
+        // Add/Remove aria-live attribute so slidecaption is read by screen reader.
+        if (slider.vars.ariaPolite) {
+          slider.slides.find(namespace + "caption").removeAttr("aria-live");
+
+          // Only add aria-live to active slide if PLAY is not active.
+          if (slider.playing === false) {
+            slider.slides.eq(target).find("." + namespace + "caption").attr("aria-live","polite");
+          }
+        }
+      } else {
+        // Just Add/Remove active-slide class.
+        slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+      }
     };
     // SLIDESHOW:
     slider.play = function() {
@@ -962,7 +985,9 @@
       }
       // !CAROUSEL:
       // CANDIDATE: active slide
-      if (!carousel) { slider.slides.removeClass(namespace + "active-slide").attr('aria-hidden','true').eq(slider.currentSlide).addClass(namespace + "active-slide"); }
+      if (!carousel) {
+        slider.slideAttributes(slider.currentSlide);
+      }
 
       //FlexSlider: init() Callback
       slider.vars.init(slider);
@@ -1153,7 +1178,8 @@
     allowOneSlide: true,            //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
 
     // Accesibility Options
-    ariaPolite: false,             //{NEW} Boolean: Add aria-polite attribute to the active slide.
+    useAriaAttributes: true,        //{NEW} Boolean: Add ARIA Attributes to improve accessibility.
+    ariaPolite: true,               //{NEW} Boolean: Add aria-polite attribute to the caption of the active slide.
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
