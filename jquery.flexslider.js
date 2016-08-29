@@ -19,7 +19,7 @@
         msGesture = window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
         touch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
         // depricating this idea, as devices are being released with both of these events
-        eventType = "click touchend MSPointerUp keyup",
+        eventType = "click touchend MSPointerUp",
         watchedEvent = "",
         watchedEventClearTimer,
         vertical = slider.vars.direction === "vertical",
@@ -214,12 +214,15 @@
 
           slider.controlNavScaffold = $('<ol class="'+ namespace + 'control-nav ' + namespace + type + '"></ol>');
 
+          controlRole = (slider.vars.useAriaAttributes === true) ? ' role="button" ': '';
+
           if (slider.pagingCount > 1) {
             for (var i = 0; i < slider.pagingCount; i++) {
               slide = slider.slides.eq(i);
               if ( undefined === slide.attr( 'data-thumb-alt' ) ) { slide.attr( 'data-thumb-alt', '' ); }
               var altText = ( '' !== slide.attr( 'data-thumb-alt' ) ) ? altText = ' alt="' + slide.attr( 'data-thumb-alt' ) + '"' : '';
-              item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"' + altText + '/>' : '<a href="#">' + j + '</a>';
+              // TODO thumbnail controls are not keyboard accessible.
+              item = (slider.vars.controlNav === "thumbnails") ? '<img src="' + slide.attr( 'data-thumb' ) + '"' + altText + controlRole +'/>' : '<a href="#"' + controlRole + '>' + j + '</a>';
               if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
                 var captn = slide.attr( 'data-thumbcaption' );
                 if ( '' !== captn && undefined !== captn ) { item += '<span class="' + namespace + 'caption">' + captn + '</span>'; }
@@ -301,7 +304,7 @@
       },
       directionNav: {
         setup: function() {
-          var directionNavScaffold = $('<ul class="' + namespace + 'direction-nav"><li class="' + namespace + 'nav-prev"><a class="' + namespace + 'prev" href="#">' + slider.vars.prevText + '</a></li><li class="' + namespace + 'nav-next"><a class="' + namespace + 'next" href="#">' + slider.vars.nextText + '</a></li></ul>');
+          var directionNavScaffold = $('<ul class="' + namespace + 'direction-nav"><li class="' + namespace + 'nav-prev"><a role="button" class="' + namespace + 'prev" href="#">' + slider.vars.prevText + '</a></li><li class="' + namespace + 'nav-next"><a role="button" class="' + namespace + 'next" href="#">' + slider.vars.nextText + '</a></li></ul>');
 
           // CUSTOM DIRECTION NAV:
           if (slider.customDirectionNav) {
@@ -352,7 +355,9 @@
       },
       pausePlay: {
         setup: function() {
-          var pausePlayScaffold = $('<div class="' + namespace + 'pauseplay"><a href="#"></a></div>');
+          controlRole = (slider.vars.useAriaAttributes === true) ? ' role="button" ': '';
+
+          var pausePlayScaffold = $('<div class="' + namespace + 'pauseplay"><a href="#" + ' + controlRole + '></a></div>');
 
           // CONTROLSCONTAINER:
           if (slider.controlsContainer) {
@@ -690,11 +695,11 @@
 
           if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
             slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+            slider.slideAttributes(target);
             target = Math.floor(target/slider.visible);
           } else {
             slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+            slider.slideAttributes(target);
             return false;
           }
         }
@@ -716,7 +721,9 @@
 
         // !CAROUSEL:
         // CANDIDATE: slide active class (for add/remove slide)
-        if (!carousel) { slider.slides.removeClass(namespace + 'active-slide').eq(target).addClass(namespace + 'active-slide'); }
+        if (!carousel) {
+          slider.slideAttributes(target);
+        }
 
         // INFINITE LOOP:
         // CANDIDATE: atEnd
@@ -820,6 +827,28 @@
       if (slider.vars.pausePlay) { methods.pausePlay.update("play"); }
       // SYNC:
       if (slider.syncExists) { methods.sync("pause"); }
+    };
+    // SLIDESHOW:
+    slider.slideAttributes = function(target) {
+      namespace = slider.vars.namespace;
+      // Add/Remove active-slide class and Add/Remove aria-attributes.
+      if (slider.vars.useAriaAttributes == true) {
+        slider.slides.removeClass(namespace + "active-slide").attr("aria-hidden","true")
+          .eq(target).addClass(namespace + "active-slide").removeAttr("aria-hidden");
+
+        // Add/Remove aria-live attribute so slidecaption is read by screen reader.
+        if (slider.vars.ariaPolite) {
+          slider.slides.find(namespace + "caption").removeAttr("aria-live");
+
+          // Only add aria-live to active slide if PLAY is not active.
+          if (slider.playing === false) {
+            slider.slides.eq(target).find("." + namespace + "caption").attr("aria-live","polite");
+          }
+        }
+      } else {
+        // Just Add/Remove active-slide class.
+        slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+      }
     };
     // SLIDESHOW:
     slider.play = function() {
@@ -961,7 +990,9 @@
       }
       // !CAROUSEL:
       // CANDIDATE: active slide
-      if (!carousel) { slider.slides.removeClass(namespace + "active-slide").eq(slider.currentSlide).addClass(namespace + "active-slide"); }
+      if (!carousel) {
+        slider.slideAttributes(slider.currentSlide);
+      }
 
       //FlexSlider: init() Callback
       slider.vars.init(slider);
@@ -1149,7 +1180,11 @@
     minItems: 1,                    //{NEW} Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
-    allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+    allowOneSlide: true,            //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+
+    // Accesibility Options
+    useAriaAttributes: true,        //{NEW} Boolean: Add ARIA Attributes to improve accessibility.
+    ariaPolite: true,               //{NEW} Boolean: Add aria-polite attribute to the caption of the active slide.
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
