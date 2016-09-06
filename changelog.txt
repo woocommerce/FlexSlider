@@ -38,3 +38,6 @@ FLEXSLIDER CHANGELOG
 2016.08.18 - Version 2.6.2
 * Fixes overflow issue with varying height images.
 * Fixes the visibility of the pagination and the navigation in the "fade" mode.
+
+2016.09.06 - Version 2.6.3
+* Rollback fade fixes, due to harsh fade reports.
