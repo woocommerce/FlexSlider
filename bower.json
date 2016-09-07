@@ -8,8 +8,7 @@
   "description": "An awesome, fully responsive jQuery slider toolkit.",
   "main": [
     "jquery.flexslider.js",
-    "flexslider.css",
-    "fonts/*"
+    "flexslider.css"
   ],
   "keywords": [
     "flexslider",
