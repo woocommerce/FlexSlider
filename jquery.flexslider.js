@@ -922,21 +922,21 @@
         // VERTICAL:
         if (vertical && !carousel) {
           slider.container.height((slider.count + slider.cloneCount) * 200 + "%").css("position", "absolute").width("100%");
-          setTimeout(function(){
+          window.requestAnimationFrame(function(){
             slider.newSlides.css({"display": "block"});
             slider.doMath();
             slider.viewport.height(slider.h);
             slider.setProps(sliderOffset * slider.h, "init");
-          }, (type === "init") ? 100 : 0);
+          });
         } else {
           slider.container.width((slider.count + slider.cloneCount) * 200 + "%");
           slider.setProps(sliderOffset * slider.computedW, "init");
-          setTimeout(function(){
+          window.requestAnimationFrame(function(){
             slider.doMath();
             slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) { methods.smoothHeight(); }
-          }, (type === "init") ? 100 : 0);
+          });
         }
       } else { // FADE:
         slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%", "position": "relative"});
