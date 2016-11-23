@@ -161,7 +161,7 @@
           slider.currentItem = slider.currentSlide;
           slider.slides.removeClass(namespace + "active-slide").eq(slider.currentItem).addClass(namespace + "active-slide");
           if(!msGesture){
-              slider.slides.on(eventType, function(e){
+              slider.on(eventType, slider.vars.selector, function(e){
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
@@ -847,9 +847,9 @@
     slider.getTarget = function(dir) {
       slider.direction = dir;
       if (dir === "next") {
-        return (slider.currentSlide === slider.last) ? 0 : slider.currentSlide + 1;
+        return (slider.currentSlide === slider.last) ? ((slider.vars.loop)?0:slider.last) : slider.currentSlide + 1;
       } else {
-        return (slider.currentSlide === 0) ? slider.last : slider.currentSlide - 1;
+        return (slider.currentSlide === 0) ? ((slider.vars.loop)?slider.last:0) : slider.currentSlide - 1;
       }
     };
 
@@ -1005,7 +1005,8 @@
       // update currentSlide and slider.animatingTo if necessary
       if (!carousel) {
         if (pos < slider.currentSlide) {
-          slider.currentSlide += 1;
+          if (action === "remove") slider.currentSlide -= 1;
+          else slider.currentSlide += 1;
         } else if (pos <= slider.currentSlide && pos !== 0) {
           slider.currentSlide -= 1;
         }
@@ -1109,6 +1110,7 @@
     randomize: false,               //Boolean: Randomize slide order
     fadeFirstSlide: true,           //Boolean: Fade in the first slide when animation type is "fade"
     thumbCaptions: false,           //Boolean: Whether or not to put captions on thumbnails when using the "thumbnails" controlNav.
+    loop: true,                     //Boolean: Loop slider
 
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
