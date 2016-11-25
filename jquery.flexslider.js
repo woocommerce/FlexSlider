@@ -480,7 +480,7 @@
 
             el.addEventListener('touchstart', onTouchStart, false);
         }else{
-            el.style.msTouchAction = "none";
+            el.style.msTouchAction = "pan-y";
             el._gesture = new MSGesture();
             el._gesture.target = el;
             el.addEventListener("MSPointerDown", onMSPointerDown, false);
