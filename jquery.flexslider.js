@@ -263,6 +263,8 @@
           slider.controlNav.bind(eventType, function(event) {
             event.preventDefault();
 
+            slider.replay();
+
             if (watchedEvent === "" || watchedEvent === event.type) {
               var $this = $(this),
                   target = slider.controlNav.index($this);
@@ -320,6 +322,8 @@
           slider.directionNav.bind(eventType, function(event) {
             event.preventDefault();
             var target;
+
+            slider.replay();
 
             if (watchedEvent === "" || watchedEvent === event.type) {
               target = ($(this).hasClass(namespace + 'next')) ? slider.getTarget('next') : slider.getTarget('prev');
@@ -703,7 +707,9 @@
         slider.animatingTo = target;
 
         // SLIDESHOW:
-        if (pause) { slider.pause(); }
+        if (pause) {
+          slider.pause();
+        }
 
         // API: before() animation Callback
         slider.vars.before(slider);
@@ -827,6 +833,10 @@
       // SYNC:
       if (slider.syncExists) { methods.sync("play"); }
     };
+    slider.replay = function() {
+      clearInterval(slider.animatedSlides);
+      slider.animatedSlides = setInterval(slider.animateSlides, slider.vars.slideshowSpeed);
+    }
     // STOP:
     slider.stop = function () {
       slider.pause();
@@ -845,6 +855,7 @@
              true;
     };
     slider.getTarget = function(dir) {
+      slider.replay();
       slider.direction = dir;
       if (dir === "next") {
         return (slider.currentSlide === slider.last) ? 0 : slider.currentSlide + 1;
