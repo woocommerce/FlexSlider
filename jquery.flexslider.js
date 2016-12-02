@@ -179,6 +179,7 @@
                   var that = this;
                   that._gesture = new MSGesture();
                   that._gesture.target = that;
+                  that.addEventListener('click', function(e){ e.preventDefault(); });
                   that.addEventListener("MSPointerDown", function (e){
                       e.preventDefault();
                       if(e.currentTarget._gesture) {
