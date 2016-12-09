@@ -3,6 +3,7 @@
   "version": "2.6.3",
   "description": "An awesome, fully responsive jQuery slider toolkit.",
   "main": "jquery.flexslider.js",
+  "style": "flexslider.css",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
