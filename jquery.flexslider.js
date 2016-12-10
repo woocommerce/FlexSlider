@@ -164,7 +164,9 @@
               slider.slides.on(eventType, function(e){
                 e.preventDefault();
                 var $slide = $(this),
-                    target = $slide.index();
+                    sliderStringSelector = (typeof(slider[0].id) !== 'undefined' && slider[0].id !== '' ) ? '#' + slider[0].id : 
+                                                                                                            '.' + slider[0].className.replace(/\s+/g, '.').replace(/\.+$/, ''),
+                    target = $slide.index(sliderStringSelector + ' ' + slider.slides.selector);
                 var posFromLeft = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
                 if( posFromLeft <= 0 && $slide.hasClass( namespace + 'active-slide' ) ) {
                   slider.flexAnimate(slider.getTarget("prev"), true);
