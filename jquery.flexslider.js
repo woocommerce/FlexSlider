@@ -507,9 +507,19 @@
                                     (reverse) ? (slider.last - slider.currentSlide + slider.cloneOffset) * cwidth : (slider.currentSlide + slider.cloneOffset) * cwidth;
                 }
             }
-
+            
+            // stops next click event
+            function stopNextClick(){
+              $(this).off('click',stopNextClick);
+              return false;
+            }
+            
             function onMSGestureChange(e) {
                 e.stopPropagation();
+                
+                // prevents click event on swipe
+                $(el).click(stopNextClick);
+                
                 var slider = e.target._slider;
                 if(!slider){
                     return;
@@ -563,6 +573,9 @@
                 dx = null;
                 offset = null;
                 accDx = 0;
+                
+                // remove click suppression if not fired
+                setTimeout(function(){$(el).off('click',stopNextClick);}, 10);
             }
         }
       },
