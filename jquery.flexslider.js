@@ -847,9 +847,9 @@
     slider.getTarget = function(dir) {
       slider.direction = dir;
       if (dir === "next") {
-        return (slider.currentSlide === slider.last) ? 0 : slider.currentSlide + 1;
+        return (slider.currentSlide === slider.last) ? 0 : parseInt(slider.currentSlide, 10) + 1;
       } else {
-        return (slider.currentSlide === 0) ? slider.last : slider.currentSlide - 1;
+        return (slider.currentSlide === 0) ? slider.last : parseInt(slider.currentSlide, 10) - 1;
       }
     };
 
