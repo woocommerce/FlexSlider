@@ -85,10 +85,10 @@
           slider.container.empty().append(slider.slides);
         }
 
-        slider.doMath();
-
         // INIT
         slider.setup("init");
+
+        slider.doMath();
 
         // CONTROLNAV:
         if (slider.vars.controlNav) { methods.controlNav.setup(); }
