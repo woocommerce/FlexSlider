@@ -680,6 +680,11 @@
 
       if (asNav && slider.pagingCount === 1) slider.direction = (slider.currentItem < target) ? "next" : "prev";
 
+
+      if(!vars.animationLoop && target === 0 && slider.currentSlide === slider.last){
+        slider.atEnd = true;
+      }
+
       if (!slider.animating && (slider.canAdvance(target, fromNav) || override) && slider.is(":visible")) {
         if (asNav && withSync) {
           var master = $(slider.vars.asNavFor).data('flexslider');
