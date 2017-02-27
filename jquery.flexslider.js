@@ -706,7 +706,13 @@
         if (pause) { slider.pause(); }
 
         // API: before() animation Callback
-        slider.vars.before(slider);
+        // if before() return false, prevent the animation
+        var canAnimate = slider.vars.before(slider);
+        if (canAnimate === false) {
+            slider.animating = false;
+            slider.animatingTo = slider.currentSlide;
+            return false;
+        }
 
         // SYNC:
         if (slider.syncExists && !fromNav) { methods.sync("animate"); }
