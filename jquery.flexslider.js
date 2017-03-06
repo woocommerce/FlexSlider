@@ -1085,6 +1085,7 @@
   };
 
   // Ensure the slider isn't focussed if the window loses focus.
+  var focused = true;
   $( window ).blur( function ( e ) {
     focused = false;
   }).focus( function ( e ) {
