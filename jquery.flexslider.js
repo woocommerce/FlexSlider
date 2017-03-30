@@ -930,9 +930,9 @@
           }, (type === "init") ? 100 : 0);
         } else {
           slider.container.width((slider.count + slider.cloneCount) * 200 + "%");
-          slider.setProps(sliderOffset * slider.computedW, "init");
           setTimeout(function(){
             slider.doMath();
+            slider.setProps(sliderOffset * slider.computedW, "init");
             slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) { methods.smoothHeight(); }
