@@ -1,0 +1,19 @@
+<div class="flexslider" id="flexslider_1" style="min-height: 0px; opacity: 1; background-image: none; background-position: initial initial; background-repeat: initial initial;">
+<ul class="slides">
+<li style="width: 100%; float: left; margin-right: -100%; display: list-item;"><a href="http://www.africanstorybook.com/ibooks/firesidefables.html"><img src="http://www.africanstorybook.com/wp-content/themes/natural/lib/timthumb.php?src=http://www.africanstorybook.com/wp-content/uploads/2013/06/lezulu_firesidefables_carousel.jpg&amp;w=1170&amp;h=400&amp;zc=1" alt="Fireside Fables for iBooks" class="" style="opacity: 1; visibility: visible;"></a>
+<p class="flex-caption">Fireside Fables for iBooks</p>
+</li>
+<li style="width: 100%; float: left; margin-right: -100%; display: none;"><a href="/ibooks/africanlion.html"><img src="http://www.africanstorybook.com/wp-content/themes/natural/lib/timthumb.php?src=http://www.africanstorybook.com/wp-content/uploads/2013/05/african_lion_carousel.jpg&amp;w=1170&amp;h=400&amp;zc=1" alt="In Search of the African Lion for iBooks" class="" style="opacity: 1; visibility: visible;"></a>
+<p class="flex-caption">In Search of the African Lion for iBooks</p>
+</li>
+<li style="width: 100%; float: left; margin-right: -100%;"><a href="http://www.africanstorybook.com/portfolio-2/ibooks/"><img src="http://www.africanstorybook.com/wp-content/themes/natural/lib/timthumb.php?src=http://www.africanstorybook.com/wp-content/uploads/2013/09/The-African-Travel-Storybook.jpg&amp;w=1170&amp;h=400&amp;zc=1" alt="The African Travel Storybook Volume: 1" class="" style="opacity: 1; visibility: visible;"></a>
+<p class="flex-caption">The African Travel Storybook Volume: 1</p>
+</li>
+<li style="width: 100%; float: left; margin-right: -100%;"><img src="http://www.africanstorybook.com/wp-content/themes/natural/lib/timthumb.php?src=http://www.africanstorybook.com/wp-content/uploads/2013/09/A-Guide-to-Southern-Africas-Iconic-Safari-Destinations.jpg&amp;w=1170&amp;h=400&amp;zc=1" alt="A Guide to Southern Africa’s Iconic Safari Destinations" class="" style="opacity: 1; visibility: visible;">
+<p class="flex-caption">A Guide to Southern Africa’s Iconic Safari Destinations</p>
+</li>
+<li style="width: 100%; float: left; margin-right: -100%;"><a href="http://www.africanstorybook.com/portfolio-2/ibooks/"><img src="http://www.africanstorybook.com/wp-content/themes/natural/lib/timthumb.php?src=http://www.africanstorybook.com/wp-content/uploads/2013/09/KAI-Collection.jpg&amp;w=1170&amp;h=400&amp;zc=1" alt="KAI Collection" class="" style="opacity: 1; visibility: visible;"></a>
+<p class="flex-caption">KAI Collection</p>
+</li>
+</ul>
+<ol class="flex-control-nav"><li><a class="active">1</a></li><li><a class="">2</a></li><li><a>3</a></li><li><a>4</a></li><li><a>5</a></li></ol><ul class="flex-direction-nav"><li><a class="prev" href="#">Previous</a></li><li><a class="next" href="#">Next</a></li></ul></div>
