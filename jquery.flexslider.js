@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v2.6.1
+ * jQuery FlexSlider v2.7.0
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
@@ -11,7 +11,7 @@
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
     var slider = $(el);
-	
+
     // making variables public
 
     //if rtl value was not passed and html is in rtl..enable it by default.
@@ -19,7 +19,7 @@
   		options.rtl=true;
     }
     slider.vars = $.extend({}, $.flexslider.defaults, options);
-    
+
     var namespace = slider.vars.namespace,
         msGesture = window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
         touch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
@@ -446,6 +446,7 @@
                          (reverse) ? (slider.last - slider.currentSlide + slider.cloneOffset) * cwidth : (slider.currentSlide + slider.cloneOffset) * cwidth;
                 startX = (vertical) ? localY : localX;
                 startY = (vertical) ? localX : localY;
+
                 el.addEventListener('touchmove', onTouchMove, false);
                 el.addEventListener('touchend', onTouchEnd, false);
               }
@@ -459,6 +460,7 @@
 
               dx = (vertical) ? startX - localY : (slider.vars.rtl?-1:1)*(startX - localX);
               scrolling = (vertical) ? (Math.abs(dx) < Math.abs(localX - startY)) : (Math.abs(dx) < Math.abs(localY - startY));
+
               var fxms = 500;
 
               if ( ! scrolling || Number( new Date() ) - startT > fxms ) {
@@ -792,12 +794,8 @@
           }
         } else { // FADE:
           if (!touch) {
-            //slider.slides.eq(slider.currentSlide).fadeOut(slider.vars.animationSpeed, slider.vars.easing);
-            //slider.slides.eq(target).fadeIn(slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
-
             slider.slides.eq(slider.currentSlide).css({"zIndex": 1}).animate({"opacity": 0}, slider.vars.animationSpeed, slider.vars.easing);
             slider.slides.eq(target).css({"zIndex": 2}).animate({"opacity": 1}, slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
-
           } else {
             slider.slides.eq(slider.currentSlide).css({ "opacity": 0, "zIndex": 1 });
             slider.slides.eq(target).css({ "opacity": 1, "zIndex": 2 });
