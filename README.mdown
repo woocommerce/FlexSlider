@@ -1,23 +1,27 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
-# FlexSlider 2.6.3
-http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
+# FlexSlider 2.6.4
+http://www.woocommerce.com/flexslider/ - Copyright (c) 2015 WooThemes
 
 ## Releases
 
-The `master` branch of this repository is always the latest development version of FlexSlider. Please view the [Releases](https://github.com/woothemes/FlexSlider/releases) section for a list of official FlexSlider builds.
+The `master` branch of this repository is always the latest development version of FlexSlider. Please view the [Releases](https://github.com/woocommerce/FlexSlider/releases) section for a list of official FlexSlider builds.
 
 ### Contributing
 
 We encourage contributions to FlexSlider and will review all pull requests submitted.
 
-Before contributing, please see our [Contributing Guide](https://github.com/woothemes/FlexSlider/blob/master/CONTRIBUTING.md).
+Before contributing, please see our [Contributing Guide](https://github.com/woocommerce/FlexSlider/blob/master/CONTRIBUTING.md).
 
 ### Roadmap
 
-To keep up to date with how FlexSlider's development roadmap looks, please see our [development roadmap](https://github.com/woothemes/FlexSlider/wiki/Roadmap).
+To keep up to date with how FlexSlider's development roadmap looks, please see our [development roadmap](https://github.com/woocommerce/FlexSlider/wiki/Roadmap).
 
 ## Updates
+
+** Version 2.6.4 **
+
+** Fixes resize method call for orientationchange. **
 
 ** Version 2.6.3 **
 
@@ -64,7 +68,7 @@ To keep up to date with how FlexSlider's development roadmap looks, please see o
 ## General Notes
 FlexSlider is no longer licensed under the MIT license. FlexSlider now uses the license, GPLv2 and later.
 
-In an effort to move the plugin forward, support for jQuery 1.4.2 has been dropped. The plugin now requires jQuery 1.7.0+. If you don't have access to the later versions of jQuery, [FlexSlider 1.8](https://github.com/woothemes/FlexSlider/tree/flexslider1) should be a perfectly suitable substitute for your needs!
+In an effort to move the plugin forward, support for jQuery 1.4.2 has been dropped. The plugin now requires jQuery 1.7.0+. If you don't have access to the later versions of jQuery, [FlexSlider 1.8](https://github.com/woocommerce/FlexSlider/tree/flexslider1) should be a perfectly suitable substitute for your needs!
 
 Your old styles and properties *might not work out of the box*. Some property names have been changed, noted below, as well as namespacing prefixes being applied to all elements. This means that `.flex-direction-nav .next` is now `.flex-direction-nav .flex-next` by default. The namespacing property is exposed, free for you to change.
 
