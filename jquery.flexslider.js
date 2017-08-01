@@ -106,7 +106,7 @@
           $(document).bind('keyup', function(event) {
             var keycode = event.keyCode;
             if (!slider.animating && (keycode === 39 || keycode === 37)) {
-              var target = (slider.vars.rtl? 
+              var target = (slider.vars.rtl?
                                 ((keycode === 37) ? slider.getTarget('next') :
                                 (keycode === 39) ? slider.getTarget('prev') : false)
                                 :
@@ -178,7 +178,7 @@
                     target = $slide.index();
         				var posFromX;
                 if(slider.vars.rtl){
-        					posFromX = -1*($slide.offset().right - $(slider).scrollLeft()); // Find position of slide relative to right of slider container	
+        					posFromX = -1*($slide.offset().right - $(slider).scrollLeft()); // Find position of slide relative to right of slider container
         				}
         				else
         				{
@@ -1173,7 +1173,8 @@
     minItems: 1,                    //{NEW} Integer: Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
-    allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+    allowOneSlide: true,            //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+    rtl: false,                     //{NEW} Boolean: Whether or not to enable RTL mode
 
     // Callback API
     start: function(){},            //Callback: function(slider) - Fires when the slider loads the first slide
@@ -1182,8 +1183,8 @@
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
-    init: function() {},             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
-	rtl: false             //{NEW} Boolean: Whether or not to enable RTL mode
+    init: function() {}             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
+
   };
 
   //FlexSlider: Plugin Function
