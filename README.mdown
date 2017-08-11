@@ -146,6 +146,9 @@ Previously called "animationDuration" in v1.8 and below.
 ### touch: *{new}*
 `touch` allows users to exclude touch swipe functionality from their sliders.
 
+### simulateTouch: *{new}*
+`simulateTouch` allows users to interpret mouse events as touch events for swipe-like functionality from their sliders. Requires `touch` to be true.
+
 ### keyboard: *{changed}*
 Previously called "keyboardNav" in v1.8 and below.
 

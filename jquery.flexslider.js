@@ -8,6 +8,33 @@
 
   var focused = true;
 
+  // Turns a mouse event into a touch event
+  function toTouchEvent(e) {
+    var touch = {
+      identifier: 0,
+      target: e.target,
+      screenX: e.screenX,
+      screenY: e.screenY,
+      clientX: e.clientX,
+      clientY: e.clientY,
+      pageX: e.pageX,
+      pageY: e.pageY
+    }
+    var touchEvent = {
+      touches: [touch],
+      targetTouches: [touch],
+      changedTouches: [touch],
+      altKey: e.altKey,
+      metaKey: e.metaKey,
+      ctrlKey: e.ctrlKey,
+      shiftKey: e.shiftKey,
+      preventDefault: e.preventDefault.bind(e),
+      type: e.type === 'mousedown' ? 'touchstart' : e.type === 'mousemove' ? 'touchmove' : e.type === 'mouseup' ? 'touchend' : e.type,
+      timeStamp: e.timeStamp || Date.now()
+    }
+    return touchEvent
+  }
+
   //FlexSlider: Object Instance
   $.flexslider = function(el, options) {
     var slider = $(el);
@@ -401,10 +428,14 @@
           onTouchStart,
           onTouchMove,
           onTouchEnd,
+          onMouseStart,
+          onMouseMove,
+          onMouseEnd,
           scrolling = false,
           localX = 0,
           localY = 0,
-          accDx = 0;
+          accDx = 0,
+          simulateTouch = slider.vars.simulateTouch;
 
         if(!msGesture){
             onTouchStart = function(e) {
@@ -431,6 +462,10 @@
 
                 el.addEventListener('touchmove', onTouchMove, false);
                 el.addEventListener('touchend', onTouchEnd, false);
+                if (simulateTouch) {
+                  el.addEventListener('mousemove', onMouseMove, false);
+                  el.addEventListener('mouseup', onMouseEnd, false);
+                }
               }
             };
 
@@ -459,6 +494,9 @@
             onTouchEnd = function(e) {
               // finish the touch by undoing the touch session
               el.removeEventListener('touchmove', onTouchMove, false);
+              if (simulateTouch) {
+                el.removeEventListener('mousemove', onMouseMove, false);
+              }
 
               if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
                 var updateDx = (reverse) ? -dx : dx,
@@ -471,6 +509,9 @@
                 }
               }
               el.removeEventListener('touchend', onTouchEnd, false);
+              if (simulateTouch) {
+                el.removeEventListener('mouseup', onMouseEnd, false);
+              }
 
               startX = null;
               startY = null;
@@ -478,7 +519,22 @@
               offset = null;
             };
 
+            onMouseStart = function(e) {
+              onTouchStart.call(this, toTouchEvent(e));
+            };
+
+            onMouseMove = function(e) {
+              onTouchMove.call(this, toTouchEvent(e));
+            };
+
+            onMouseEnd = function(e) {
+              onTouchEnd.call(this, toTouchEvent(e));
+            };
+
             el.addEventListener('touchstart', onTouchStart, false);
+            if (simulateTouch) {
+              el.addEventListener('mousedown', onMouseStart, false);
+            }
         }else{
             el.style.msTouchAction = "none";
             el._gesture = new MSGesture();
@@ -1113,9 +1169,10 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
+    pauseInvisible: true,           //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
+    simulateTouch: false,           //{NEW} Boolean: Allow mouse swipe navigation of the slider. Requires touch to be true
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
 
     // Primary Controls
