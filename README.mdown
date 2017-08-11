@@ -90,6 +90,34 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 - `slider.addSlide(obj, pos)` accepts two parameters, a string/jQuery object and an index.
 - `slider.removeSlide(obj)` accepts one parameter, either an object to be removed, or an index.
 
+### Updating `slideshowSpeed` after Flexslider has been created
+
+```javascript
+  var $flexsliderInstance = $('.flexslider-classname');
+  if ($flexsliderInstance.data('flexslider')) {
+    $flexsliderInstance.data('flexslider').vars.slideshowSpeed = 10000; //drop here the number you want
+    $flexsliderInstance.flexslider('pause');
+    $flexsliderInstance.flexslider('play');
+  }
+```
+
+If your flexslider instance got initialised using any DOM ready callback or similar like `ready` from jQuery or [DOMContentLoaded](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded), then, if the modification is suscribed after the initialization both suscribed on the same event, the modification will get dispatched first than the initialisation and, therefore, we need to run it asyncronously. Because of this, we would only need to add a `setTimeout` and it would get fixed, like follows:
+
+```javascript
+domready(function () {
+  setTimeout(function () {
+  var $flexsliderInstance = $('.flexslider-classname');
+  if ($flexsliderInstance.data('flexslider')) {
+    $flexsliderInstance.data('flexslider').vars.slideshowSpeed = 10000; //drop here the number you want
+    $flexsliderInstance.flexslider('pause');
+    $flexsliderInstance.flexslider('play');
+  }
+ }, 0);
+});
+```
+
+Note that for the latest example I used [`domReady`](https://github.com/ded/domready) from Dustin Diaz.
+
 ## Examples
 
 - [Basic Slider](http://flexslider.woothemes.com/)
