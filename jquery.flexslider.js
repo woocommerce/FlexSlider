@@ -472,6 +472,8 @@
               }
               el.removeEventListener('touchend', onTouchEnd, false);
 
+              if (!slider.vars.pauseOnHover) slider.play();
+
               startX = null;
               startY = null;
               dx = null;
@@ -557,6 +559,8 @@
                         if (!fade) { slider.flexAnimate(slider.currentSlide, slider.vars.pauseOnAction, true); }
                     }
                 }
+                
+                if (!slider.vars.pauseOnHover) slider.play();
 
                 startX = null;
                 startY = null;
