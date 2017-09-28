@@ -391,10 +391,6 @@
           (state === "play") ? slider.pausePlay.removeClass(namespace + 'pause').addClass(namespace + 'play').html(slider.vars.playText) : slider.pausePlay.removeClass(namespace + 'play').addClass(namespace + 'pause').html(slider.vars.pauseText);
         }
       },
-
-      touchResumeSlideShow(action) {
-        return 
-      },
       touch: function() {
         var startX,
           startY,
