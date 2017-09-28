@@ -391,6 +391,10 @@
           (state === "play") ? slider.pausePlay.removeClass(namespace + 'pause').addClass(namespace + 'play').html(slider.vars.playText) : slider.pausePlay.removeClass(namespace + 'play').addClass(namespace + 'pause').html(slider.vars.pauseText);
         }
       },
+
+      touchResumeSlideShow(action) {
+        return 
+      },
       touch: function() {
         var startX,
           startY,
@@ -472,7 +476,19 @@
               }
               el.removeEventListener('touchend', onTouchEnd, false);
 
-              if (!slider.vars.pauseOnHover) slider.play();
+              if (dx && scrolling) {
+                
+                // (scroll) Resume autoplay if slideshow is enabled
+                slider.vars.slideshow && slider.play();
+              } else if (dx) {
+                
+                // (swipe) Resume if pauseOnAction:false, else end slideshow
+                !slider.vars.pauseOnAction && slider.play() || (slider.vars.slideshow = false);
+              } else {
+                
+                // ("click") Resume if pauseOnAction:false, slideshow:true
+                (slider.vars.slideshow && !slider.vars.pauseOnAction) && slider.play() || (slider.vars.slideshow = false);
+              }
 
               startX = null;
               startY = null;
@@ -560,7 +576,19 @@
                     }
                 }
                 
-                if (!slider.vars.pauseOnHover) slider.play();
+                if (dx && scrolling) {
+                    
+                    // (scroll) Resume autoplay if slideshow is enabled
+                    slider.vars.slideshow && slider.play();
+                  } else if (dx) {
+                    
+                    // (swipe) Resume if pauseOnAction:false, else end slideshow
+                    !slider.vars.pauseOnAction && slider.play() || (slider.vars.slideshow = false);
+                  } else {
+                    
+                    // ("click") Resume if pauseOnAction:false, slideshow:true
+                    (slider.vars.slideshow && !slider.vars.pauseOnAction) && slider.play() || (slider.vars.slideshow = false);
+                  }
 
                 startX = null;
                 startY = null;
