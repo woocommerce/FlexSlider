@@ -1,4 +1,5 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/flexslider/badge?style=rounded)](https://www.jsdelivr.com/package/npm/flexslider)
 
 # FlexSlider 2.6.4
 http://www.woocommerce.com/flexslider/ - Copyright (c) 2015 WooThemes
