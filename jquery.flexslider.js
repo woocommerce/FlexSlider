@@ -1,5 +1,6 @@
 /*
  * jQuery FlexSlider v2.6.4
+ * fork patch 0.1 (cancel AsNav tap if ending a swipe, fix resize bind broken in 2.6.4)
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
@@ -145,7 +146,7 @@
         if (touch && slider.vars.touch) { methods.touch(); }
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) { $(window).bind("resize orientationchange focus", methods.resize()); }
+        if (!fade || (fade && slider.vars.smoothHeight)) { $(window).bind("resize orientationchange focus", methods.resize); }
 
         slider.find("img").attr("draggable", "false");
 
@@ -163,6 +164,9 @@
           if(!msGesture){
               slider.slides.on(eventType, function(e){
                 e.preventDefault();
+                if (slider.swiping) {
+                  return;
+                }
                 var $slide = $(this),
                     target = $slide.index();
                 var posFromLeft = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
@@ -187,6 +191,9 @@
                   }, false);
                   that.addEventListener("MSGestureTap", function (e){
                       e.preventDefault();
+                      if (slider.swiping) {
+                        return;
+                      }
                       var $slide = $(this),
                           target = $slide.index();
                       if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass('active')) {
@@ -435,6 +442,9 @@
             };
 
             onTouchMove = function(e) {
+
+              slider.swiping = true;
+
               // Local vars for X and Y points.
 
               localX = e.touches[0].pageX;
@@ -459,6 +469,8 @@
             onTouchEnd = function(e) {
               // finish the touch by undoing the touch session
               el.removeEventListener('touchmove', onTouchMove, false);
+
+              slider.swiping = false;
 
               if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
                 var updateDx = (reverse) ? -dx : dx,
@@ -511,6 +523,7 @@
             function onMSGestureChange(e) {
                 e.stopPropagation();
                 var slider = e.target._slider;
+                slider.swiping = true;
                 if(!slider){
                     return;
                 }
@@ -544,6 +557,7 @@
             function onMSGestureEnd(e) {
                 e.stopPropagation();
                 var slider = e.target._slider;
+                slider.swiping = false;
                 if(!slider){
                     return;
                 }
