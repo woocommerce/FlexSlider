@@ -1,6 +1,5 @@
 /*
  * jQuery FlexSlider v2.6.4
- * fork patch 0.1 (cancel AsNav tap if ending a swipe, fix resize bind broken in 2.6.4)
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
