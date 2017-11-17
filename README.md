@@ -1,7 +1,7 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
-# FlexSlider 2.6.4
-http://www.woocommerce.com/flexslider/ - Copyright (c) 2015 WooThemes
+# FlexSlider 2.6.4 - SpaceCraft customizations branch
+**This branch should be used for SpaceCraft customizations that may not be intended for making pull requests back to the origin project**  at http://www.woocommerce.com/flexslider/ **— changes that ARE intended for upstream pull requests can be made in `master` then merged into `spacecraft-customizations`.**
 
 ## Releases
 
