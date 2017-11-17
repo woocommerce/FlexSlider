@@ -523,10 +523,10 @@
             function onMSGestureChange(e) {
                 e.stopPropagation();
                 var slider = e.target._slider;
-                slider.swiping = true;
                 if(!slider){
                     return;
                 }
+                slider.swiping = true;
                 var transX = -e.translationX,
                     transY = -e.translationY;
 
@@ -557,10 +557,10 @@
             function onMSGestureEnd(e) {
                 e.stopPropagation();
                 var slider = e.target._slider;
-                slider.swiping = false;
                 if(!slider){
                     return;
                 }
+                slider.swiping = false;
                 if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
                     var updateDx = (reverse) ? -dx : dx,
                         target = (updateDx > 0) ? slider.getTarget('next') : slider.getTarget('prev');
