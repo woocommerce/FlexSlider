@@ -1,4 +1,4 @@
-/*
+/* @preserve
  * jQuery FlexSlider v2.6.4
  * SC customizations 0.1 - added swiping flag; fixed resize bind issue in v2.6.4
  * Copyright 2012 WooThemes
