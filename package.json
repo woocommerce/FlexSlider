@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "./node_modules/.bin/lessc flexslider.less flexslider.css",
-    "build:demo": "cp jquery.flexslider.js demo/js/jquery.flexslider.js",
+    "build:demo": "cp jquery.flexslider.js demo/js/jquery.flexslider.js && cp flexslider.css demo/css/flexslider.css",
     "build": "npm run build:css && npm run build:demo"
   },
   "repository": {
