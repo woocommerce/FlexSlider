@@ -1,6 +1,6 @@
 /* @preserve
  * jQuery FlexSlider v2.6.4
- * SC customizations 0.2 - added swiping flag; fixed resize bind issue in v2.6.4; added itemMargin consideration in carousel's slider.visible calculation
+ * SC customizations 0.3 - added swiping flag; fixed resize bind issue in v2.6.4; improved itemMargin consideration in carousel's slider.visible calculation
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
