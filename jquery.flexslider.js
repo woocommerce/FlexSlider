@@ -1,4 +1,4 @@
-/*
+/* @preserve
  * jQuery FlexSlider v2.6.4
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
@@ -145,7 +145,7 @@
         if (touch && slider.vars.touch) { methods.touch(); }
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) { $(window).bind("resize orientationchange focus", methods.resize()); }
+        if (!fade || (fade && slider.vars.smoothHeight)) { $(window).bind("resize orientationchange focus", methods.resize); }
 
         slider.find("img").attr("draggable", "false");
 
@@ -163,6 +163,9 @@
           if(!msGesture){
               slider.slides.on(eventType, function(e){
                 e.preventDefault();
+                if (slider.swiping) {
+                  return;
+                }
                 var $slide = $(this),
                     target = $slide.index();
                 var posFromLeft = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
@@ -187,6 +190,9 @@
                   }, false);
                   that.addEventListener("MSGestureTap", function (e){
                       e.preventDefault();
+                      if (slider.swiping) {
+                        return;
+                      }
                       var $slide = $(this),
                           target = $slide.index();
                       if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass('active')) {
@@ -435,6 +441,9 @@
             };
 
             onTouchMove = function(e) {
+
+              slider.swiping = true;
+
               // Local vars for X and Y points.
 
               localX = e.touches[0].pageX;
@@ -459,6 +468,8 @@
             onTouchEnd = function(e) {
               // finish the touch by undoing the touch session
               el.removeEventListener('touchmove', onTouchMove, false);
+
+              slider.swiping = false;
 
               if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
                 var updateDx = (reverse) ? -dx : dx,
@@ -514,6 +525,7 @@
                 if(!slider){
                     return;
                 }
+                slider.swiping = true;
                 var transX = -e.translationX,
                     transY = -e.translationY;
 
@@ -547,6 +559,7 @@
                 if(!slider){
                     return;
                 }
+                slider.swiping = false;
                 if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
                     var updateDx = (reverse) ? -dx : dx,
                         target = (updateDx > 0) ? slider.getTarget('next') : slider.getTarget('prev');
@@ -983,7 +996,8 @@
                        (slider.maxW < slider.w) ? (slider.w - (slideMargin * (maxItems - 1)))/maxItems :
                        (slider.vars.itemWidth > slider.w) ? slider.w : slider.vars.itemWidth;
 
-        slider.visible = Math.floor(slider.w/(slider.itemW));
+        slider.visible = (maxItems === 0) ? Math.max(Math.floor(slider.w/(slider.itemW + slideMargin)), 1) :
+                         Math.floor(slider.w/(slider.itemW));
         slider.move = (slider.vars.move > 0 && slider.vars.move < slider.visible ) ? slider.vars.move : slider.visible;
         slider.pagingCount = Math.ceil(((slider.count - slider.visible)/slider.move) + 1);
         slider.last =  slider.pagingCount - 1;

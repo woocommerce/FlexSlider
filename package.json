@@ -4,7 +4,11 @@
   "description": "An awesome, fully responsive jQuery slider toolkit.",
   "main": "jquery.flexslider.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:js": "./node_modules/.bin/uglifyjs jquery.flexslider.js --comments --ie8 -o jquery.flexslider-min.js",
+    "build:css": "./node_modules/.bin/lessc flexslider.less flexslider.css",
+    "build:demo": "cp jquery.flexslider.js demo/js/jquery.flexslider.js && cp flexslider.css demo/css/flexslider.css",
+    "build": "npm run build:js && npm run build:css && npm run build:demo"
   },
   "repository": {
     "type": "git",
@@ -25,5 +29,9 @@
   "homepage": "https://github.com/woocommerce/FlexSlider#readme",
   "dependencies": {
     "jquery": ">=1.11.3"
+  },
+  "devDependencies": {
+    "less": "^2.7.3",
+    "uglify-js": "^3.1.10"
   }
 }
