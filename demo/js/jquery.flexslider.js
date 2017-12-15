@@ -1,6 +1,6 @@
 /* @preserve
  * jQuery FlexSlider v2.6.4
- * SC customizations 0.3 - added swiping flag; fixed resize bind issue in v2.6.4; improved itemMargin consideration in carousel's slider.visible calculation
+ * SC customizations 0.4 - added swiping flag; fixed resize bind issue in v2.6.4; improved itemMargin consideration in carousel's slider.visible calculation; fixed animationLoop logic disabling nav buttons
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
@@ -854,8 +854,8 @@
              (asNav && slider.currentItem === 0 && target === slider.pagingCount - 1 && slider.direction !== "next") ? false :
              (target === slider.currentSlide && !asNav) ? false :
              (slider.vars.animationLoop) ? true :
-             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction !== "next") ? false :
-             (slider.atEnd && slider.currentSlide === last && target === 0 && slider.direction === "next") ? false :
+             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction === "next") ? false :
+             (slider.atEnd && slider.currentSlide === last && target === 0 && slider.direction !== "next") ? false :
              true;
     };
     slider.getTarget = function(dir) {
@@ -1128,7 +1128,7 @@
     // Usability features
     pauseOnAction: true,            //Boolean: Pause the slideshow when interacting with control elements, highly recommended.
     pauseOnHover: false,            //Boolean: Pause the slideshow when hovering over slider, then resume when no longer hovering
-    pauseInvisible: true,   		//{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
+    pauseInvisible: true,       //{NEW} Boolean: Pause the slideshow when tab is invisible, resume when visible. Provides better UX, lower CPU usage.
     useCSS: true,                   //{NEW} Boolean: Slider will use CSS3 transitions if available
     touch: true,                    //{NEW} Boolean: Allow touch swipe navigation of the slider on touch-enabled devices
     video: false,                   //{NEW} Boolean: If using video in the slider, will prevent CSS3 3D Transforms to avoid graphical glitches
