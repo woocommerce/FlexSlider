@@ -21,7 +21,7 @@ To keep up to date with how FlexSlider's development roadmap looks, please see o
 
 ** Version 2.7.0 **
 
-** Details go here. **
+** Fixes resize method call for orientationchange. Adds RTL feature - param "rtl" added. **
 
 ** Version 2.6.3 **
 
@@ -202,4 +202,4 @@ Description to be added.
 Boolean. Whether or not you'd like FlexSlider to initialize as usual if only one slide is present.
 
 ### rtl: *{new}*
-Boolean. Supports RTL functionality in the slider.
+Boolean. False by default. Supports RTL functionality in the slider.
