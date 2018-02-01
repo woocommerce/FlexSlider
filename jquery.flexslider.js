@@ -891,7 +891,7 @@
               }
             }());
 
-            return (posCalc * -1) + "px";
+            return (posCalc * ((slider.vars.rtl)?1:-1)) + "px";
           }());
 
       if (slider.transitions) {
@@ -951,7 +951,7 @@
           setTimeout(function(){
             slider.doMath();
           if(slider.vars.rtl){
-              slider.newSlides.css({"width": slider.computedW, "marginLeft" : slider.computedM, "float": "right", "display": "block"});
+              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
            }
             else{
               slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
