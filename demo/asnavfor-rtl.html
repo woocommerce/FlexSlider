@@ -48,7 +48,7 @@
         <ul>
           <li><a href="index.html">Basic Slider</a></li>
           <li><a href="basic-slider-with-custom-direction-nav.html">Basic Slider customDirectionNav</a></li>
-          <li class="active"><a href="basic-slider-with-caption.html">Basic Slider with Simple Caption</a></li>
+          <li><a href="basic-slider-with-caption.html">Basic Slider with Simple Caption</a></li>
           <li><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
           <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
@@ -56,7 +56,14 @@
           <li><a href="dynamic-carousel-min-max.html">Carousel with dynamic min/max ranges</a></li>
           <li><a href="video.html">Video & the api (vimeo)</a></li>
           <li><a href="video-wistia.html">Video & the api (wistia)</a></li>
-		  <li><a href="basic-carousel-rtl.html">Basic Carousel - RTL</a></li>
+        </ul>
+      </nav>
+      <h3 class="nav-header">RTL Examples</h3>
+      <nav>
+        <ul>
+          <li><a href="index-rtl.html">Basic Slider</a></li>
+          <li class="active"><a href="asnavfor-rtl.html">Slider with Simple Caption w/thumbnail slider</a></li>
+          <li><a href="basic-carousel-rtl.html">Basic Carousel</a></li>
         </ul>
       </nav>
     </header>
@@ -158,7 +165,7 @@
       </section>
       <aside>
         <div class="cf">
-          <h3>Basic Slider</h3>
+          <h3>Slider with Carousel Slider as Navigation - RTL</h3>
           <ul class="toggle cf">
             <li class="js"><a href="#view-js">JS</a></li>
             <li class="css"><a href="#view-css">CSS</a></li>
@@ -168,9 +175,23 @@
         <div id="view-js" class="code">
           <pre class="brush: js; toolbar: false; gutter: false;">
             // Can also be used with $(document).ready()
-            $(window).load(function() {
-              $('.flexslider').flexslider({
-                animation: "slide"
+            $(window).load(function(){
+              $('#f1').flexslider({
+                animation: "slide",
+                rtl: true,
+                start: function(slider){
+                  $('body').removeClass('loading');
+                }
+              });
+             $('#f2').flexslider({
+                animation: "slide",
+                animationLoop: false,
+                itemWidth: 210,
+                itemMargin: 5,
+                pausePlay: true,
+                mousewheel: true,
+                rtl: true,
+                asNavFor:'.flexslider'
               });
             });
           </pre>
@@ -190,13 +211,16 @@
               font-size: 14px;
               line-height: 18px;
             }
+            li.css a {
+              border-radius: 0;
+            }
             &lt;/style>
           </pre>
         </div>
         <div id="view-html" class="code">
           <pre class="brush: xml; toolbar: false; gutter: false;">
             &lt;!-- Place somewhere in the &lt;body&gt; of your page -->
-            &lt;div class="flexslider">
+            &lt;div class="flexslider" id="f1" style="direction:rtl">
               &lt;ul class="slides">
                 &lt;li>
                   &lt;img src="slide1.jpg" />
@@ -213,6 +237,22 @@
                 &lt;li>
                   &lt;img src="slide4.jpg" />
                   &lt;p class="flex-caption">Adventurer Caramel&lt;/p>
+                &lt;/li>
+              &lt;/ul>
+            &lt;/div>
+            &lt;div class="flexslider carousel" id="f2" style="direction:rtl">
+              &lt;ul class="slides">
+                &lt;li>
+                  &lt;img src="slide1.jpg" />
+                &lt;/li>
+                &lt;li>
+                  &lt;img src="slide2.jpg" />
+                &lt;/li>
+                &lt;li>
+                  &lt;img src="slide3.jpg" />
+                &lt;/li>
+                &lt;li>
+                  &lt;img src="slide4.jpg" />
                 &lt;/li>
               &lt;/ul>
             &lt;/div>
@@ -237,7 +277,7 @@
     $(window).load(function(){
       $('#f1').flexslider({
         animation: "slide",
-		rtl: true,
+		    rtl: true,
         start: function(slider){
           $('body').removeClass('loading');
         }
@@ -248,9 +288,9 @@
         itemWidth: 210,
         itemMargin: 5,
         pausePlay: true,
-		mousewheel: true,
-		rtl: true,
-		asNavFor:'.flexslider'
+    		mousewheel: true,
+    		rtl: true,
+    		asNavFor:'.flexslider'
       });
     });
   </script>
