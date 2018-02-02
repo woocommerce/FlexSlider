@@ -15,23 +15,6 @@
 	<!-- Modernizr -->
   <script src="js/modernizr.js"></script>
 
-  <style type="text/css">
-    .flex-caption {
-      width: 96%;
-      padding: 2%;
-      left: 0;
-      bottom: 0;
-      background: rgba(0,0,0,.5);
-      color: #fff;
-      text-shadow: 0 -1px 0 rgba(0,0,0,.3);
-      font-size: 14px;
-      line-height: 18px;
-    }
-    li.css a {
-      border-radius: 0;
-    }
-  </style>
-
 </head>
 <body class="loading">
 
@@ -48,7 +31,7 @@
         <ul>
           <li><a href="index.html">Basic Slider</a></li>
           <li><a href="basic-slider-with-custom-direction-nav.html">Basic Slider customDirectionNav</a></li>
-          <li class="active"><a href="basic-slider-with-caption.html">Basic Slider with Simple Caption</a></li>
+          <li><a href="basic-slider-with-caption.html">Basic Slider with Simple Caption</a></li>
           <li><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
           <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
@@ -61,7 +44,7 @@
       <h3 class="nav-header">RTL Examples</h3>
       <nav>
         <ul>
-          <li><a href="index-rtl.html">Basic Slider</a></li>
+          <li class="active"><a href="index-rtl.html">Basic Slider</a></li>
           <li><a href="asnavfor-rtl.html">Slider with Simple Caption w/thumbnail slider</a></li>
           <li><a href="basic-carousel-rtl.html">Basic Carousel</a></li>
         </ul>
@@ -70,33 +53,28 @@
 
 	<div id="main" role="main">
       <section class="slider">
-        <div class="flexslider">
+        <div class="flexslider" style="direction:rtl">
           <ul class="slides">
             <li>
   	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
-              <p class="flex-caption">Adventurer Cheesecake Brownie</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
-              <p class="flex-caption">Adventurer Lemon</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_donut.jpg" />
-              <p class="flex-caption">Adventurer Donut</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
-              <p class="flex-caption">Adventurer Caramel</p>
   	    		</li>
           </ul>
         </div>
       </section>
       <aside>
         <div class="cf">
-          <h3>Basic Slider with Simple Caption</h3>
+          <h3>Basic Slider - RTL</h3>
           <ul class="toggle cf">
             <li class="js"><a href="#view-js">JS</a></li>
-            <li class="css"><a href="#view-css">CSS</a></li>
             <li class="html"><a href="#view-html">HTML</a></li>
           </ul>
         </div>
@@ -105,49 +83,28 @@
             // Can also be used with $(document).ready()
             $(window).load(function() {
               $('.flexslider').flexslider({
-                animation: "slide"
+                animation: "slide",
+                rtl: true
               });
             });
-          </pre>
-        </div>
-        <div id="view-css" class="code">
-          <pre class="brush: xml; toolbar: false; gutter: false;">
-            &lt;!-- Place either at the bottom in the &lt;head&gt; of your page or inside your CSS -->
-            &lt;style type="text/css">
-            .flex-caption {
-              width: 96%;
-              padding: 2%;
-              left: 0;
-              bottom: 0;
-              background: rgba(0,0,0,.5);
-              color: #fff;
-              text-shadow: 0 -1px 0 rgba(0,0,0,.3);
-              font-size: 14px;
-              line-height: 18px;
-            }
-            &lt;/style>
           </pre>
         </div>
         <div id="view-html" class="code">
           <pre class="brush: xml; toolbar: false; gutter: false;">
             &lt;!-- Place somewhere in the &lt;body&gt; of your page -->
-            &lt;div class="flexslider">
+            &lt;div class="flexslider" style="direction:rtl">
               &lt;ul class="slides">
                 &lt;li>
                   &lt;img src="slide1.jpg" />
-                  &lt;p class="flex-caption">Adventurer Cheesecake Brownie&lt;/p>
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide2.jpg" />
-                  &lt;p class="flex-caption">Adventurer Lemon&lt;/p>
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide3.jpg" />
-                  &lt;p class="flex-caption">Adventurer Donut&lt;/p>
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide4.jpg" />
-                  &lt;p class="flex-caption">Adventurer Caramel&lt;/p>
                 &lt;/li>
               &lt;/ul>
             &lt;/div>
@@ -172,6 +129,7 @@
     $(window).load(function(){
       $('.flexslider').flexslider({
         animation: "slide",
+        rtl: true,
         start: function(slider){
           $('body').removeClass('loading');
         }

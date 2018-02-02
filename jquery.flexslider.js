@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v2.6.4
+ * jQuery FlexSlider v2.7.0
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
@@ -13,6 +13,11 @@
     var slider = $(el);
 
     // making variables public
+
+    //if rtl value was not passed and html is in rtl..enable it by default.
+  	if(typeof options.rtl=='undefined' && $('html').attr('dir')=='rtl'){
+  		options.rtl=true;
+    }
     slider.vars = $.extend({}, $.flexslider.defaults, options);
 
     var namespace = slider.vars.namespace,
@@ -49,7 +54,7 @@
         slider.syncExists = $(slider.vars.sync).length > 0;
         // SLIDE:
         if (slider.vars.animation === "slide") { slider.vars.animation = "swing"; }
-        slider.prop = (vertical) ? "top" : "marginLeft";
+        slider.prop = (vertical) ? "top" : ( slider.vars.rtl ? "marginRight" : "marginLeft" );
         slider.args = {};
         // SLIDESHOW:
         slider.manualPause = false;
@@ -101,8 +106,14 @@
           $(document).bind('keyup', function(event) {
             var keycode = event.keyCode;
             if (!slider.animating && (keycode === 39 || keycode === 37)) {
-              var target = (keycode === 39) ? slider.getTarget('next') :
-                           (keycode === 37) ? slider.getTarget('prev') : false;
+              var target = (slider.vars.rtl?
+                                ((keycode === 37) ? slider.getTarget('next') :
+                                (keycode === 39) ? slider.getTarget('prev') : false)
+                                :
+                                ((keycode === 39) ? slider.getTarget('next') :
+                                (keycode === 37) ? slider.getTarget('prev') : false)
+                                )
+                                ;
               slider.flexAnimate(target, slider.vars.pauseOnAction);
             }
           });
@@ -145,7 +156,7 @@
         if (touch && slider.vars.touch) { methods.touch(); }
 
         // FADE&&SMOOTHHEIGHT || SLIDE:
-        if (!fade || (fade && slider.vars.smoothHeight)) { $(window).bind("resize orientationchange focus", methods.resize()); }
+        if (!fade || (fade && slider.vars.smoothHeight)) { $(window).bind("resize orientationchange focus", methods.resize); }
 
         slider.find("img").attr("draggable", "false");
 
@@ -165,8 +176,15 @@
                 e.preventDefault();
                 var $slide = $(this),
                     target = $slide.index();
-                var posFromLeft = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
-                if( posFromLeft <= 0 && $slide.hasClass( namespace + 'active-slide' ) ) {
+        				var posFromX;
+                if(slider.vars.rtl){
+        					posFromX = -1*($slide.offset().right - $(slider).scrollLeft()); // Find position of slide relative to right of slider container
+        				}
+        				else
+        				{
+        					posFromX = $slide.offset().left - $(slider).scrollLeft(); // Find position of slide relative to left of slider container
+        				}
+                if( posFromX <= 0 && $slide.hasClass( namespace + 'active-slide' ) ) {
                   slider.flexAnimate(slider.getTarget("prev"), true);
                 } else if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass(namespace + "active-slide")) {
                   slider.direction = (slider.currentItem < target) ? "next" : "prev";
@@ -428,7 +446,6 @@
                          (reverse) ? (slider.last - slider.currentSlide + slider.cloneOffset) * cwidth : (slider.currentSlide + slider.cloneOffset) * cwidth;
                 startX = (vertical) ? localY : localX;
                 startY = (vertical) ? localX : localY;
-
                 el.addEventListener('touchmove', onTouchMove, false);
                 el.addEventListener('touchend', onTouchEnd, false);
               }
@@ -440,9 +457,8 @@
               localX = e.touches[0].pageX;
               localY = e.touches[0].pageY;
 
-              dx = (vertical) ? startX - localY : startX - localX;
+              dx = (vertical) ? startX - localY : (slider.vars.rtl?-1:1)*(startX - localX);
               scrolling = (vertical) ? (Math.abs(dx) < Math.abs(localX - startY)) : (Math.abs(dx) < Math.abs(localY - startY));
-
               var fxms = 500;
 
               if ( ! scrolling || Number( new Date() ) - startT > fxms ) {
@@ -519,7 +535,7 @@
 
                 //Accumulate translations.
                 accDx = accDx + ((vertical) ? transY : transX);
-                dx = accDx;
+                dx = (slider.vars.rtl?-1:1)*accDx;
                 scrolling = (vertical) ? (Math.abs(accDx) < Math.abs(-transX)) : (Math.abs(accDx) < Math.abs(-transY));
 
                 if(e.detail === e.MSGESTURE_FLAG_INERTIA){
@@ -874,11 +890,11 @@
               }
             }());
 
-            return (posCalc * -1) + "px";
+            return (posCalc * ((slider.vars.rtl)?1:-1)) + "px";
           }());
 
       if (slider.transitions) {
-        target = (vertical) ? "translate3d(0," + target + ",0)" : "translate3d(" + target + ",0,0)";
+        target = (vertical) ? "translate3d(0," + target + ",0)" : "translate3d(" + ((slider.vars.rtl?-1:1)*parseInt(target)+'px') + ",0,0)";
         dur = (dur !== undefined) ? (dur/1000) + "s" : "0s";
         slider.container.css("-" + slider.pfx + "-transition-duration", dur);
          slider.container.css("transition-duration", dur);
@@ -933,13 +949,23 @@
           slider.setProps(sliderOffset * slider.computedW, "init");
           setTimeout(function(){
             slider.doMath();
-            slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+          if(slider.vars.rtl){
+              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+           }
+            else{
+              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+            }
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) { methods.smoothHeight(); }
           }, (type === "init") ? 100 : 0);
         }
       } else { // FADE:
-        slider.slides.css({"width": "100%", "float": "left", "marginRight": "-100%", "position": "relative"});
+        if(slider.vars.rtl){
+          slider.slides.css({"width": "100%", "float": 'right', "marginLeft": "-100%", "position": "relative"});
+        }
+        else{
+          slider.slides.css({"width": "100%", "float": 'left', "marginRight": "-100%", "position": "relative"});
+        }
         if (type === "init") {
           if (!touch) {
             //slider.slides.eq(slider.currentSlide).fadeIn(slider.vars.animationSpeed, slider.vars.easing);
@@ -1154,7 +1180,8 @@
     end: function(){},              //Callback: function(slider) - Fires when the slider reaches the last slide (asynchronous)
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
-    init: function() {}             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
+    init: function() {},             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
+	rtl: false             //{NEW} Boolean: Whether or not to enable RTL mode
   };
 
   //FlexSlider: Plugin Function
