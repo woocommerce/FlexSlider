@@ -1,7 +1,7 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
 # FlexSlider 2.7.0
-http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
+http://www.woothemes.com/flexslider/ - Copyright (c) 2018 WooCommerce
 
 ## Releases
 
