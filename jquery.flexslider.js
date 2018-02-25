@@ -499,7 +499,13 @@
             el.style.msTouchAction = "none";
             el._gesture = new MSGesture();
             el._gesture.target = el;
-            el.addEventListener("MSPointerDown", onMSPointerDown, false);
+            var eventType;
+            if (window.navigator.pointerEnabled) {
+                eventType = "pointerDown";
+            } else if (window.navigator.msPointerEnabled) {
+                eventType = "MSPointerDown";
+            }
+            el.addEventListener(eventType, onMSPointerDown, false);
             el._slider = slider;
             el.addEventListener("MSGestureChange", onMSGestureChange, false);
             el.addEventListener("MSGestureEnd", onMSGestureEnd, false);
