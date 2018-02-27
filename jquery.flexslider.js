@@ -931,7 +931,11 @@
         }
         slider.newSlides = $(slider.vars.selector, slider);
 
-        sliderOffset = (reverse) ? slider.count - 1 - slider.currentSlide + slider.cloneOffset : slider.currentSlide + slider.cloneOffset;
+        var trueCurrent = slider.currentSlide;
+        if (slider.visible > 1) {
+          trueCurrent = slider.currentSlide * slider.visible;
+        }
+        sliderOffset = (reverse) ? slider.count - 1 - trueCurrent + slider.cloneOffset : trueCurrent + slider.cloneOffset;
         // VERTICAL:
         if (vertical && !carousel) {
           slider.container.height((slider.count + slider.cloneCount) * 200 + "%").css("position", "absolute").width("100%");
@@ -1063,6 +1067,7 @@
       slider.slides = $(slider.vars.selector + ':not(.clone)', slider);
       // re-setup the slider to accomdate new slide
       slider.setup();
+      if (asNav) { methods.asNav.setup(); }
 
       //FlexSlider: added() Callback
       slider.vars.added(slider);
