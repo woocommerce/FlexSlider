@@ -1076,7 +1076,7 @@
     slider.addSlide = function(obj, pos) {
       var $obj = $(obj);
 
-      slider.count += 1;
+      slider.count += $obj.length;
       slider.last = slider.count - 1;
 
       // append new slide
