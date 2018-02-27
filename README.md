@@ -1,7 +1,7 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
-# FlexSlider 2.6.4
-http://www.woocommerce.com/flexslider/ - Copyright (c) 2015 WooThemes
+# FlexSlider 2.7.0
+http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
 
 ## Releases
 
@@ -19,9 +19,9 @@ To keep up to date with how FlexSlider's development roadmap looks, please see o
 
 ## Updates
 
-** Version 2.6.4 **
+** Version 2.7.0 **
 
-** Fixes resize method call for orientationchange. **
+** Fixes resize method call for orientationchange. Adds RTL feature - param "rtl" added. **
 
 ** Version 2.6.3 **
 
@@ -94,13 +94,20 @@ Two new methods are available for adding/removing slides, `slider.addSlide()` an
 
 - [Basic Slider](http://flexslider.woothemes.com/)
 - [Basic Slider customDirectionNav](http://flexslider.woothemes.com/basic-slider-with-custom-direction-nav.html)
+- [Basic Slider with Simple Caption](http://flexslider.woothemes.com/basic-slider-with-caption.html)
 - [Slider w/thumbnail controlNav pattern](http://flexslider.woothemes.com/thumbnail-controlnav.html)
 - [Slider w/thumbnail slider](http://flexslider.woothemes.com/thumbnail-slider.html)
 - [Basic Carousel](http://flexslider.woothemes.com/basic-carousel.html)
 - [Carousel with min and max ranges](http://flexslider.woothemes.com/carousel-min-max.html)
+- [Carousel with min and max ranges](http://flexslider.woothemes.com/dynamic-carousel-min-max.html)
 - [Video with Vimeo API](http://flexslider.woothemes.com/video.html)
 - [Video with Wistia API](http://flexslider.woothemes.com/video-wistia.html)
 
+## RTL Examples
+
+- [Basic Slider](http://flexslider.woothemes.com/index-rtl.html)
+- [Slider with Simple Caption w/thumbnail slider](http://flexslider.woothemes.com/asnavfor-rtl.html)
+- [Basic Slider with Simple Caption](http://flexslider.woothemes.com/basic-carousel-rtl.html)
 
 ## Properties
 
@@ -200,3 +207,7 @@ Description to be added.
 
 ### allowOneSlide: *{new}*
 Boolean. Whether or not you'd like FlexSlider to initialize as usual if only one slide is present.
+
+### rtl: *{new}*
+Boolean. False by default. Supports RTL functionality in the slider.
+*Note: you must add `style="direction:rtl"` to your container div in order for this to work.*

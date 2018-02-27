@@ -174,6 +174,7 @@ header h1 { font-family: Geogrotesque-Semibold, Helvetica, Arial, sans-serif; ma
 header h2 { margin: 0 0 30px; font: normal 20px Geogrotesque-regular, Helvetica, Arial, sans-serif; text-shadow: 0 1px 1px #555; color: #fff; }
 header .button { margin: 0 0 50px; padding: 10px 15px 10px 15px; position: relative; }
 h3.nav-header { width: 200px; margin: 0 0 10px; padding: 0 0 3px; font-size: 18px; text-shadow: 0 1px 1px #555; color: #fff; font-family: Geogrotesque-Regular, Helvetica, Arial, sans-serif; border-bottom: 1px solid #fff; border-bottom: 1px solid rgba(255,255,255,0.5); }
+nav { margin-bottom: 20px; }
 nav li {margin: 0 0 7px; font-size: 15px; }
 nav li a:hover,
 nav li.active a  {border-bottom: 1px dotted #fff; border-bottom: 1px dotted rgba(255,255,255,0.3); background: none;}
