@@ -1,11 +1,12 @@
 /* @preserve
  * jQuery FlexSlider v2.7.0
- * SC customizations 0.5:
+ * SC customizations 0.6:
    - added swiping flag
    - improved itemMargin consideration in carousel's slider.visible calculation
    - fixed animationLoop logic disabling nav buttons
    - fix positioning issues in setup when slider.visible > 1
    - re-call asNav setup if needed after addSlide
+   - add array-of-items support to addSlide
 
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
