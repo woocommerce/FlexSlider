@@ -1,6 +1,11 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
-# FlexSlider 2.7.0
+
+# FlexSlider 2.7.0 - SpaceCraft customizations branch
+**This branch should be used for SpaceCraft customizations that may not be appropriate for contribution back to the origin project at https://github.com/woocommerce/FlexSlider/ — changes that ARE intended for upstream pull requests should be made in `master` then merged into this branch.**
+
+SpaceCraft deployments can/should be prepped with `npm run build`, which minifies `jquery.flexslider.js`, builds the LESS source into CSS, and copies the built CSS and JS into the appropriate spot in the demo project.
+
 http://www.woothemes.com/flexslider/ - Copyright (c) 2015 WooThemes
 
 ## Releases

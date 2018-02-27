@@ -1,5 +1,13 @@
-/*
+/* @preserve
  * jQuery FlexSlider v2.7.0
+ * SC customizations 0.6:
+   - added swiping flag
+   - improved itemMargin consideration in carousel's slider.visible calculation
+   - fixed animationLoop logic disabling nav buttons
+   - fix positioning issues in setup when slider.visible > 1
+   - re-call asNav setup if needed after addSlide
+   - add array-of-items support to addSlide
+
  * Copyright 2012 WooThemes
  * Contributing Author: Tyler Smith
  */
@@ -174,6 +182,9 @@
           if(!msGesture){
               slider.slides.on(eventType, function(e){
                 e.preventDefault();
+                if (slider.swiping) {
+                  return;
+                }
                 var $slide = $(this),
                     target = $slide.index();
                 var posFromX;
@@ -205,6 +216,9 @@
                   }, false);
                   that.addEventListener("MSGestureTap", function (e){
                       e.preventDefault();
+                      if (slider.swiping) {
+                        return;
+                      }
                       var $slide = $(this),
                           target = $slide.index();
                       if (!$(slider.vars.asNavFor).data('flexslider').animating && !$slide.hasClass('active')) {
@@ -452,6 +466,9 @@
             };
 
             onTouchMove = function(e) {
+
+              slider.swiping = true;
+
               // Local vars for X and Y points.
 
               localX = e.touches[0].pageX;
@@ -475,6 +492,8 @@
             onTouchEnd = function(e) {
               // finish the touch by undoing the touch session
               el.removeEventListener('touchmove', onTouchMove, false);
+
+              slider.swiping = false;
 
               if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
                 var updateDx = (reverse) ? -dx : dx,
@@ -530,6 +549,7 @@
                 if(!slider){
                     return;
                 }
+                slider.swiping = true;
                 var transX = -e.translationX,
                     transY = -e.translationY;
 
@@ -563,6 +583,7 @@
                 if(!slider){
                     return;
                 }
+                slider.swiping = false;
                 if (slider.animatingTo === slider.currentSlide && !scrolling && !(dx === null)) {
                     var updateDx = (reverse) ? -dx : dx,
                         target = (updateDx > 0) ? slider.getTarget('next') : slider.getTarget('prev');
@@ -856,8 +877,8 @@
              (asNav && slider.currentItem === 0 && target === slider.pagingCount - 1 && slider.direction !== "next") ? false :
              (target === slider.currentSlide && !asNav) ? false :
              (slider.vars.animationLoop) ? true :
-             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction !== "next") ? false :
-             (slider.atEnd && slider.currentSlide === last && target === 0 && slider.direction === "next") ? false :
+             (slider.atEnd && slider.currentSlide === 0 && target === last && slider.direction === "next") ? false :
+             (slider.atEnd && slider.currentSlide === last && target === 0 && slider.direction !== "next") ? false :
              true;
     };
     slider.getTarget = function(dir) {
@@ -934,7 +955,11 @@
         }
         slider.newSlides = $(slider.vars.selector, slider);
 
-        sliderOffset = (reverse) ? slider.count - 1 - slider.currentSlide + slider.cloneOffset : slider.currentSlide + slider.cloneOffset;
+        var trueCurrent = slider.currentSlide;
+        if (slider.visible > 1) {
+          trueCurrent = slider.currentSlide * slider.visible;
+        }
+        sliderOffset = (reverse) ? slider.count - 1 - trueCurrent + slider.cloneOffset : trueCurrent + slider.cloneOffset;
         // VERTICAL:
         if (vertical && !carousel) {
           slider.container.height((slider.count + slider.cloneCount) * 200 + "%").css("position", "absolute").width("100%");
@@ -1009,7 +1034,8 @@
                        (slider.maxW < slider.w) ? (slider.w - (slideMargin * (maxItems - 1)))/maxItems :
                        (slider.vars.itemWidth > slider.w) ? slider.w : slider.vars.itemWidth;
 
-        slider.visible = Math.floor(slider.w/(slider.itemW));
+        slider.visible = (maxItems === 0) ? Math.max(Math.floor(slider.w/(slider.itemW + slideMargin)), 1) :
+                         Math.floor(slider.w/(slider.itemW));
         slider.move = (slider.vars.move > 0 && slider.vars.move < slider.visible ) ? slider.vars.move : slider.visible;
         slider.pagingCount = Math.ceil(((slider.count - slider.visible)/slider.move) + 1);
         slider.last =  slider.pagingCount - 1;
@@ -1058,7 +1084,7 @@
     slider.addSlide = function(obj, pos) {
       var $obj = $(obj);
 
-      slider.count += 1;
+      slider.count += $obj.length;
       slider.last = slider.count - 1;
 
       // append new slide
@@ -1075,6 +1101,7 @@
       slider.slides = $(slider.vars.selector + ':not(.clone)', slider);
       // re-setup the slider to accomdate new slide
       slider.setup();
+      if (asNav) { methods.asNav.setup(); }
 
       //FlexSlider: added() Callback
       slider.vars.added(slider);
@@ -1181,7 +1208,7 @@
     added: function(){},            //{NEW} Callback: function(slider) - Fires after a slide is added
     removed: function(){},           //{NEW} Callback: function(slider) - Fires after a slide is removed
     init: function() {},             //{NEW} Callback: function(slider) - Fires after the slider is initially setup
-  rtl: false             //{NEW} Boolean: Whether or not to enable RTL mode
+    rtl: false             //{NEW} Boolean: Whether or not to enable RTL mode
   };
 
   //FlexSlider: Plugin Function
