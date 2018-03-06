@@ -18,21 +18,21 @@ em {font-style: italic;}
  * MyFonts Webfont Build ID 825795, 2011-05-26T03:42:08-0400 - SEMIBOLD
  *
  * The fonts listed in this notice are subject to the End User License
- * Agreement(s) entered into by the website owner. All other parties are 
+ * Agreement(s) entered into by the website owner. All other parties are
  * explicitly restricted from using the Licensed Webfonts(s).
- * 
+ *
  * You may obtain a valid license at the URLs below
  *
  * License: http://www.myfonts.com/viewlicense?type=web&buildid=1114443 - REGULAR
  * License: http://www.myfonts.com/viewlicense?type=web&buildid=1118460 - MEDIUM
  * License: http://www.myfonts.com/viewlicense?1056 - SEMIBOLD
- * 
+ *
  * Webfont: Geogrotesque SemiBold
  * URL: http://new.myfonts.com/fonts/emtype/geogrotesque/semibold/
  * Foundry: Emtype Foundry
  * Copyright: Copyright © 2009 by Eduardo Manso. All rights reserved.
  * Licensed pageviews: 10,000,000/month
- * 
+ *
  * © 2011 Bitstream Inc
 */
 
@@ -50,11 +50,11 @@ em {font-style: italic;}
 /* Font-face Icons */
 @font-face {
 	font-family: 'flexslider-icon';
-	src:url('../fonts/webfonts/flexslider-icon.eot');
-	src:url('../fonts/webfonts/flexslider-icon.eot?#iefix') format('embedded-opentype'),
-		url('../fonts/webfonts/flexslider-icon.woff') format('woff'),
-		url('../fonts/webfonts/flexslider-icon.ttf') format('truetype'),
-		url('../fonts/webfonts/flexslider-icon.svg#flexslider-icon') format('svg');
+	src:url('../fonts/flexslider-icon.eot');
+	src:url('../fonts/flexslider-icon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/flexslider-icon.woff') format('woff'),
+		url('../fonts/flexslider-icon.ttf') format('truetype'),
+		url('../fonts/flexslider-icon.svg#flexslider-icon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -93,7 +93,7 @@ p {
 
 .toggle { margin: 2px 0 0 14px; float: left; border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; }
 .toggle li { float: left; }
-.toggle li a {width: 50px; padding: 6px 0; text-align: center; display: block; text-shadow: 1px 1px 0 #fff; font-size: 12px; font-weight: 600; color: #666; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0; -o-border-radius: 0 4px 4px 0; border-radius: 0 4px 4px 0; 
+.toggle li a {width: 50px; padding: 6px 0; text-align: center; display: block; text-shadow: 1px 1px 0 #fff; font-size: 12px; font-weight: 600; color: #666; -webkit-border-radius: 0 4px 4px 0; -moz-border-radius: 0 4px 4px 0; -o-border-radius: 0 4px 4px 0; border-radius: 0 4px 4px 0;
 
 background: #ffffff; /* Old browsers */
 background: -moz-linear-gradient(top, #ffffff 0%, #ededed 100%); /* FF3.6+ */
@@ -210,7 +210,7 @@ nav li.active a  { cursor: default; }
 		min-height: 46px;
 		margin-bottom: 20px;
 		width: 100%;
-	}	
+	}
 	nav ul {
 		width: 260px;
 		padding: 0;
@@ -275,14 +275,14 @@ nav li.active a  { cursor: default; }
 	nav ul:hover .active a:after  {
 		display: none;
 	}
-  
+
 }
 
 /*
  SyntaxHighlighter - http://alexgorbatchev.com/SyntaxHighlighter
- 
+
  SyntaxHighlighter is donationware. If you are using it, please donate. - http://alexgorbatchev.com/SyntaxHighlighter/donate.html
- 
+
  @version - 3.0.83 (July 02 2010)
  @copyright - Copyright (C) 2004-2010 Alex Gorbatchev.
  @license - Dual licensed under the MIT and GPL licenses.
