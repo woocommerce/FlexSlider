@@ -608,7 +608,8 @@
           }
         }
       },
-      smoothHeight: function(dur, init = false) {
+      smoothHeight: function(dur, init) {
+        var init = typeof init === 'undefined' ? false : true;
         if (!vertical || fade) {
           var $obj = (fade) ? slider : slider.viewport;
           // On init, set the object to the current item height.
