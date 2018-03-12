@@ -909,6 +909,8 @@
         }
         // INFINITE LOOP && !CAROUSEL:
         if (slider.vars.animationLoop && !carousel) {
+		  slider.doMath();
+		  slider.slides.css({ "width": slider.computedW, "marginRight": slider.computedM, "float": "left", "display": "block" });
           slider.cloneCount = 2;
           slider.cloneOffset = 1;
           // clear out old clones
