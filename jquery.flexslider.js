@@ -158,6 +158,9 @@
         // FADE&&SMOOTHHEIGHT || SLIDE:
         if (!fade || (fade && slider.vars.smoothHeight)) { $(window).bind("resize orientationchange focus", methods.resize); }
 
+        // SMOOTH HEIGHT:
+        if (slider.vars.smoothHeight) { methods.smoothHeight(slider.vars.animationSpeed, true); }
+
         slider.find("img").attr("draggable", "false");
 
         // API: start() Callback
@@ -605,9 +608,11 @@
           }
         }
       },
-      smoothHeight: function(dur) {
+      smoothHeight: function(dur, init = false) {
         if (!vertical || fade) {
           var $obj = (fade) ? slider : slider.viewport;
+          // On init, set the object to the current item height.
+          if (init) { $obj.css({"height": slider.slides.eq(slider.currentItem).innerHeight()}); }
           (dur) ? $obj.animate({"height": slider.slides.eq(slider.animatingTo).innerHeight()}, dur) : $obj.innerHeight(slider.slides.eq(slider.animatingTo).innerHeight());
         }
       },
