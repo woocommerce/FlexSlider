@@ -5,13 +5,10 @@
 	<title>FlexSlider 2</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-  <!-- Syntax Highlighter -->
-  <link href="css/shCore.css" rel="stylesheet" type="text/css" />
-  <link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
   <!-- Demo CSS -->
 	<link rel="stylesheet" href="css/demo.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../flexslider.css" type="text/css" media="screen" />
-
+    <link rel="stylesheet" href="../flexslider-rtl.css" type="text/css" media="screen" />
 	<!-- Modernizr -->
   <script src="js/modernizr.js"></script>
 
@@ -36,7 +33,7 @@
           <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
           <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li>
-          <li class="active"><a href="dynamic-carousel-min-max.html">Carousel with dynamic min/max ranges</a></li>
+          <li><a href="dynamic-carousel-min-max.html">Carousel with dynamic min/max ranges</a></li>
           <li><a href="video.html">Video & the api (vimeo)</a></li>
           <li><a href="video-wistia.html">Video & the api (wistia)</a></li>
         </ul>
@@ -46,14 +43,14 @@
         <ul>
           <li><a href="index-rtl.html">Basic Slider</a></li>
           <li><a href="asnavfor-rtl.html">Slider with Simple Caption w/thumbnail slider</a></li>
-          <li><a href="basic-carousel-rtl.html">Basic Carousel</a></li>
+          <li class="active"><a href="basic-carousel-rtl.html">Basic Carousel</a></li>
         </ul>
       </nav>
     </header>
 
 	<div id="main" role="main">
       <section class="slider">
-        <div class="flexslider carousel">
+        <div class="flexslider carousel" style="direction:rtl">
           <ul class="slides">
             <li>
   	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
@@ -68,35 +65,35 @@
   	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
   	    		</li>
             <li>
-              <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
-            </li>
+  	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+  	    		</li>
+  	    		<li>
+  	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
+  	    		</li>
+  	    		<li>
+  	    	    <img src="images/kitchen_adventurer_donut.jpg" />
+  	    		</li>
+  	    		<li>
+  	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
+  	    		</li>
             <li>
-              <img src="images/kitchen_adventurer_lemon.jpg" />
-            </li>
-            <li>
-              <img src="images/kitchen_adventurer_donut.jpg" />
-            </li>
-            <li>
-              <img src="images/kitchen_adventurer_caramel.jpg" />
-            </li>
-            <li>
-              <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
-            </li>
-            <li>
-              <img src="images/kitchen_adventurer_lemon.jpg" />
-            </li>
-            <li>
-              <img src="images/kitchen_adventurer_donut.jpg" />
-            </li>
-            <li>
-              <img src="images/kitchen_adventurer_caramel.jpg" />
-            </li>
+  	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+  	    		</li>
+  	    		<li>
+  	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
+  	    		</li>
+  	    		<li>
+  	    	    <img src="images/kitchen_adventurer_donut.jpg" />
+  	    		</li>
+  	    		<li>
+  	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
+  	    		</li>
           </ul>
         </div>
       </section>
       <aside>
         <div class="cf">
-          <h3>Carousel With Dynamic Min &amp; Max Ranges</h3>
+          <h3>Basic Carousel - RTL</h3>
           <ul class="toggle cf">
             <li class="js"><a href="#view-js">JS</a></li>
             <li class="html"><a href="#view-html">HTML</a></li>
@@ -104,47 +101,22 @@
         </div>
         <div id="view-js" class="code">
           <pre class="brush: js; toolbar: false; gutter: false;">
-            (function() {
-
-              // store the slider in a local variable
-              var $window = $(window),
-                  flexslider = { vars:{} };
-
-              // tiny helper function to add breakpoints
-              function getGridSize() {
-                return (window.innerWidth < 600) ? 2 :
-                       (window.innerWidth < 900) ? 3 : 4;
-              }
-
-              $(function() {
-                SyntaxHighlighter.all();
+            $(window).load(function() {
+              $('.flexslider').flexslider({
+                animation: "slide",
+                animationLoop: false,
+                itemWidth: 210,
+                itemMargin: 5,
+				mousewheel: true,
+				rtl: true
               });
-
-              $window.load(function() {
-                $('.flexslider').flexslider({
-                  animation: "slide",
-                  animationLoop: false,
-                  itemWidth: 210,
-                  itemMargin: 5,
-                  minItems: getGridSize(), // use function to pull in initial value
-                  maxItems: getGridSize() // use function to pull in initial value
-                });
-              });
-
-              // check grid size on resize event
-              $window.resize(function() {
-                var gridSize = getGridSize();
-
-                flexslider.vars.minItems = gridSize;
-                flexslider.vars.maxItems = gridSize;
-              });
-            }());
+            });
           </pre>
         </div>
         <div id="view-html" class="code">
           <pre class="brush: xml; toolbar: false; gutter: false;">
             &lt;!-- Place somewhere in the &lt;body&gt; of your page -->
-            &lt;div class="flexslider carousel">
+            &lt;div class="flexslider" style="direction:rtl">
               &lt;ul class="slides">
                 &lt;li>
                   &lt;img src="slide1.jpg" />
@@ -169,55 +141,30 @@
   </div>
 
   <!-- jQuery -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
 
   <!-- FlexSlider -->
   <script defer src="../jquery.flexslider.js"></script>
 
   <script type="text/javascript">
-
-    (function() {
-
-      // store the slider in a local variable
-      var $window = $(window),
-          flexslider = { vars:{} };
-
-      // tiny helper function to add breakpoints
-      function getGridSize() {
-        return (window.innerWidth < 600) ? 2 :
-               (window.innerWidth < 900) ? 3 : 4;
-      }
-
-      $(function() {
-        SyntaxHighlighter.all();
+    $(function(){
+      SyntaxHighlighter.all();
+    });
+    $(window).load(function(){
+      $('.flexslider').flexslider({
+        animation: "slide",
+        animationLoop: false,
+        itemWidth: 210,
+        itemMargin: 5,
+        pausePlay: true,
+		mousewheel: true,
+		rtl: true,
+		start: function(slider){
+          $('body').removeClass('loading');
+        }
       });
-
-      $window.load(function() {
-        $('.flexslider').flexslider({
-          animation: "slide",
-          animationSpeed: 400,
-          animationLoop: false,
-          itemWidth: 210,
-          itemMargin: 5,
-          minItems: getGridSize(), // use function to pull in initial value
-          maxItems: getGridSize(), // use function to pull in initial value
-          start: function(slider){
-            $('body').removeClass('loading');
-            flexslider = slider;
-          }
-        });
-      });
-
-      // check grid size on resize event
-      $window.resize(function() {
-        var gridSize = getGridSize();
-
-        flexslider.vars.minItems = gridSize;
-        flexslider.vars.maxItems = gridSize;
-      });
-    }());
-
+    });
   </script>
 
 

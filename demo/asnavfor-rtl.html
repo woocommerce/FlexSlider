@@ -3,7 +3,7 @@
 <head>
 	<meta content="charset=utf-8">
 	<title>FlexSlider 2</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 
   <!-- Syntax Highlighter -->
   <link href="css/shCore.css" rel="stylesheet" type="text/css" />
@@ -11,9 +11,26 @@
   <!-- Demo CSS -->
 	<link rel="stylesheet" href="css/demo.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../flexslider.css" type="text/css" media="screen" />
-
+   <link rel="stylesheet" href="../flexslider-rtl.css" type="text/css" media="screen" />
 	<!-- Modernizr -->
   <script src="js/modernizr.js"></script>
+
+  <style type="text/css">
+    .flex-caption {
+      width: 96%;
+      padding: 2%;
+      left: 0;
+      bottom: 0;
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+      font-size: 14px;
+      line-height: 18px;
+    }
+    li.css a {
+      border-radius: 0;
+    }
+  </style>
 
 </head>
 <body class="loading">
@@ -33,7 +50,7 @@
           <li><a href="basic-slider-with-custom-direction-nav.html">Basic Slider customDirectionNav</a></li>
           <li><a href="basic-slider-with-caption.html">Basic Slider with Simple Caption</a></li>
           <li><a href="thumbnail-controlnav.html">Slider w/thumbnail controlNav pattern</a></li>
-          <li class="active"><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
+          <li><a href="thumbnail-slider.html">Slider w/thumbnail slider</a></li>
           <li><a href="basic-carousel.html">Basic Carousel</a></li>
           <li><a href="carousel-min-max.html">Carousel with min and max ranges</a></li>
           <li><a href="dynamic-carousel-min-max.html">Carousel with dynamic min/max ranges</a></li>
@@ -45,7 +62,7 @@
       <nav>
         <ul>
           <li><a href="index-rtl.html">Basic Slider</a></li>
-          <li><a href="asnavfor-rtl.html">Slider with Simple Caption w/thumbnail slider</a></li>
+          <li class="active"><a href="asnavfor-rtl.html">Slider with Simple Caption w/thumbnail slider</a></li>
           <li><a href="basic-carousel-rtl.html">Basic Carousel</a></li>
         </ul>
       </nav>
@@ -53,47 +70,59 @@
 
 	<div id="main" role="main">
       <section class="slider">
-        <div id="slider" class="flexslider">
+        <div class="flexslider" id="f1" style="direction:rtl">
           <ul class="slides">
             <li>
   	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+              <p class="flex-caption">Adventurer Cheesecake Brownie</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
+              <p class="flex-caption">Adventurer Lemon</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_donut.jpg" />
+              <p class="flex-caption">Adventurer Donut</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
+              <p class="flex-caption">Adventurer Caramel</p>
   	    		</li>
-            <li>
+				 <li>
   	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+              <p class="flex-caption">Adventurer Cheesecake Brownie</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
+              <p class="flex-caption">Adventurer Lemon</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_donut.jpg" />
+              <p class="flex-caption">Adventurer Donut</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
+              <p class="flex-caption">Adventurer Caramel</p>
   	    		</li>
-            <li>
+				 <li>
   	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
+              <p class="flex-caption">Adventurer Cheesecake Brownie</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_lemon.jpg" />
+              <p class="flex-caption">Adventurer Lemon</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_donut.jpg" />
+              <p class="flex-caption">Adventurer Donut</p>
   	    		</li>
   	    		<li>
   	    	    <img src="images/kitchen_adventurer_caramel.jpg" />
+              <p class="flex-caption">Adventurer Caramel</p>
   	    		</li>
           </ul>
         </div>
-        <div id="carousel" class="flexslider">
+		<div class="flexslider carousel" id="f2" style="direction:rtl">
           <ul class="slides">
             <li>
   	    	    <img src="images/kitchen_adventurer_cheesecake_brownie.jpg" />
@@ -136,57 +165,82 @@
       </section>
       <aside>
         <div class="cf">
-          <h3>Slider with Carousel Slider as Navigation</h3>
+          <h3>Slider with Carousel Slider as Navigation - RTL</h3>
           <ul class="toggle cf">
             <li class="js"><a href="#view-js">JS</a></li>
+            <li class="css"><a href="#view-css">CSS</a></li>
             <li class="html"><a href="#view-html">HTML</a></li>
           </ul>
         </div>
         <div id="view-js" class="code">
           <pre class="brush: js; toolbar: false; gutter: false;">
-            $(window).load(function() {
-              // The slider being synced must be initialized first
-              $('#carousel').flexslider({
+            // Can also be used with $(document).ready()
+            $(window).load(function(){
+              $('#f1').flexslider({
                 animation: "slide",
-                controlNav: false,
+                rtl: true,
+                start: function(slider){
+                  $('body').removeClass('loading');
+                }
+              });
+             $('#f2').flexslider({
+                animation: "slide",
                 animationLoop: false,
-                slideshow: false,
                 itemWidth: 210,
                 itemMargin: 5,
-                asNavFor: '#slider'
-              });
-
-              $('#slider').flexslider({
-                animation: "slide",
-                controlNav: false,
-                animationLoop: false,
-                slideshow: false,
-                sync: "#carousel"
+                pausePlay: true,
+                mousewheel: true,
+                rtl: true,
+                asNavFor:'.flexslider'
               });
             });
+          </pre>
+        </div>
+        <div id="view-css" class="code">
+          <pre class="brush: xml; toolbar: false; gutter: false;">
+            &lt;!-- Place either at the bottom in the &lt;head&gt; of your page or inside your CSS -->
+            &lt;style type="text/css">
+            .flex-caption {
+              width: 96%;
+              padding: 2%;
+              left: 0;
+              bottom: 0;
+              background: rgba(0,0,0,.5);
+              color: #fff;
+              text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+              font-size: 14px;
+              line-height: 18px;
+            }
+            li.css a {
+              border-radius: 0;
+            }
+            &lt;/style>
           </pre>
         </div>
         <div id="view-html" class="code">
           <pre class="brush: xml; toolbar: false; gutter: false;">
             &lt;!-- Place somewhere in the &lt;body&gt; of your page -->
-            &lt;div id="slider" class="flexslider">
+            &lt;div class="flexslider" id="f1" style="direction:rtl">
               &lt;ul class="slides">
                 &lt;li>
                   &lt;img src="slide1.jpg" />
+                  &lt;p class="flex-caption">Adventurer Cheesecake Brownie&lt;/p>
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide2.jpg" />
+                  &lt;p class="flex-caption">Adventurer Lemon&lt;/p>
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide3.jpg" />
+                  &lt;p class="flex-caption">Adventurer Donut&lt;/p>
                 &lt;/li>
                 &lt;li>
                   &lt;img src="slide4.jpg" />
+                  &lt;p class="flex-caption">Adventurer Caramel&lt;/p>
                 &lt;/li>
-                &lt;!-- items mirrored twice, total of 12 -->
               &lt;/ul>
             &lt;/div>
-            &lt;div id="carousel" class="flexslider">
+            &lt;div class="flexslider carousel" id="f2" style="direction:rtl">
               &lt;ul class="slides">
                 &lt;li>
                   &lt;img src="slide1.jpg" />
@@ -200,7 +254,6 @@
                 &lt;li>
                   &lt;img src="slide4.jpg" />
                 &lt;/li>
-                &lt;!-- items mirrored twice, total of 12 -->
               &lt;/ul>
             &lt;/div>
           </pre>
@@ -222,25 +275,22 @@
       SyntaxHighlighter.all();
     });
     $(window).load(function(){
-      $('#carousel').flexslider({
+      $('#f1').flexslider({
         animation: "slide",
-        controlNav: false,
-        animationLoop: false,
-        slideshow: false,
-        itemWidth: 210,
-        itemMargin: 5,
-        asNavFor: '#slider'
-      });
-
-      $('#slider').flexslider({
-        animation: "slide",
-        controlNav: false,
-        animationLoop: false,
-        slideshow: false,
-        sync: "#carousel",
+		    rtl: true,
         start: function(slider){
           $('body').removeClass('loading');
         }
+      });
+	   $('#f2').flexslider({
+        animation: "slide",
+        animationLoop: false,
+        itemWidth: 210,
+        itemMargin: 5,
+        pausePlay: true,
+    		mousewheel: true,
+    		rtl: true,
+    		asNavFor:'.flexslider'
       });
     });
   </script>
