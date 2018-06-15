@@ -1,5 +1,5 @@
 /*
- * jQuery FlexSlider v2.7.0
+ * jQuery FlexSlider v2.7.1
  * http://www.woothemes.com/flexslider/
  *
  * Copyright 2012 WooThemes
@@ -103,6 +103,11 @@ html[xmlns] .flexslider .slides {
 }
 .loading .flex-viewport {
   max-height: 300px;
+}
+@-moz-document url-prefix() {
+  .loading .flex-viewport {
+    max-height: none;
+  }
 }
 .carousel li {
   margin-right: 5px;
