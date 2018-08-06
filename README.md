@@ -1,6 +1,6 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
-# FlexSlider 2.7.0
+# FlexSlider 2.7.1
 http://www.woocommerce.com/flexslider/ - Copyright (c) 2015 WooThemes
 
 ## Releases
@@ -18,6 +18,10 @@ Before contributing, please see our [Contributing Guide](https://github.com/wooc
 To keep up to date with how FlexSlider's development roadmap looks, please see our [development roadmap](https://github.com/woocommerce/FlexSlider/wiki/Roadmap).
 
 ## Updates
+
+** Version 2.7.1 **
+
+** RTL fixes for Firefox browser.
 
 ** Version 2.7.0 **
 
@@ -211,3 +215,7 @@ Boolean. Whether or not you'd like FlexSlider to initialize as usual if only one
 ### rtl: *{new}*
 Boolean. False by default. Supports RTL functionality in the slider.
 *Note: you must add `style="direction:rtl"` to your container div in order for this to work.*
+
+### isFirefox: *{new}*
+Boolean. False by default. Set to true if the Firefox browser is in use.
+*Note: used for RTL compatibility logic.*
