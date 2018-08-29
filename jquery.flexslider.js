@@ -289,12 +289,15 @@
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
-            slider.controlNavScaffold.append($('<li><a href="#">' + slider.count + '</a></li>'));
+            slider.controlNavScaffold.append($('<li><a href="#"></a></li>'));
           } else if (slider.pagingCount === 1) {
             slider.controlNavScaffold.find('li').remove();
           } else {
             slider.controlNav.eq(pos).closest('li').remove();
           }
+          slider.controlNavScaffold.find('li').each(function (ind, el) {
+            $(el).find('a').text(ind + 1);
+          });
           methods.controlNav.set();
           (slider.pagingCount > 1 && slider.pagingCount !== slider.controlNav.length) ? slider.update(pos, action) : methods.controlNav.active();
         }
