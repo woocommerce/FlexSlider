@@ -24,7 +24,7 @@
         msGesture = window.navigator && window.navigator.msPointerEnabled && window.MSGesture,
         touch = (( "ontouchstart" in window ) || msGesture || window.DocumentTouch && document instanceof DocumentTouch) && slider.vars.touch,
         // deprecating this idea, as devices are being released with both of these events
-        eventType = "click touchend MSPointerUp keyup",
+        eventType = "click touchend MSPointerUp",
         watchedEvent = "",
         watchedEventClearTimer,
         vertical = slider.vars.direction === "vertical",
