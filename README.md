@@ -1,6 +1,6 @@
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
-# FlexSlider 2.7.1
+# FlexSlider 2.7.2
 http://www.woocommerce.com/flexslider/ - Copyright (c) 2015 WooThemes
 
 ## Releases
@@ -18,6 +18,10 @@ Before contributing, please see our [Contributing Guide](https://github.com/wooc
 To keep up to date with how FlexSlider's development roadmap looks, please see our [development roadmap](https://github.com/woocommerce/FlexSlider/wiki/Roadmap).
 
 ## Updates
+
+** Version 2.7.2 **
+
+** Refactor jQuery HTML output for img attributes.
 
 ** Version 2.7.1 **
 
