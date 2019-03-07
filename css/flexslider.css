@@ -1,6 +1,6 @@
 /*
- * jQuery FlexSlider v2.7.0
- * http://www.woothemes.com/flexslider/
+ * jQuery FlexSlider v2.7.2
+ * https://www.woocommerce.com/flexslider/
  *
  * Copyright 2012 WooThemes
  * Free to use under the GPLv2 and later license.
@@ -12,7 +12,7 @@
 /* ====================================================================================================================
  * FONT-FACE
  * ====================================================================================================================*/
-@font-face {
+ @font-face {
   font-family: 'flexslider-icon';
   src: url('../fonts/flexslider-icon.eot');
   src: url('../fonts/flexslider-icon.eot?#iefix') format('embedded-opentype'), url('../fonts/flexslider-icon.woff') format('woff'), url('../fonts/flexslider-icon.ttf') format('truetype'), url('../fonts/flexslider-icon.svg#flexslider-icon') format('svg');
@@ -108,7 +108,7 @@ html[xmlns] .flexslider .slides {
   .loading .flex-viewport {
     max-height: none;
   }
-} 
+}
 .carousel li {
   margin-right: 5px;
 }
