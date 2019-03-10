@@ -37,13 +37,13 @@ em {font-style: italic;}
 */
 
 /* GEO - Semibold */
-@font-face {font-family: 'Geogrotesque-SemiBold';src: url('../fonts/webfonts/geo-semibold/eot/style_169898.eot');src: url('../fonts/webfonts/geo-semibold/eot/style_169898.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-semibold/woff/style_169898.woff') format('woff'),url('../fonts/webfonts/geo-semibold/ttf/style_169898.ttf') format('truetype'),url('../fonts/webfonts/geo-semibold/svg/style_169898.svg#Geogrotesque-SemiBold') format('svg');}
+@font-face {font-family: 'Geogrotesque-SemiBold';src: url('../fonts/webfonts/geo-semibold/eot/style_169898.eot');src: url('../fonts/webfonts/geo-semibold/eot/style_169898.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-semibold/woff2/style_169898.woff2') format('woff2'),url('../fonts/webfonts/geo-semibold/woff/style_169898.woff') format('woff'),url('../fonts/webfonts/geo-semibold/ttf/style_169898.ttf') format('truetype'),url('../fonts/webfonts/geo-semibold/svg/style_169898.svg#Geogrotesque-SemiBold') format('svg');}
 
 /* GEO - Medium */
-@font-face {font-family: 'Geogrotesque-Medium';src: url('../fonts/webfonts/geo-medium/eot/1110FC_0.eot');src: url('../fonts/webfonts/geo-medium/eot/1110FC_0.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-medium/woff/1110FC_0.woff') format('woff'),url('../fonts/webfonts/geo-medium/ttf/1110FC_0.ttf') format('truetype'),url('webfonts/1110FC_0.svg#wf') format('svg');}
+@font-face {font-family: 'Geogrotesque-Medium';src: url('../fonts/webfonts/geo-medium/eot/1110FC_0.eot');src: url('../fonts/webfonts/geo-medium/eot/1110FC_0.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-medium/woff2/1110FC_0.woff2') format('woff2'),url('../fonts/webfonts/geo-medium/woff/1110FC_0.woff') format('woff'),url('../fonts/webfonts/geo-medium/ttf/1110FC_0.ttf') format('truetype'),url('webfonts/1110FC_0.svg#wf') format('svg');}
 
 /* GEO - Regular */
- @font-face {font-family: 'Geogrotesque-Regular';src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot');src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-regular/woff/11014B_0.woff') format('woff'),url('../fonts/webfonts/geo-regular/ttf/11014B_0.ttf') format('truetype'),url('../fonts/webfonts/geo-regular/svg/11014B_0.svg#wf') format('svg');}
+ @font-face {font-family: 'Geogrotesque-Regular';src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot');src: url('../fonts/webfonts/geo-regular/eot/11014B_0.eot?#iefix') format('embedded-opentype'),url('../fonts/webfonts/geo-regular/woff2/11014B_0.woff2') format('woff2'),url('../fonts/webfonts/geo-regular/woff/11014B_0.woff') format('woff'),url('../fonts/webfonts/geo-regular/ttf/11014B_0.ttf') format('truetype'),url('../fonts/webfonts/geo-regular/svg/11014B_0.svg#wf') format('svg');}
 
 /* Icon Fonts
 *********************************/
@@ -52,6 +52,7 @@ em {font-style: italic;}
 	font-family: 'flexslider-icon';
 	src:url('../fonts/webfonts/flexslider-icon.eot');
 	src:url('../fonts/webfonts/flexslider-icon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/webfonts/flexslider-icon.woff2') format('woff2'),
 		url('../fonts/webfonts/flexslider-icon.woff') format('woff'),
 		url('../fonts/webfonts/flexslider-icon.ttf') format('truetype'),
 		url('../fonts/webfonts/flexslider-icon.svg#flexslider-icon') format('svg');
