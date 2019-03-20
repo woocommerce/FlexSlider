@@ -509,6 +509,20 @@
               }
               el.removeEventListener('touchend', onTouchEnd, false);
 
+              if (dx && scrolling) {
+                
+                // (scroll) Resume autoplay if slideshow is enabled
+                slider.vars.slideshow && slider.play();
+              } else if (dx) {
+                
+                // (swipe) Resume if pauseOnAction:false, else end slideshow
+                !slider.vars.pauseOnAction && slider.play() || (slider.vars.slideshow = false);
+              } else {
+                
+                // ("click") Resume if pauseOnAction:false, slideshow:true
+                (slider.vars.slideshow && !slider.vars.pauseOnAction) && slider.play() || (slider.vars.slideshow = false);
+              }
+
               startX = null;
               startY = null;
               dx = null;
@@ -594,6 +608,20 @@
                         if (!fade) { slider.flexAnimate(slider.currentSlide, slider.vars.pauseOnAction, true); }
                     }
                 }
+                
+                if (dx && scrolling) {
+                    
+                    // (scroll) Resume autoplay if slideshow is enabled
+                    slider.vars.slideshow && slider.play();
+                  } else if (dx) {
+                    
+                    // (swipe) Resume if pauseOnAction:false, else end slideshow
+                    !slider.vars.pauseOnAction && slider.play() || (slider.vars.slideshow = false);
+                  } else {
+                    
+                    // ("click") Resume if pauseOnAction:false, slideshow:true
+                    (slider.vars.slideshow && !slider.vars.pauseOnAction) && slider.play() || (slider.vars.slideshow = false);
+                  }
 
                 startX = null;
                 startY = null;
