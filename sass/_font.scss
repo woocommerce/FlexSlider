@@ -1,0 +1,17 @@
+/* ====================================================================================================================
+ * FONT-FACE
+ * ====================================================================================================================*/
+
+
+@font-face {
+
+  font-family: '#{$font-name}';
+  src:url('#{$font-path}/#{$font-file-name}.eot');
+  src:url('#{$font-path}/#{$font-file-name}.eot?#iefix') format('embedded-opentype'),
+    url('#{$font-path}/#{$font-file-name}.woff') format('woff'),
+    url('#{$font-path}/#{$font-file-name}.ttf') format('truetype'),
+    url('#{$font-path}/#{$font-file-name}.svg#flexslider-icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
