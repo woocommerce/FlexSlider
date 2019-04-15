@@ -46,3 +46,10 @@ FLEXSLIDER CHANGELOG
 * Fixes resize method call for orientationchange.
 * Adds RTL feature - param "rtl" added.
 * Adds RTL demo's.
+
+2018.06.15 - Version 2.7.1
+* Firefox RTL fixes.
+* Adds "isFirefox" param.
+
+2019.03.07 - Version 2.7.2
+* Refactor jQuery HTML output for img attributes.
