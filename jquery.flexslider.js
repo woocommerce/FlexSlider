@@ -725,15 +725,14 @@
           slider.direction = (slider.currentItem < target) ? "next" : "prev";
           master.direction = slider.direction;
 
-          if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
-            slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
-            target = Math.floor(target/slider.visible);
-          } else {
-            slider.currentItem = target;
-            slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
-            return false;
-          }
+          slider.currentItem = target;
+          slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
+
+          // Calculate the "real" target slide index to animate to
+          //
+          // For sliders with differing 'move' and 'visible' values, this
+          // requires some math.
+          target = Math.max(0, Math.floor((target - slider.visible) / slider.move) + 1);
         }
 
         slider.animating = true;
