@@ -241,7 +241,7 @@
                 slide.attr( 'data-thumb-alt', '' ); 
               }
               
-              item = $( '<a></a>' ).attr( 'href', '#' ).text( j );
+              item = $( '<a></a>' ).attr( 'href', '#' ).attr('aria-label', 'Slide').text( j );
               if ( slider.vars.controlNav === "thumbnails" ) {
                 item = $( '<img/>' ).attr( 'src', slide.attr( 'data-thumb' ) );
               }
@@ -328,7 +328,7 @@
         },
         update: function(action, pos) {
           if (slider.pagingCount > 1 && action === "add") {
-            slider.controlNavScaffold.append($('<li><a href="#">' + slider.count + '</a></li>'));
+            slider.controlNavScaffold.append($('<li><a href="#" aria-label="Slide">' + slider.count + '</a></li>'));
           } else if (slider.pagingCount === 1) {
             slider.controlNavScaffold.find('li').remove();
           } else {
