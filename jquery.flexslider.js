@@ -340,37 +340,39 @@
       },
       directionNav: {
         setup: function() {
-          var directionNavScaffold = $('<ul class="' + namespace + 'direction-nav"><li class="' + namespace + 'nav-prev"><a class="' + namespace + 'prev" href="#">' + slider.vars.prevText + '</a></li><li class="' + namespace + 'nav-next"><a class="' + namespace + 'next" href="#">' + slider.vars.nextText + '</a></li></ul>');
+          if (slider.pagingCount > 1) {
+            var directionNavScaffold = $('<ul class="' + namespace + 'direction-nav"><li class="' + namespace + 'nav-prev"><a class="' + namespace + 'prev" href="#">' + slider.vars.prevText + '</a></li><li class="' + namespace + 'nav-next"><a class="' + namespace + 'next" href="#">' + slider.vars.nextText + '</a></li></ul>');
 
-          // CUSTOM DIRECTION NAV:
-          if (slider.customDirectionNav) {
-            slider.directionNav = slider.customDirectionNav;
-          // CONTROLSCONTAINER:
-          } else if (slider.controlsContainer) {
-            $(slider.controlsContainer).append(directionNavScaffold);
-            slider.directionNav = $('.' + namespace + 'direction-nav li a', slider.controlsContainer);
-          } else {
-            slider.append(directionNavScaffold);
-            slider.directionNav = $('.' + namespace + 'direction-nav li a', slider);
+            // CUSTOM DIRECTION NAV:
+            if (slider.customDirectionNav) {
+              slider.directionNav = slider.customDirectionNav;
+            // CONTROLSCONTAINER:
+            } else if (slider.controlsContainer) {
+              $(slider.controlsContainer).append(directionNavScaffold);
+              slider.directionNav = $('.' + namespace + 'direction-nav li a', slider.controlsContainer);
+            } else {
+              slider.append(directionNavScaffold);
+              slider.directionNav = $('.' + namespace + 'direction-nav li a', slider);
+            }
+
+            methods.directionNav.update();
+
+            slider.directionNav.bind(eventType, function(event) {
+              event.preventDefault();
+              var target;
+
+              if (watchedEvent === "" || watchedEvent === event.type) {
+                target = ($(this).hasClass(namespace + 'next')) ? slider.getTarget('next') : slider.getTarget('prev');
+                slider.flexAnimate(target, slider.vars.pauseOnAction);
+              }
+
+              // setup flags to prevent event duplication
+              if (watchedEvent === "") {
+                watchedEvent = event.type;
+              }
+              methods.setToClearWatchedEvent();
+            });
           }
-
-          methods.directionNav.update();
-
-          slider.directionNav.bind(eventType, function(event) {
-            event.preventDefault();
-            var target;
-
-            if (watchedEvent === "" || watchedEvent === event.type) {
-              target = ($(this).hasClass(namespace + 'next')) ? slider.getTarget('next') : slider.getTarget('prev');
-              slider.flexAnimate(target, slider.vars.pauseOnAction);
-            }
-
-            // setup flags to prevent event duplication
-            if (watchedEvent === "") {
-              watchedEvent = event.type;
-            }
-            methods.setToClearWatchedEvent();
-          });
         },
         update: function() {
           var disabledClass = namespace + 'disabled';
