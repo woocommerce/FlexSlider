@@ -185,7 +185,7 @@ Previously called "keyboardNav" in v1.8 and below.
 ### sync: *{new}*
 `sync` is a new property that will allow other slider(s) to hook into the current slider via a given selector. The selector should describe an object that has already been initialized as a FlexSlider. Right now, `sync` will synchronize animation, play, and pause behaviors. More behaviors can be added in the future as the property matures.
 
-*[Example of sync being used](http://flex.madebymufffin.com/examples/basic-carousel.html)*
+*[Example of sync being used](http://flexslider.woothemes.com/thumbnail-slider.html)*
 
 ### asNavFor: *{new}*
 Description to be added.
