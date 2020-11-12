@@ -813,11 +813,11 @@
           }
         } else { // FADE:
           if (!touch) {
-            slider.slides.eq(slider.currentSlide).css({"zIndex": 1}).animate({"opacity": 0}, slider.vars.animationSpeed, slider.vars.easing);
-            slider.slides.eq(target).css({"zIndex": 2}).animate({"opacity": 1}, slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
+            slider.slides.eq(slider.currentSlide).css({"zIndex": "1"}).animate({"opacity": 0}, slider.vars.animationSpeed, slider.vars.easing);
+            slider.slides.eq(target).css({"zIndex": "2"}).animate({"opacity": 1}, slider.vars.animationSpeed, slider.vars.easing, slider.wrapup);
           } else {
-            slider.slides.eq(slider.currentSlide).css({ "opacity": 0, "zIndex": 1 });
-            slider.slides.eq(target).css({ "opacity": 1, "zIndex": 2 });
+            slider.slides.eq(slider.currentSlide).css({ "opacity": "0", "zIndex": "1" });
+            slider.slides.eq(target).css({ "opacity": "1", "zIndex": "2" });
             slider.wrapup(dimension);
           }
         }
@@ -976,14 +976,14 @@
             slider.doMath();
           if(slider.vars.rtl){
             if (slider.isFirefox) {
-              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "right", "display": "block"});
+              slider.newSlides.css({"width": slider.computedW+"px", "marginRight" : slider.computedM+"px", "float": "right", "display": "block"});
             } else {
-              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+              slider.newSlides.css({"width": slider.computedW+"px", "marginRight" : slider.computedM+"px", "float": "left", "display": "block"});
             }
               
            }
             else{
-              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+              slider.newSlides.css({"width": slider.computedW+"px", "marginRight" : slider.computedM+"px", "float": "left", "display": "block"});
             }
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) { methods.smoothHeight(); }
@@ -1000,12 +1000,12 @@
           if (!touch) {
             //slider.slides.eq(slider.currentSlide).fadeIn(slider.vars.animationSpeed, slider.vars.easing);
             if (slider.vars.fadeFirstSlide == false) {
-              slider.slides.css({ "opacity": 0, "display": "block", "zIndex": 1 }).eq(slider.currentSlide).css({"zIndex": 2}).css({"opacity": 1});
+              slider.slides.css({ "opacity": "0", "display": "block", "zIndex": "1"}).eq(slider.currentSlide).css({"zIndex": "2"}).css({"opacity": "1"});
             } else {
-              slider.slides.css({ "opacity": 0, "display": "block", "zIndex": 1 }).eq(slider.currentSlide).css({"zIndex": 2}).animate({"opacity": 1},slider.vars.animationSpeed,slider.vars.easing);
+              slider.slides.css({ "opacity": "0", "display": "block", "zIndex": "1"}).eq(slider.currentSlide).css({"zIndex": "2"}).animate({"opacity": 1},slider.vars.animationSpeed,slider.vars.easing);
             }
           } else {
-            slider.slides.css({ "opacity": 0, "display": "block", "webkitTransition": "opacity " + slider.vars.animationSpeed / 1000 + "s ease", "zIndex": 1 }).eq(slider.currentSlide).css({ "opacity": 1, "zIndex": 2});
+            slider.slides.css({ "opacity": "0", "display": "block", "webkitTransition": "opacity " + slider.vars.animationSpeed / 1000 + "s ease", "zIndex": "1"}).eq(slider.currentSlide).css({ "opacity": "1", "zIndex": "2"});
           }
         }
         // SMOOTH HEIGHT:
