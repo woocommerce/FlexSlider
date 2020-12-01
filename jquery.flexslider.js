@@ -976,14 +976,14 @@
             slider.doMath();
           if(slider.vars.rtl){
             if (slider.isFirefox) {
-              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "right", "display": "block"});
+              slider.newSlides.css({"width": slider.computedW + 'px', "marginRight" : slider.computedM + 'px', "float": "right", "display": "block"});
             } else {
-              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+              slider.newSlides.css({"width": slider.computedW + 'px', "marginRight" : slider.computedM + 'px', "float": "left", "display": "block"});
             }
               
            }
             else{
-              slider.newSlides.css({"width": slider.computedW, "marginRight" : slider.computedM, "float": "left", "display": "block"});
+              slider.newSlides.css({"width": slider.computedW + 'px', "marginRight" : slider.computedM + 'px', "float": "left", "display": "block"});
             }
             // SMOOTH HEIGHT:
             if (slider.vars.smoothHeight) { methods.smoothHeight(); }
