@@ -275,7 +275,7 @@
 
           methods.controlNav.active();
 
-          slider.controlNavScaffold.on('a, img', eventType, function(event) {
+          slider.controlNavScaffold.on( eventType, 'a, img', function(event) {
             event.preventDefault();
 
             if (watchedEvent === "" || watchedEvent === event.type) {
