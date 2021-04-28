@@ -120,6 +120,7 @@ html[xmlns] .flexslider .slides {
   display: block;
   width: 40px;
   height: 40px;
+  line-height: 1;
   margin: -20px 0 0;
   position: absolute;
   top: 50%;
