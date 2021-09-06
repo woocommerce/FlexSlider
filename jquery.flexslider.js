@@ -243,7 +243,11 @@
               
               item = $( '<a></a>' ).attr( 'href', '#' ).text( j );
               if ( slider.vars.controlNav === "thumbnails" ) {
-                item = $( '<img/>' ).attr( 'src', slide.attr( 'data-thumb' ) );
+                item = $( '<img/>' )
+                .attr( 'width', parseInt( slide.width() ) )
+                .attr( 'height', parseInt( slide.height() ) )
+                .attr( 'alt', slide.attr( 'alt' ) )
+                .attr( 'src', slide.attr( 'data-thumb' ) );
               }
               
               if ( '' !== slide.attr( 'data-thumb-alt' ) ) {
