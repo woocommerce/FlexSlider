@@ -244,8 +244,8 @@
               item = $( '<a></a>' ).attr( 'href', '#' ).text( j );
               if ( slider.vars.controlNav === "thumbnails" ) {
                 item = $( '<img/>' )
-                .attr( 'width', parseInt( slide.width() ) )
-                .attr( 'height', parseInt( slide.height() ) )
+                .attr( 'width', parseInt( parseInt( slider.width() ) / slider.pagingCount ) )
+                .attr( 'height', parseInt( parseInt( slider.width() ) / slider.pagingCount ) )
                 .attr( 'alt', slide.attr( 'alt' ) )
                 .attr( 'src', slide.attr( 'data-thumb' ) );
               }
