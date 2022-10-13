@@ -249,18 +249,19 @@
               if ( '' !== slide.attr( 'data-thumb-alt' ) ) {
                 item.attr( 'alt', slide.attr( 'data-thumb-alt' ) );
               }
-
+              
+              var liElement = $( '<li></li>' );
+              liElement.append( item );
+              
               if ( 'thumbnails' === slider.vars.controlNav && true === slider.vars.thumbCaptions ) {
                 var captn = slide.attr( 'data-thumbcaption' );
                 if ( '' !== captn && undefined !== captn ) { 
                   var caption = $('<span></span>' ).addClass( namespace + 'caption' ).text( captn );
-                  item.append( caption );
+                  liElement.append( caption );
                 }
               }
               
-              var liElement = $( '<li>' );
-              item.appendTo( liElement );
-              liElement.append( '</li>' );
+              
 
               slider.controlNavScaffold.append(liElement);
               j++;
