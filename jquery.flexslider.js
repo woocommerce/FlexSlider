@@ -326,9 +326,13 @@
         active: function() {
           slider.controlNav.removeClass(namespace + "active").eq(slider.animatingTo).addClass(namespace + "active");
         },
-        update: function(action, pos) {
+        update: function(action, pos, $obj) { 
           if (slider.pagingCount > 1 && action === "add") {
-            slider.controlNavScaffold.append($('<li><a href="#">' + slider.count + '</a></li>'));
+            if(slider.vars.controlNav !== "thumbnails"){
+              slider.controlNavScaffold.find('li').eq(pos).before($('<li><img src="'+$obj.attr('data-thumb')+'"></li>'));
+            } else {
+              slider.controlNavScaffold.find('li').eq(pos).before($('<li><a href="#">' + slider.count + '</a></li>'));
+            }
           } else if (slider.pagingCount === 1) {
             slider.controlNavScaffold.find('li').remove();
           } else {
@@ -1056,7 +1060,7 @@
       slider.computedM = slider.itemM;
     };
 
-    slider.update = function(pos, action) {
+    slider.update = function(pos, action, $obj = null) {
       slider.doMath();
 
       // update currentSlide and slider.animatingTo if necessary
@@ -1072,7 +1076,7 @@
       // update controlNav
       if (slider.vars.controlNav && !slider.manualControls) {
         if ((action === "add" && !carousel) || slider.pagingCount > slider.controlNav.length) {
-          methods.controlNav.update("add");
+          methods.controlNav.update("add", pos, $obj);
         } else if ((action === "remove" && !carousel) || slider.pagingCount < slider.controlNav.length) {
           if (carousel && slider.currentSlide > slider.last) {
             slider.currentSlide -= 1;
@@ -1100,7 +1104,7 @@
       }
 
       // update currentSlide, animatingTo, controlNav, and directionNav
-      slider.update(pos, "add");
+      slider.update(pos, "add", $obj);
 
       // update slider.slides
       slider.slides = $(slider.vars.selector + ':not(.clone)', slider);
