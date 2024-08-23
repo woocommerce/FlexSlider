@@ -1,3 +1,8 @@
+# No longer under active development
+
+Please note that this repository is no longer actively developed. See [the discussion](https://github.com/woocommerce/woocommerce/discussions/48302). The most recent version of FlexSlider is currently incubated 
+[within WooCommerce](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/client/legacy/js/flexslider/jquery.flexslider.js).
+
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
 
 # FlexSlider 2.7.2
