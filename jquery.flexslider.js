@@ -140,7 +140,13 @@
             slider.hover(function() {
               if (!slider.manualPlay && !slider.manualPause) { slider.pause(); }
             }, function() {
-              if (!slider.manualPause && !slider.manualPlay && !slider.stopped) { slider.play(); }
+              if (!slider.manualPause && !slider.manualPlay && !slider.stopped) {
+                var lastSlide = slider.currentSlide === slider.last;
+                // If we are on the last slide and animationLoop is deactivated do not resume slideshow.
+                if (!(lastSlide && !slider.animationLoop)) {
+                  slider.play();
+                }
+              }
             });
           }
           // initialize animation
