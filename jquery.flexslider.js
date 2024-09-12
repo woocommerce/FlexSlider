@@ -350,8 +350,8 @@
             $(slider.controlsContainer).append(directionNavScaffold);
             slider.directionNav = $('.' + namespace + 'direction-nav li a', slider.controlsContainer);
           } else {
-            slider.append(directionNavScaffold);
-            slider.directionNav = $('.' + namespace + 'direction-nav li a', slider);
+            slider.viewport.append(directionNavScaffold);
+            slider.directionNav = $('.' + namespace + 'direction-nav li a', slider.viewport);
           }
 
           methods.directionNav.update();
@@ -628,7 +628,7 @@
       },
       smoothHeight: function(dur) {
         if (!vertical || fade) {
-          var $obj = (fade) ? slider : slider.viewport;
+          var $obj = slider.viewport;
           (dur) ? $obj.animate({"height": slider.slides.eq(slider.animatingTo).innerHeight()}, dur) : $obj.innerHeight(slider.slides.eq(slider.animatingTo).innerHeight());
         }
       },
@@ -932,12 +932,13 @@
     };
 
     slider.setup = function(type) {
+      slider.viewport = $('<div class="' + namespace + 'viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo(slider).append(slider.container);
+
       // SLIDE:
       if (!fade) {
         var sliderOffset, arr;
 
         if (type === "init") {
-          slider.viewport = $('<div class="' + namespace + 'viewport"></div>').css({"overflow": "hidden", "position": "relative"}).appendTo(slider).append(slider.container);
           // INFINITE LOOP:
           slider.cloneCount = 0;
           slider.cloneOffset = 0;
