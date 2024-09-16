@@ -1078,7 +1078,7 @@
             slider.currentSlide -= 1;
             slider.animatingTo -= 1;
           }
-          methods.controlNav.update("remove", slider.last);
+          methods.controlNav.update("remove", pos);
         }
       }
       // update directionNav
