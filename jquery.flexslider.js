@@ -1026,7 +1026,7 @@
           maxItems = slider.vars.maxItems;
 
       slider.w = (slider.viewport===undefined) ? slider.width() : slider.viewport.width();
-      if (slider.isFirefox) { slider.w = slider.width(); }
+
       slider.h = slide.height();
       slider.boxPadding = slide.outerWidth() - slide.width();
 
