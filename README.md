@@ -4,6 +4,7 @@ Please note that this repository is no longer actively developed. See [the discu
 [within WooCommerce](https://github.com/woocommerce/woocommerce/blob/trunk/plugins/woocommerce/client/legacy/js/flexslider/jquery.flexslider.js).
 
 [![Gitter chat](https://badges.gitter.im/woothemes/FlexSlider.png)](https://gitter.im/woothemes/FlexSlider)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/flexslider/badge?style=rounded)](https://www.jsdelivr.com/package/npm/flexslider)
 
 # FlexSlider 2.7.2
 http://www.woocommerce.com/flexslider/ - Copyright (c) 2015 WooThemes
