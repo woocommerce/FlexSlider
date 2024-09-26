@@ -725,7 +725,7 @@
           slider.direction = (slider.currentItem < target) ? "next" : "prev";
           master.direction = slider.direction;
 
-          if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide && target !== 0) {
+          if (Math.ceil((target + 1)/slider.visible) - 1 !== slider.currentSlide) {
             slider.currentItem = target;
             slider.slides.removeClass(namespace + "active-slide").eq(target).addClass(namespace + "active-slide");
             target = Math.floor(target/slider.visible);
