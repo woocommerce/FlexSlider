@@ -361,6 +361,13 @@
             var target;
 
             if (watchedEvent === "" || watchedEvent === event.type) {
+              // control loop
+              if (!options.loop) {
+                var disabledClass = namespace + 'disabled';
+                if ($(this).hasClass(disabledClass)) {
+                  return;
+                }
+              }
               target = ($(this).hasClass(namespace + 'next')) ? slider.getTarget('next') : slider.getTarget('prev');
               slider.flexAnimate(target, slider.vars.pauseOnAction);
             }
@@ -1203,6 +1210,7 @@
     maxItems: 0,                    //{NEW} Integer: Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this limit.
     move: 0,                        //{NEW} Integer: Number of carousel items that should move on animation. If 0, slider will move all visible items.
     allowOneSlide: true,           //{NEW} Boolean: Whether or not to allow a slider comprised of a single slide
+    loop: true,                     //{NEW} Boolean: If true, slider repeats over and over again. If not, it's not repeated.
 
     // Browser Specific
     isFirefox: false,             // {NEW} Boolean: Set to true when Firefox is the browser used.
